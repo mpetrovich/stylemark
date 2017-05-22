@@ -11,7 +11,7 @@
   ],
   "main": "index.js",
   "scripts": {
-    "test": "gulp test"
+    "test": "./node_modules/.bin/gulp test"
   },
   "homepage": "https://github.com/Instadoc/livingstyleguides",
   "repository": "https://github.com/Instadoc/livingstyleguides.git",
