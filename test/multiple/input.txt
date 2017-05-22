@@ -1,0 +1,94 @@
+/*******
+---
+name: PatternA
+category: Foos & Bars
+version: 1.0.3
+todo:
+ - First todo
+ - Another future task
+---
+
+Basic usage of PatternA
+```
+<pattern-a param-a="123"></pattern-a>
+```
+
+Advanced usage of PatternA
+```html,height=300
+<pattern-a
+	param-a="123"
+	param-b="{ foo: true }"
+	param-c="some value"
+></pattern-a>
+```
+
+```
+<pattern-a param-a="456"></pattern-a>
+```
+**********/
+
+Intermediate code
+@param NotAParam
+@doc NotADoc
+@param NotAnotherParam
+
+/* @todo A random comment */
+
+/*
+---
+name: PatternB
+version: 0.2.4
+category: Something
+deprecated: Use PatternA instead
+todo: Some future task
+---
+This is a description for PatternB.
+
+The description continues on even more lines here.
+
+
+Section Heading
+---------------
+It even has section breaks delimited by a line of dashes.
+With more lines that follow.
+
+Another Heading
+---------------
+Lots of sections here.
+
+Basic usage of PatternB
+```html
+	<pattern-b param-a="456"></pattern-b>
+```
+
+
+Advanced usage of PatternB
+```advanced.js
+scope.foo = "bar";
+scope.what = "who";
+```
+```advanced.html
+	<pattern-b
+		param-a="456"
+		param-b="{ bar: false }"
+		param-c="another value"
+	></pattern-b>
+```
+ */
+
+/*
+---
+name: PatternA
+---
+*/
+
+/*
+---
+name: PatternA
+---
+Some addition description.
+
+```more.html
+<pattern-a></pattern-a>
+```
+*/
