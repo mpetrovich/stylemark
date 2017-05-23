@@ -65,12 +65,6 @@ The required markup for a tooltip is only a `data` attribute and `title` on the 
 Interactive example
 -------------------
 
-To use an @ symbol at the start of a line within the description, simply escape it with a backslash like so:
-@example This will be in the description
-@category This will be too
-
-But escaped @ symbols occurring NOT at the beginning (like this one \@) should remain escaped.
-
 <example name="interactive"></example>
 ```html
 <button>Click me</button>

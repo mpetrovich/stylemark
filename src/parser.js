@@ -102,9 +102,6 @@ function parseDescriptionMarkdown(markdown, doc) {
 
 	description = description.trim();
 
-	// Unescapes leading escaped @ symbols
-	description = description.replace(/^\\@/gm, '@');
-
 	// Replaces escaped pipes '\|' with '&#124;' to allow pipe characters in Markdown table cells
 	// @see http://stackoverflow.com/questions/17319940/how-to-escape-a-pipe-char-in-a-code-statement-in-a-markdown-table/17320389#17320389
 	description = description.replace(/\\\|/g, '&#124;');
