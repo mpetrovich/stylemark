@@ -23,6 +23,7 @@ describe('Parser.parse()', function() {
 
 			describe('1st example', () => {
 				var example = doc.getExamples().example;
+				it('should have an example by that name', () => expect(example).to.not.be.empty());
 				it('should have the correct number of code blocks', () => expect(example.codeBlocks.length).to.equal(2));
 				it('should have the correct options', () => expect(example.options).to.deep.equal({}));
 
@@ -48,6 +49,7 @@ describe('Parser.parse()', function() {
 
 			describe('2nd example', () => {
 				var example = doc.getExamples().static;
+				it('should have an example by that name', () => expect(example).to.not.be.empty());
 				it('should have the correct number of code blocks', () => expect(example.codeBlocks.length).to.equal(1));
 				it('should have the correct options', () => expect(example.options).to.deep.equal({ height: '50' }));
 
@@ -86,6 +88,7 @@ describe('Parser.parse()', function() {
 
 			describe('3rd example', () => {
 				var example = doc.getExamples()['static-directions'];
+				it('should have an example by that name', () => expect(example).to.not.be.empty());
 				it('should have the correct number of code blocks', () => expect(example.codeBlocks.length).to.equal(2));
 				it('should have the correct options', () => expect(example.options).to.deep.equal({}));
 

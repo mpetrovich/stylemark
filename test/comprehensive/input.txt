@@ -53,7 +53,7 @@ Four options are available: top, right, bottom, and left aligned.
 
 ### Four directions
 
-```static-directions.html
+``` static-directions.html
 <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Tooltip on left">Tooltip on left</button>
 
 <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Tooltip on top">Tooltip on top</button>
@@ -62,7 +62,7 @@ Four options are available: top, right, bottom, and left aligned.
 
 <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="Tooltip on right">Tooltip on right</button>
 ```
-```static-directions.js hidden
+``` static-directions.js hidden
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
@@ -83,7 +83,7 @@ Usage
 The tooltip plugin generates content and markup on demand, and by default places tooltips after their trigger element.
 
 Trigger the tooltip via JavaScript:
-```js
+``` js
 $('#example').tooltip(options)
 ```
 

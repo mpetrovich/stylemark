@@ -120,10 +120,11 @@ function parseDescriptionMarkdown(markdown, doc) {
 
 	// Extracts examples from description blocks
 	_.forEach(blocks, function(block) {
-		var matches = block.match(/```([^\.\s]+)\.(\w+)(.*)\n/);
+		var matches = block.match(/```\s*([^\.\s]+)\.(\w+)(.*)\n/);
 		var name = matches ? matches[1] : null;
 		var syntax = matches ? matches[2] : null;
 		var optionsString = matches ? matches[3] : '';
+		console.log(matches);
 
 		if (!name) {
 			// Unnamed examples are not renderable
@@ -178,7 +179,7 @@ function parseDescriptionMarkdown(markdown, doc) {
 			: '<example name="' + name + '"></example>\n';
 
 		description = description.replace(
-			new RegExp('```' + name + '\.(html|jsx|handlebars|hbs)', 'gm'),
+			new RegExp('```\\s*' + name + '\\.(html|jsx|handlebars|hbs)', 'gm'),
 			function(match, extension) {
 				if (hasExample[name]) {
 					return '```' + extension;
