@@ -26,7 +26,7 @@ describe('Parser', function() {
 					expect( doc.getCategory() ).to.equal('Foos & Bars');
 				});
 				it('should have the correct meta version', function() {
-					expect( doc.getMeta().version ).to.eql(['1.0.3']);
+					expect( doc.getMeta().version ).to.deep.equal(['1.0.3']);
 				});
 				it('should have the correct doc description', function() {
 					expect( doc.getDescription() ).to.equal(
@@ -34,7 +34,7 @@ describe('Parser', function() {
 					);
 				});
 				it('should have the correct todos', function() {
-					expect( doc.getMeta().todo ).to.eql(['First todo', 'Another future task']);
+					expect( doc.getMeta().todo ).to.deep.equal(['First todo', 'Another future task']);
 				});
 			});
 
@@ -45,7 +45,7 @@ describe('Parser', function() {
 					expect( doc.getName() ).to.equal('PatternB');
 				});
 				it('should have the correct meta version', function() {
-					expect( doc.getMeta().version ).to.eql(['0.2.4']);
+					expect( doc.getMeta().version ).to.deep.equal(['0.2.4']);
 				});
 				it('should have the correct doc description', function() {
 					expect( doc.getDescription() ).to.equal(
@@ -53,10 +53,10 @@ describe('Parser', function() {
 					);
 				});
 				it('should have the correct todos', function() {
-					expect( doc.getMeta().todo ).to.eql(['Some future task']);
+					expect( doc.getMeta().todo ).to.deep.equal(['Some future task']);
 				});
 				it('should have the correct deprecation message', function() {
-					expect( doc.getMeta().deprecated ).to.eql(['Use PatternA instead']);
+					expect( doc.getMeta().deprecated ).to.deep.equal(['Use PatternA instead']);
 				});
 			});
 		});

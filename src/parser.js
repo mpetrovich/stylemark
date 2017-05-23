@@ -131,7 +131,7 @@ function parseDescriptionMarkdown(markdown, doc) {
 		}
 
 		var code = block
-			.replace(/```\S*\n/m, '')  // Removes leading ```[syntax]
+			.replace(/```.*\n/m, '')  // Removes leading ```[syntax]
 			.replace(/\n```.*/m, '');  // Removes trailing ```
 
 		var options = _(optionsString)
@@ -144,15 +144,24 @@ function parseDescriptionMarkdown(markdown, doc) {
 			}, {})
 			.value();
 
-		codeBlocksByExample[name] = codeBlocksByExample[name] || [];
-		codeBlocksByExample[name].push({
+		var codeBlock = {
 			syntax: syntax,
 			code: code,
 			hidden: _.has(options, 'hidden'),
-			height: options.height,
-		});
+		};
+
+		if (options.height) {
+			codeBlock.height = options.height;
+		}
+
+		codeBlocksByExample[name] = codeBlocksByExample[name] || [];
+		codeBlocksByExample[name].push(codeBlock);
 		optionsByExample[name] = optionsByExample[name] || {};
-		optionsByExample[name].height = optionsByExample[name].height || options.height;
+
+		var height = optionsByExample[name].height || options.height;
+		if (height) {
+			optionsByExample[name].height = height;
+		}
 	});
 
 	_.forEach(codeBlocksByExample, function(codeBlocks, exampleName) {

@@ -19,7 +19,7 @@ describe('Parser.parse() with a Markdown example', function() {
 		expect(doc.getCategory()).to.equal('Getting Started');
 	});
 	it('should have the correct doc meta', function() {
-		expect(doc.getMeta()).to.eql({
+		expect(doc.getMeta()).to.deep.equal({
 			tags: ['one', 'two', 'three'],
 			version: ['1.2.3'],
 			todo: ['first todo', 'second todo'],

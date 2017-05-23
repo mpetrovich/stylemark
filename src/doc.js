@@ -82,9 +82,9 @@ Doc.prototype.getExamples = function() {
 /**
  * @param {String} name
  * @param {Array.<Object>} codeBlocks
- * @param {String} codeBlocks[i].syntax
- * @param {String} codeBlocks[i].code
- * @param {Boolean} [codeBlocks[i].hidden]
+ * @param {String} codeBlocks[name].syntax
+ * @param {String} codeBlocks[name].code
+ * @param {Boolean} [codeBlocks[name].hidden]
  * @param {Object} [options]
  * @param {Number} [options.height]
  */
