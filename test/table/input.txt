@@ -9,4 +9,5 @@ Col A | Col B | Col C | Col D
 Some text | **some bold** | `some code` | <code>{{ some code \| filter }}</code>
 
 Escaped 'less than' symbols (eg. \<) should be automatically encoded as &lt;.
+Escaped 'greater than' symbols (eg. \>) should be automatically encoded as &gt;.
 */

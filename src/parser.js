@@ -106,8 +106,9 @@ function parseDescriptionMarkdown(markdown, doc) {
 	// @see http://stackoverflow.com/questions/17319940/how-to-escape-a-pipe-char-in-a-code-statement-in-a-markdown-table/17320389#17320389
 	description = description.replace(/\\\|/g, '&#124;');
 
-	// Replaces escaped '\<' with 'lt;'
+	// Replaces escaped '\<' and '\>' with 'lt;' and 'gt;'
 	description = description.replace(/\\</g, '&lt;');
+	description = description.replace(/\\>/g, '&gt;');
 
 	// Extracts blocks from description
 	var blocks = description.match(/```(.*\n)+?```/g);
