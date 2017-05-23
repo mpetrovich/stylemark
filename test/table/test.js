@@ -26,7 +26,7 @@ describe('Parser.parse()', function() {
 
 Col A | Col B | Col C | Col D
 --- | --- | --- | ---
-Some text | **some bold** | \`some code\` | <code>{{ some code &#124; filter }}</code>
+Some text | **some bold** | \`some code\` | <code>{{ some code \\| filter }}</code>
 
 Escaped 'less than' symbols (eg. &lt;) should be automatically encoded as &lt;.
 Escaped 'greater than' symbols (eg. &gt;) should be automatically encoded as &gt;.`
