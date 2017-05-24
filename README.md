@@ -69,11 +69,11 @@ For more details and examples, see the full [Stylemark spec](doc/spec.md).
 
 Installation
 ------------
-Available on [npm](https://www.npmjs.com/package/styleguidedoc):
+Available on [npm](https://www.npmjs.com/package/stylemark):
 ```sh
-npm install styleguidedoc
+npm install stylemark
 # or
-yarn add styleguidedoc
+yarn add stylemark
 ```
 
 
@@ -81,7 +81,7 @@ yarn add styleguidedoc
 Usage
 -----
 ```js
-docs = styleguidedoc.parse(content, syntax)
+docs = stylemark.parse(content, syntax)
 ```
 
 Name | Type | Description
@@ -96,11 +96,11 @@ _Extracts components from a CSS file._
 
 ```js
 var fs = require('fs');
-var styleguidedoc = require('styleguidedoc');
+var stylemark = require('stylemark');
 
 var content = fs.readFileSync('button.css', 'utf8');
 var syntax = 'md';
-var docs = styleguidedoc.parse(content, syntax);
+var docs = stylemark.parse(content, syntax);
 
 console.log(JSON.stringify(docs));
 ```
