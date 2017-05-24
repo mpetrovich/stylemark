@@ -1,3 +1,5 @@
+'use strict';
+
 var rfr = require('rfr');
 var _ = require('lodash');
 var Component = rfr('src/component');
