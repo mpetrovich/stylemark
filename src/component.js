@@ -16,7 +16,7 @@ class Component {
 			var mergedComponent = new Component();
 
 			_.forEach(componentsToMerge, function(component) {
-				mergedComponent.import(component);
+				component.importInto(mergedComponent);
 			});
 
 			return mergedComponent;
@@ -142,27 +142,41 @@ class Component {
 	}
 
 	/**
-	 * @param {Component} component
+	 * Adds data from this component into a given one.
+	 *
+	 * If set on this component, these fields will be overwritten in the given component:
+	 * - name
+	 * - category
+	 * - source
+	 * - filepath
+	 *
+	 * These fields will be merged with those in the given component:
+	 * - description
+	 * - examples
+	 * - meta
+	 *
+	 * @param {Component} to
 	 */
-	import(component) {
-		var self = this;
+	importInto(to) {
+		var from = this;
 
-		this.name = component.name;
-		this.category = component.category || this.category;
-		this.source = component.source || this.source;
-		this.filepath = component.filepath || this.filepath;
+		to.name = from.name;
+		to.category = from.category || to.category;
+		to.source = from.source || to.source;
+		to.filepath = from.filepath || to.filepath;
 
-		if (component.description) {
-			var description = this.description ? this.description + '\n' : '';
-			this.description = description + component.description;
+		if (from.description) {
+			let description = to.description ? to.description + '\n' : '';
+			to.description = description + from.description;
 		}
 
-		_.each(component.getExamples(), function(example, name) {
-			self.addExample(name, example.codeBlocks, example.options);
+		_.each(from.getExamples(), (example, name) => {
+			to.addExample(name, example.codeBlocks, example.options);
 		});
-		_.each(component.getMeta(), function(meta, key) {
-			_.each(meta, function(value) {
-				self.addMeta(key, value);
+
+		_.each(from.getMeta(), (meta, key) => {
+			_.each(meta, (value) => {
+				to.addMeta(key, value);
 			});
 		});
 	}
