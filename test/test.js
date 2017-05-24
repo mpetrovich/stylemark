@@ -40,6 +40,7 @@ describe('A processed source code file', () => {
 			tags: ['element', 'interactive', 'form'],
 			version: ['1.0.3'],
 			todos: ['fix padding', 'improve colors'],
+			author: ['mpetrovich'],
 		}));
 		it('should have the correct doc description', () => expect(docs[0].getDescription()).to.equal(
 			fs.readFileSync('test/expected.md', 'utf8')

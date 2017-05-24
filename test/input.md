@@ -83,3 +83,12 @@ foo | an escaped pipe \| lives here | bar
 what | `{{ 'foo' \| bar }}` | who
 
 < and > can also be escaped to prevent them from being treated as HTML tags: \<foo\>
+
+
+Disabled state
+--------------
+Buttons can be disabled too.
+
+```disabled.html
+<button class="btn btn-primary" disabled>Disabled button</button>
+```

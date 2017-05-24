@@ -158,7 +158,7 @@ Doc.prototype.import = function(doc) {
 	this.filepath = doc.filepath || this.filepath;
 
 	if (doc.description) {
-		var description = this.description ? this.description + '\n\n' : '';
+		var description = this.description ? this.description + '\n' : '';
 		this.description = description + doc.description;
 	}
 

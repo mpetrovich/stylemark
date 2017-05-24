@@ -16,16 +16,15 @@ function Parser() {}
  * Parses docs from source content.
  *
  * @param {String} source
- * @param {String} [syntax]
+ * @param {String} [extension]
  * @return {Array.<Doc>}
  */
-Parser.prototype.parse = function(content, syntax) {
-	var commentBlocks = getCommentBlocks(content, syntax);
-	var docs = _.map(commentBlocks, function(commentBlock) {
-		return parseMarkdown(commentBlock);
-	});
-	docs = _.flatten(docs);
-	docs = Doc.merge(docs);
+Parser.prototype.parse = function(content, extension) {
+	var docs = _(getDocBlocks(content, extension))
+		.map(parseDocBlock)
+		.flatten()
+		.thru(Doc.merge)
+		.value();
 
 	return docs;
 };
@@ -34,35 +33,35 @@ Parser.prototype.parse = function(content, syntax) {
  * Private
  * --------------------------------------------------------------------- */
 
-function getCommentBlocks(content, syntax) {
-	var commentBlocks;
-
-	if (_.includes(['markdown', 'mdown', 'md'], syntax)) {
-		commentBlocks = [content];
-	}
-	else {
-		commentBlocks = getJsCommentBlocks(content);
-	}
-
-	return commentBlocks;
+function getDocBlocks(fileContent, fileExtension) {
+	return isMarkdown(fileExtension)
+		? getMarkdownDocBlocks(fileContent)
+		: getSourceCodeDocBlocks(fileContent);
 }
 
-function getJsCommentBlocks(content) {
-	var commentBlockRegex = /\/\*([\s\S]+?)\*\//g;
-	var commentBlocks = content.match(commentBlockRegex);
-
-	commentBlocks = _.map(commentBlocks, function(commentBlock) {
-		// Removes comment block start/end dividers such as ***
-		return /\/\*[\s\*]*([\s\S]+?)?[ \t\*]*\*\//g.exec(commentBlock)[1];
-	});
-
-	return commentBlocks;
+function isMarkdown(fileExtension) {
+	return _.includes(['markdown', 'mdown', 'md'], fileExtension);
 }
 
-function parseMarkdown(content) {
+function getMarkdownDocBlocks(fileContent) {
+	return [fileContent];
+}
+
+function getSourceCodeDocBlocks(fileContent) {
+	var docBlocks = fileContent.match(/\/\*([\s\S]+?)\*\//g);
+
+	// Removes extraneous asterisks from the start & end of comment blocks
+	docBlocks = _.map(docBlocks, (docBlock) => /\/\*[\s\*]*([\s\S]+?)?[ \t\*]*\*\//g.exec(docBlock)[1]);
+
+	return docBlocks;
+}
+
+// @todo Refactor below
+
+function parseDocBlock(docBlock) {
 	var docs = [];
 	var doc = new Doc();
-	var parsed = matter(content);
+	var parsed = matter(docBlock);
 	var name;
 
 	if (parsed.data.name) {
@@ -110,7 +109,7 @@ function parseDescriptionMarkdown(markdown, doc) {
 	_.forEach(blocks, function(block) {
 		var matches = block.match(/```\s*([^\.\s]+)\.(\w+)(.*)\n/);
 		var name = matches ? matches[1] : null;
-		var syntax = matches ? matches[2] : null;
+		var extension = matches ? matches[2] : null;
 		var optionsString = matches ? matches[3] : '';
 
 		if (!name) {
@@ -119,7 +118,7 @@ function parseDescriptionMarkdown(markdown, doc) {
 		}
 
 		var code = block
-			.replace(/```.*\n/m, '')  // Removes leading ```[syntax]
+			.replace(/```.*\n/m, '')  // Removes leading ```[extension]
 			.replace(/\n```.*/m, '');  // Removes trailing ```
 
 		var options = _(optionsString)
@@ -133,7 +132,7 @@ function parseDescriptionMarkdown(markdown, doc) {
 			.value();
 
 		var codeBlock = {
-			syntax: syntax,
+			extension: extension,
 			code: code,
 			hidden: _.has(options, 'hidden'),
 		};

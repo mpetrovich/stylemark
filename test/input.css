@@ -117,3 +117,18 @@ This is a clickable link.
 .text-link {
 	text-decoration: underline;
 }
+
+/*
+---
+name: Button
+author: mpetrovich
+---
+
+Disabled state
+--------------
+Buttons can be disabled too.
+
+```disabled.html
+<button class="btn btn-primary" disabled>Disabled button</button>
+```
+ */
