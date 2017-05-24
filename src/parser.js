@@ -37,7 +37,7 @@ Parser.prototype.parse = function(content, syntax) {
 function getCommentBlocks(content, syntax) {
 	var commentBlocks;
 
-	if (syntax === 'markdown') {
+	if (_.includes(['markdown', 'mdown', 'md'], syntax)) {
 		commentBlocks = [content];
 	}
 	else {
@@ -53,7 +53,7 @@ function getJsCommentBlocks(content) {
 
 	commentBlocks = _.map(commentBlocks, function(commentBlock) {
 		// Removes comment block start/end dividers such as ***
-		return /\/\*[\s\*]*([\s\S]+?)\n?[\s\*]*\*\//g.exec(commentBlock)[1];
+		return /\/\*[\s\*]*([\s\S]+?)?[ \t\*]*\*\//g.exec(commentBlock)[1];
 	});
 
 	return commentBlocks;
