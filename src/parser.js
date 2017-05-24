@@ -1,6 +1,6 @@
 var rfr = require('rfr');
 var _ = require('lodash');
-var Doc = rfr('src/doc');
+var Component = rfr('src/component');
 var matter = require('gray-matter');
 
 /**
@@ -17,13 +17,13 @@ function Parser() {}
  *
  * @param {String} source
  * @param {String} [extension]
- * @return {Array.<Doc>}
+ * @return {Array.<Component>}
  */
 Parser.prototype.parse = function(content, extension) {
 	var docs = _(getDocBlocks(content, extension))
 		.map(parseDocBlock)
 		.flatten()
-		.thru(Doc.merge)
+		.thru(Component.merge)
 		.value();
 
 	return docs;
@@ -60,7 +60,7 @@ function getSourceCodeDocBlocks(fileContent) {
 
 function parseDocBlock(docBlock) {
 	var docs = [];
-	var doc = new Doc();
+	var doc = new Component();
 	var parsed = matter(docBlock);
 	var name;
 

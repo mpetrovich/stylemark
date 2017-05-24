@@ -3,7 +3,7 @@ var _ = require('lodash');
 /**
  * @constructs
  */
-function Doc() {}
+function Component() {}
 
 /* ---------------------------------------------------------------------
  * Public
@@ -14,11 +14,11 @@ function Doc() {}
  * @param {Array} docs
  * @return {Array}
  */
-Doc.merge = function(docs) {
+Component.merge = function(docs) {
 	var docsGroupedByName = _.groupBy(docs, 'name');
 
 	var docsMerged = _.map(docsGroupedByName, function(docsToMerge) {
-		var docMerged = new Doc();
+		var docMerged = new Component();
 
 		_.forEach(docsToMerge, function(doc) {
 			docMerged.import(doc);
@@ -33,49 +33,49 @@ Doc.merge = function(docs) {
 /**
  * @return {String}
  */
-Doc.prototype.getName = function() {
+Component.prototype.getName = function() {
 	return this.name;
 };
 
 /**
  * @param {String} name
  */
-Doc.prototype.setName = function(name) {
+Component.prototype.setName = function(name) {
 	this.name = name;
 };
 
 /**
  * @return {String}
  */
-Doc.prototype.getCategory = function() {
+Component.prototype.getCategory = function() {
 	return this.category;
 };
 
 /**
  * @param {String} category
  */
-Doc.prototype.setCategory = function(category) {
+Component.prototype.setCategory = function(category) {
 	this.category = category;
 };
 
 /**
  * @return {String}
  */
-Doc.prototype.getDescription = function() {
+Component.prototype.getDescription = function() {
 	return this.description;
 };
 
 /**
  * @param {String} description
  */
-Doc.prototype.setDescription = function(description) {
+Component.prototype.setDescription = function(description) {
 	this.description = description;
 };
 
 /**
  * @return {Object}
  */
-Doc.prototype.getExamples = function() {
+Component.prototype.getExamples = function() {
 	return this.examples || {};
 };
 
@@ -88,7 +88,7 @@ Doc.prototype.getExamples = function() {
  * @param {Object} [options]
  * @param {Number} [options.height]
  */
-Doc.prototype.addExample = function(name, codeBlocks, options) {
+Component.prototype.addExample = function(name, codeBlocks, options) {
 	this.examples = this.examples || {};
 	this.examples[name] = {
 		codeBlocks: codeBlocks,
@@ -99,7 +99,7 @@ Doc.prototype.addExample = function(name, codeBlocks, options) {
 /**
  * @return {Object} Set of key-value pairs
  */
-Doc.prototype.getMeta = function() {
+Component.prototype.getMeta = function() {
 	return this.meta || {};
 };
 
@@ -107,7 +107,7 @@ Doc.prototype.getMeta = function() {
  * @param {String} key
  * @param {*} value
  */
-Doc.prototype.addMeta = function(key, value) {
+Component.prototype.addMeta = function(key, value) {
 	this.meta = this.meta || {};
 
 	if (this.meta[key]) {
@@ -121,35 +121,35 @@ Doc.prototype.addMeta = function(key, value) {
 /**
  * @return {String}
  */
-Doc.prototype.getSource = function() {
+Component.prototype.getSource = function() {
 	return this.source;
 };
 
 /**
  * @param {String} source
  */
-Doc.prototype.setSource = function(source) {
+Component.prototype.setSource = function(source) {
 	this.source = source;
 };
 
 /**
  * @return {String}
  */
-Doc.prototype.getFilepath = function() {
+Component.prototype.getFilepath = function() {
 	return this.filepath;
 };
 
 /**
  * @param {String} filepath
  */
-Doc.prototype.setFilepath = function(filepath) {
+Component.prototype.setFilepath = function(filepath) {
 	this.filepath = filepath;
 };
 
 /**
- * @param {Doc} doc
+ * @param {Component} doc
  */
-Doc.prototype.import = function(doc) {
+Component.prototype.import = function(doc) {
 	var self = this;
 
 	this.name = doc.name;
@@ -172,4 +172,4 @@ Doc.prototype.import = function(doc) {
 	});
 };
 
-module.exports = Doc;
+module.exports = Component;
