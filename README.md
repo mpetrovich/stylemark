@@ -113,10 +113,10 @@ Outputs:
     "description": "Buttons can be used with `<a>`, `<button>`, and `<input>` elements.\n\nTypes of buttons:\n- Default: Standard button\n- Primary: Provides extra visual weight and identifies the primary action in a set of buttons\n- Success: Indicates a successful or positive action\n\n<example name=\"types\"></example>\n```html\n<button class=\"btn btn-default\">Default</button>\n<button class=\"btn btn-primary\">Primary</button>\n<button class=\"btn btn-success\">Success</button>\n```",
     "examples": {
       "types": {
-        "codeBlocks": [
+        "blocks": [
           {
             "syntax": "html",
-            "code": "<button class=\"btn btn-default\">Default</button>\n<button class=\"btn btn-primary\">Primary</button>\n<button class=\"btn btn-success\">Success</button>",
+            "content": "<button class=\"btn btn-default\">Default</button>\n<button class=\"btn btn-primary\">Primary</button>\n<button class=\"btn btn-success\">Success</button>",
             "hidden": false
           }
         ],

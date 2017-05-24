@@ -5,35 +5,25 @@ var _ = require('lodash');
 var Component = rfr('src/component');
 var matter = require('gray-matter');
 
-/**
- * @constructs
- */
-function Parser() {}
+class Parser {
 
-/* ---------------------------------------------------------------------
- * Public
- * --------------------------------------------------------------------- */
+	/**
+	 * Parses components from source content.
+	 *
+	 * @param {String} source
+	 * @param {String} [extension]
+	 * @return {Array.<Component>}
+	 */
+	parse(content, extension) {
+		var components = _(getDocBlocks(content, extension))
+			.map(parseDocBlock)
+			.filter()
+			.thru(Component.merge)
+			.value();
 
-/**
- * Parses components from source content.
- *
- * @param {String} source
- * @param {String} [extension]
- * @return {Array.<Component>}
- */
-Parser.prototype.parse = function(content, extension) {
-	var components = _(getDocBlocks(content, extension))
-		.map(parseDocBlock)
-		.flatten()
-		.thru(Component.merge)
-		.value();
-
-	return components;
-};
-
-/* ---------------------------------------------------------------------
- * Private
- * --------------------------------------------------------------------- */
+		return components;
+	}
+}
 
 function getDocBlocks(fileContent, fileExtension) {
 	return isMarkdown(fileExtension)
@@ -61,41 +51,34 @@ function getSourceCodeDocBlocks(fileContent) {
 // @todo Refactor below
 
 function parseDocBlock(docBlock) {
-	var components = [];
+	var markdown = matter(docBlock);
+
+	if (!markdown.data.name) {
+		// A component must have a name
+		return null;
+	}
+
 	var component = new Component();
-	var parsed = matter(docBlock);
-	var name;
+	component.setName(markdown.data.name);
+	component.setCategory(markdown.data.category);
 
-	if (parsed.data.name) {
-		name = parsed.data.name;
-	}
-	else {
-		// No name available or inferrable, so bailing
-		return components;
-	}
+	var metadata = _.omit(markdown.data, ['name', 'category']);
 
-	component.setName(name);
-	component.setCategory(parsed.data.category);
-
-	var metas = _.omit(parsed.data, ['name', 'category'])
-
-	_.forEach(metas, function(meta, key) {
-		if (_.isArray(meta)) {
-			_.forEach(meta, function(value) {
-				component.addMeta(key, value);
-			});
+	_.forEach(metadata, (value, key) => {
+		if (_.isArray(value)) {
+			// List
+			_.forEach(value, (item) => component.addMeta(key, item));
 		}
 		else {
-			component.addMeta(key, meta);
+			// Single
+			component.addMeta(key, value);
 		}
 	});
 
-	var description = parseDescriptionMarkdown(parsed.content, component);
+	var description = parseDescriptionMarkdown(markdown.content, component);
 	component.setDescription(description);
 
-	components = [component];
-
-	return components;
+	return component;
 }
 
 function parseDescriptionMarkdown(markdown, component) {
@@ -104,7 +87,7 @@ function parseDescriptionMarkdown(markdown, component) {
 	// Extracts blocks from description
 	var blocks = description.match(/```(.*\n)+?```/g);
 
-	var codeBlocksByExample = {};
+	var blocksByExample = {};
 	var optionsByExample = {};
 
 	// Extracts examples from description blocks
@@ -119,7 +102,7 @@ function parseDescriptionMarkdown(markdown, component) {
 			return;
 		}
 
-		var code = block
+		var content = block
 			.replace(/```.*\n/m, '')  // Removes leading ```[extension]
 			.replace(/\n```.*/m, '');  // Removes trailing ```
 
@@ -133,18 +116,18 @@ function parseDescriptionMarkdown(markdown, component) {
 			}, {})
 			.value();
 
-		var codeBlock = {
+		var block = {
 			extension: extension,
-			code: code,
+			content: content,
 			hidden: _.has(options, 'hidden'),
 		};
 
 		if (options.height) {
-			codeBlock.height = options.height;
+			block.height = options.height;
 		}
 
-		codeBlocksByExample[name] = codeBlocksByExample[name] || [];
-		codeBlocksByExample[name].push(codeBlock);
+		blocksByExample[name] = blocksByExample[name] || [];
+		blocksByExample[name].push(block);
 		optionsByExample[name] = optionsByExample[name] || {};
 
 		var height = optionsByExample[name].height || options.height;
@@ -153,9 +136,9 @@ function parseDescriptionMarkdown(markdown, component) {
 		}
 	});
 
-	_.forEach(codeBlocksByExample, function(codeBlocks, exampleName) {
+	_.forEach(blocksByExample, function(blocks, exampleName) {
 		var options = optionsByExample[exampleName];
-		component.addExample(exampleName, codeBlocks, options);
+		component.addExample(exampleName, blocks, options);
 	});
 
 	var hasExample = {};

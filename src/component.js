@@ -76,17 +76,17 @@ class Component {
 
 	/**
 	 * @param {String} name
-	 * @param {Array.<Object>} codeBlocks
-	 * @param {String} codeBlocks[name].syntax
-	 * @param {String} codeBlocks[name].code
-	 * @param {Boolean} [codeBlocks[name].hidden]
+	 * @param {Array.<Object>} blocks
+	 * @param {String} blocks[name].syntax
+	 * @param {String} blocks[name].content
+	 * @param {Boolean} [blocks[name].hidden]
 	 * @param {Object} [options]
 	 * @param {Number} [options.height]
 	 */
-	addExample(name, codeBlocks, options) {
+	addExample(name, blocks, options) {
 		this.examples = this.examples || {};
 		this.examples[name] = {
-			codeBlocks: codeBlocks,
+			blocks: blocks,
 			options: options || {},
 		};
 	}
@@ -106,10 +106,14 @@ class Component {
 		this.meta = this.meta || {};
 
 		if (this.meta[key]) {
-			this.meta[key].push(value);
+			// List
+			this.meta[key] = _.isArray(this.meta[key]) ? this.meta[key] : [this.meta[key]];
+			value = _.isArray(value) ? value : [value];
+			this.meta[key] = this.meta[key].concat(value);
 		}
 		else {
-			this.meta[key] = [value];
+			// Single
+			this.meta[key] = value;
 		}
 	}
 
@@ -171,13 +175,20 @@ class Component {
 		}
 
 		_.each(from.getExamples(), (example, name) => {
-			to.addExample(name, example.codeBlocks, example.options);
+			to.addExample(name, example.blocks, example.options);
 		});
 
-		_.each(from.getMeta(), (meta, key) => {
-			_.each(meta, (value) => {
+		_.each(from.getMeta(), (value, key) => {
+			if (_.isArray(value)) {
+				// List
+				_.each(value, (item) => {
+					to.addMeta(key, item);
+				});
+			}
+			else {
+				// Single
 				to.addMeta(key, value);
-			});
+			}
 		});
 	}
 }
