@@ -6,23 +6,23 @@ class Component {
 
 	/**
 	 * @static
-	 * @param {Array} docs
+	 * @param {Array} components
 	 * @return {Array}
 	 */
-	static merge(docs) {
-		var docsGroupedByName = _.groupBy(docs, 'name');
+	static merge(components) {
+		var componentsGroupedByName = _.groupBy(components, 'name');
 
-		var docsMerged = _.map(docsGroupedByName, function(docsToMerge) {
-			var docMerged = new Component();
+		var mergedComponents = _.map(componentsGroupedByName, function(componentsToMerge) {
+			var mergedComponent = new Component();
 
-			_.forEach(docsToMerge, function(doc) {
-				docMerged.import(doc);
+			_.forEach(componentsToMerge, function(component) {
+				mergedComponent.import(component);
 			});
 
-			return docMerged;
+			return mergedComponent;
 		});
 
-		return docsMerged;
+		return mergedComponents;
 	}
 
 	/**
@@ -142,25 +142,25 @@ class Component {
 	}
 
 	/**
-	 * @param {Component} doc
+	 * @param {Component} component
 	 */
-	import(doc) {
+	import(component) {
 		var self = this;
 
-		this.name = doc.name;
-		this.category = doc.category || this.category;
-		this.source = doc.source || this.source;
-		this.filepath = doc.filepath || this.filepath;
+		this.name = component.name;
+		this.category = component.category || this.category;
+		this.source = component.source || this.source;
+		this.filepath = component.filepath || this.filepath;
 
-		if (doc.description) {
+		if (component.description) {
 			var description = this.description ? this.description + '\n' : '';
-			this.description = description + doc.description;
+			this.description = description + component.description;
 		}
 
-		_.each(doc.getExamples(), function(example, name) {
+		_.each(component.getExamples(), function(example, name) {
 			self.addExample(name, example.codeBlocks, example.options);
 		});
-		_.each(doc.getMeta(), function(meta, key) {
+		_.each(component.getMeta(), function(meta, key) {
 			_.each(meta, function(value) {
 				self.addMeta(key, value);
 			});

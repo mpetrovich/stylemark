@@ -15,20 +15,20 @@ function Parser() {}
  * --------------------------------------------------------------------- */
 
 /**
- * Parses docs from source content.
+ * Parses components from source content.
  *
  * @param {String} source
  * @param {String} [extension]
  * @return {Array.<Component>}
  */
 Parser.prototype.parse = function(content, extension) {
-	var docs = _(getDocBlocks(content, extension))
+	var components = _(getDocBlocks(content, extension))
 		.map(parseDocBlock)
 		.flatten()
 		.thru(Component.merge)
 		.value();
 
-	return docs;
+	return components;
 };
 
 /* ---------------------------------------------------------------------
@@ -61,8 +61,8 @@ function getSourceCodeDocBlocks(fileContent) {
 // @todo Refactor below
 
 function parseDocBlock(docBlock) {
-	var docs = [];
-	var doc = new Component();
+	var components = [];
+	var component = new Component();
 	var parsed = matter(docBlock);
 	var name;
 
@@ -71,34 +71,34 @@ function parseDocBlock(docBlock) {
 	}
 	else {
 		// No name available or inferrable, so bailing
-		return docs;
+		return components;
 	}
 
-	doc.setName(name);
-	doc.setCategory(parsed.data.category);
+	component.setName(name);
+	component.setCategory(parsed.data.category);
 
 	var metas = _.omit(parsed.data, ['name', 'category'])
 
 	_.forEach(metas, function(meta, key) {
 		if (_.isArray(meta)) {
 			_.forEach(meta, function(value) {
-				doc.addMeta(key, value);
+				component.addMeta(key, value);
 			});
 		}
 		else {
-			doc.addMeta(key, meta);
+			component.addMeta(key, meta);
 		}
 	});
 
-	var description = parseDescriptionMarkdown(parsed.content, doc);
-	doc.setDescription(description);
+	var description = parseDescriptionMarkdown(parsed.content, component);
+	component.setDescription(description);
 
-	docs = [doc];
+	components = [component];
 
-	return docs;
+	return components;
 }
 
-function parseDescriptionMarkdown(markdown, doc) {
+function parseDescriptionMarkdown(markdown, component) {
 	var description = markdown;
 
 	// Extracts blocks from description
@@ -155,13 +155,13 @@ function parseDescriptionMarkdown(markdown, doc) {
 
 	_.forEach(codeBlocksByExample, function(codeBlocks, exampleName) {
 		var options = optionsByExample[exampleName];
-		doc.addExample(exampleName, codeBlocks, options);
+		component.addExample(exampleName, codeBlocks, options);
 	});
 
 	var hasExample = {};
 
 	// Adds <example> tags for renderable HTML examples
-	_.forEach(doc.getExamples(), function(example, name) {
+	_.forEach(component.getExamples(), function(example, name) {
 		var exampleHtml = example.options.height
 			? '<example name="' + name + '" height="' + example.options.height + '"></example>\n'
 			: '<example name="' + name + '"></example>\n';
