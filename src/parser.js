@@ -100,12 +100,6 @@ function parseMarkdown(content) {
 function parseDescriptionMarkdown(markdown, doc) {
 	var description = markdown;
 
-	description = description.trim();
-
-	// Replaces escaped '\<' and '\>' with 'lt;' and 'gt;'
-	description = description.replace(/\\</g, '&lt;');
-	description = description.replace(/\\>/g, '&gt;');
-
 	// Extracts blocks from description
 	var blocks = description.match(/```(.*\n)+?```/g);
 

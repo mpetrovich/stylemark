@@ -1,0 +1,67 @@
+
+A button can be used with `<button>`, `<a>`, and `<input>` elements.
+
+
+Types
+-----
+Buttons can have several types:
+
+class | description
+--- | ---
+`btn-default` | Standard button
+`btn-primary` | Primary call-to-action
+`btn-success` | Indicates a successful or positive action
+
+<example name="types"></example>
+```html
+<button class="btn btn-default">Default</button>
+<button class="btn btn-primary">Primary</button>
+<button class="btn btn-success">Success</button>
+```
+
+
+Sizes
+-----
+Buttons have different sizes available:
+- `btn-sm`
+- `btn-lg`
+
+<example name="sizes"></example>
+
+
+Frameworks
+----------
+Buttons can be used with Handlebars, React/JSX, and AngularJS.
+
+In Handlebars:
+<example name="handlebars-button"></example>
+```handlebars
+{{#bs-button}}Button{{/bs-button}}
+```
+
+In React/JSX:
+<example name="react-button"></example>
+```jsx
+<Button>Button</Button>
+```
+
+In AngularJS:
+<example name="angular-button"></example>
+```html
+<button class="btn btn-default">{{ text }}</button>
+```
+```angularjs
+text = 'Button'
+```
+
+
+Edge cases
+----------
+Pipes (`|`) can be escaped in tables:
+
+One | Two | Three
+--- | --- | ---
+foo | an escaped pipe \| lives here | bar
+what | `{{ 'foo' \| bar }}` | who
+
+< and > can also be escaped to prevent them from being treated as HTML tags: \<foo\>
