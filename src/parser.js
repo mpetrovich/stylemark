@@ -118,7 +118,6 @@ function parseDescriptionMarkdown(markdown, doc) {
 		var name = matches ? matches[1] : null;
 		var syntax = matches ? matches[2] : null;
 		var optionsString = matches ? matches[3] : '';
-		console.log(matches);
 
 		if (!name) {
 			// Unnamed examples are not renderable
