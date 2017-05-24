@@ -1,8 +1,9 @@
 {
-  "name": "livingstyleguides",
-  "version": "0.0.1",
-  "description": "Documentation extractor for living style guides",
+  "name": "styleguidedoc",
+  "version": "0.0.0",
+  "description": "Tools for documenting living style guides",
   "keywords": [
+    "style guide doc",
     "livingstyleguide",
     "living style guide",
     "style guide",
@@ -13,10 +14,10 @@
   "scripts": {
     "test": "./node_modules/.bin/gulp test"
   },
-  "homepage": "https://github.com/Instadoc/livingstyleguides",
-  "repository": "https://github.com/Instadoc/livingstyleguides.git",
+  "homepage": "https://github.com/Instadoc/StyleGuideDoc",
+  "repository": "https://github.com/Instadoc/StyleGuideDoc.git",
   "bugs": {
-    "url": "https://github.com/Instadoc/livingstyleguides/issues"
+    "url": "https://github.com/Instadoc/StyleGuideDoc/issues"
   },
   "author": "Mike Petrovich <michael.c.petrovich@gmail.com>",
   "license": "MIT",
