@@ -6,8 +6,9 @@ StyleGuideDoc is a standard for documenting [living style guides](https://www.go
 
 Syntax
 ------
-Documenting style guide components is as easy as writing Markdown. Components can be documented in dedicated Markdown files:
+Documenting style guide components is as easy as writing Markdown. Components can be documented in dedicated Markdown files or as comment blocks within any source code.
 
+#### As a dedicated Markdown file
 ~~~markdown
 ---
 name: Button
@@ -28,8 +29,7 @@ Types of buttons:
 ```
 ~~~
 
-…or as comment blocks within any source code:
-
+#### As a comment block within source code
 ~~~css
 /*
 ---
