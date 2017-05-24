@@ -1,7 +1,7 @@
 {
-  "name": "styleguidedoc",
-  "version": "0.0.5",
-  "description": "Tools for documenting living style guides",
+  "name": "stylemark",
+  "version": "0.0.1",
+  "description": "A standard for documenting living style guides",
   "keywords": [
     "style guide doc",
     "livingstyleguide",
@@ -14,10 +14,10 @@
   "scripts": {
     "test": "./node_modules/.bin/gulp test"
   },
-  "homepage": "https://github.com/Instadoc/StyleGuideDoc",
-  "repository": "https://github.com/Instadoc/StyleGuideDoc.git",
+  "homepage": "https://github.com/LivingStyleGuides/stylemark",
+  "repository": "https://github.com/LivingStyleGuides/stylemark.git",
   "bugs": {
-    "url": "https://github.com/Instadoc/StyleGuideDoc/issues"
+    "url": "https://github.com/LivingStyleGuides/stylemark/issues"
   },
   "author": "Mike Petrovich <michael.c.petrovich@gmail.com>",
   "license": "MIT",

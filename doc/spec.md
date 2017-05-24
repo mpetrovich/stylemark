@@ -1,6 +1,6 @@
-StyleGuideDoc Spec
-==================
-StyleGuideDoc is an extension of [GitHub-flavored Markdown](https://guides.github.com/features/mastering-markdown/) with executable code blocks.
+Stylemark Spec
+==============
+Stylemark is an extension of [GitHub-flavored Markdown](https://guides.github.com/features/mastering-markdown/) with executable code blocks.
 
 
 

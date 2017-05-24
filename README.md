@@ -1,6 +1,6 @@
-StyleGuideDoc &nbsp; [![Build Status](https://travis-ci.org/LivingStyleGuides/StyleGuideDoc.svg?branch=master)](https://travis-ci.org/LivingStyleGuides/StyleGuideDoc)
-=============
-StyleGuideDoc is a standard for documenting [living style guides](https://www.google.com/search?q=what+is+a+living+style+guide) like [these](http://styleguides.io/examples.html).
+Stylemark &nbsp; [![Build Status](https://travis-ci.org/LivingStyleGuides/Stylemark.svg?branch=master)](https://travis-ci.org/LivingStyleGuides/Stylemark)
+=========
+Stylemark is a standard for documenting [living style guides](https://www.google.com/search?q=what+is+a+living+style+guide) like [these](http://styleguides.io/examples.html).
 
 
 
@@ -63,7 +63,7 @@ Types of buttons:
 
 In both cases, the output will be the same.
 
-For more details and examples, see the full [StyleGuideDoc spec](doc/spec.md).
+For more details and examples, see the full [Stylemark spec](doc/spec.md).
 
 
 
