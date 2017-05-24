@@ -12,12 +12,10 @@ class Component {
 	static merge(components) {
 		var componentsGroupedByName = _.groupBy(components, 'name');
 
-		var mergedComponents = _.map(componentsGroupedByName, function(componentsToMerge) {
+		var mergedComponents = _.map(componentsGroupedByName, (componentsToMerge) => {
 			var mergedComponent = new Component();
 
-			_.forEach(componentsToMerge, function(component) {
-				component.importInto(mergedComponent);
-			});
+			_.forEach(componentsToMerge, (component) => component.importInto(mergedComponent));
 
 			return mergedComponent;
 		});

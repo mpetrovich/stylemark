@@ -3,56 +3,245 @@ var path = require('path');
 var expect = require('chai').expect;
 var Parser = rfr('src/parser');
 var fs = require('fs');
+var _ = require('lodash');
 
 describe('A processed Markdown file', () => {
 	var filepath = 'test/input.md';
 	var content = fs.readFileSync(filepath, 'utf8');
 	var parser = new Parser();
-	var syntax = path.extname(filepath).substr(1);
-	var docs = parser.parse(content, syntax);
+	var language = path.extname(filepath).substr(1);
+	var components = parser.parse(content, language);
+	var component = components[0];
 
-	it('should have the correct number of docs', () => expect(docs.length).to.equal(1));
-	it('should have the correct doc name', () => expect(docs[0].getName()).to.equal('Button'));
-	it('should have the correct doc category', () => expect(docs[0].getCategory()).to.equal('Components'));
-	it('should have the correct doc meta', () => expect(docs[0].getMeta()).to.deep.equal({
+	it('should have a single component', () => expect(components.length).to.equal(1));
+	it('should have the correct component name', () => expect(component.getName()).to.equal('Button'));
+	it('should have the correct component category', () => expect(component.getCategory()).to.equal('Components'));
+	it('should have the correct component meta', () => expect(component.getMeta()).to.deep.equal({
 		tags: ['element', 'interactive', 'form'],
 		version: '1.0.3',
 		todos: ['fix padding', 'improve colors'],
 	}));
-	it('should have the correct doc description', () => expect(docs[0].getDescription()).to.equal(
+	it('should have the correct component description', () => expect(component.getDescription()).to.equal(
 		fs.readFileSync('test/expected.md', 'utf8')
 	));
+	it('should have the correct number of examples', () => expect(_.size(component.getExamples())).to.equal(6));
+
+	it('should have the correct 1st example', () => expect(component.getExamples().types).to.deep.equal({
+		blocks: [
+			{
+				language: 'html',
+				hidden: false,
+				content: `<button class="btn btn-default">Default</button>
+<button class="btn btn-primary">Primary</button>
+<button class="btn btn-success">Success</button>`
+			},
+			{
+				language: 'css',
+				hidden: true,
+				content: `button { margin: 5px; }`
+			},
+			{
+				language: 'js',
+				hidden: true,
+				content: `$('button').click(function() { alert('Button clicked!'); });`
+			},
+		],
+		options: {},
+	}));
+
+	it('should have the correct 2nd example', () => expect(component.getExamples().sizes).to.deep.equal({
+		blocks: [
+			{
+				language: 'html',
+				hidden: true,
+				content: `<button class="btn btn-default btn-sm">Small</button>
+<button class="btn btn-default">Default</button>
+<button class="btn btn-default btn-lg">Large</button>`
+			},
+		],
+		options: {
+			height: '100',
+		},
+	}));
+
+	it('should have the correct 3rd example', () => expect(component.getExamples()['handlebars-button']).to.deep.equal({
+		blocks: [
+			{
+				language: 'handlebars',
+				hidden: false,
+				content: `{{#bs-button}}Button{{/bs-button}}`
+			},
+		],
+		options: {},
+	}));
+
+	it('should have the correct 4rd example', () => expect(component.getExamples()['react-button']).to.deep.equal({
+		blocks: [
+			{
+				language: 'jsx',
+				hidden: false,
+				content: `<Button>Button</Button>`
+			},
+		],
+		options: {},
+	}));
+
+	it('should have the correct 5rd example', () => expect(component.getExamples()['angular-button']).to.deep.equal({
+		blocks: [
+			{
+				language: 'html',
+				hidden: false,
+				content: `<button class="btn btn-default">{{ text }}</button>`
+			},
+			{
+				language: 'angularjs',
+				hidden: false,
+				content: `text = 'Button'`
+			},
+		],
+		options: {},
+	}));
+
+	it('should have the correct 6rd example', () => expect(component.getExamples()['disabled']).to.deep.equal({
+		blocks: [
+			{
+				language: 'html',
+				hidden: false,
+				content: `<button class="btn btn-primary" disabled>Disabled button</button>`
+			},
+		],
+		options: {},
+	}));
 });
 
 describe('A processed source code file', () => {
 	var filepath = 'test/input.css';
 	var content = fs.readFileSync(filepath, 'utf8');
 	var parser = new Parser();
-	var syntax = path.extname(filepath).substr(1);
-	var docs = parser.parse(content, syntax);
+	var language = path.extname(filepath).substr(1);
+	var components = parser.parse(content, language);
 
-	it('should have the correct number of docs', () => expect(docs.length).to.equal(2));
+	it('should have the correct number of components', () => expect(components.length).to.equal(2));
 
-	describe('First doc', () => {
-		it('should have the correct doc name', () => expect(docs[0].getName()).to.equal('Button'));
-		it('should have the correct doc category', () => expect(docs[0].getCategory()).to.equal('Components'));
-		it('should have the correct doc meta', () => expect(docs[0].getMeta()).to.deep.equal({
+	describe('first component', () => {
+		it('should have the correct component name', () => expect(components[0].getName()).to.equal('Button'));
+		it('should have the correct component category', () => expect(components[0].getCategory()).to.equal('Components'));
+		it('should have the correct component meta', () => expect(components[0].getMeta()).to.deep.equal({
 			tags: ['element', 'interactive', 'form'],
 			version: '1.0.3',
 			todos: ['fix padding', 'improve colors'],
 			author: 'mpetrovich',
 		}));
-		it('should have the correct doc description', () => expect(docs[0].getDescription()).to.equal(
+		it('should have the correct component description', () => expect(components[0].getDescription()).to.equal(
 			fs.readFileSync('test/expected.md', 'utf8')
 		));
+		it('should have the correct number of examples', () => expect(_.size(components[0].getExamples())).to.equal(6));
+
+		it('should have the correct 1st example', () => expect(components[0].getExamples().types).to.deep.equal({
+			blocks: [
+				{
+					language: 'html',
+					hidden: false,
+					content: `<button class="btn btn-default">Default</button>
+<button class="btn btn-primary">Primary</button>
+<button class="btn btn-success">Success</button>`
+				},
+				{
+					language: 'css',
+					hidden: true,
+					content: `button { margin: 5px; }`
+				},
+				{
+					language: 'js',
+					hidden: true,
+					content: `$('button').click(function() { alert('Button clicked!'); });`
+				},
+			],
+			options: {},
+		}));
+		it('should have the correct 2nd example', () => expect(components[0].getExamples().sizes).to.deep.equal({
+			blocks: [
+				{
+					language: 'html',
+					hidden: true,
+					content: `<button class="btn btn-default btn-sm">Small</button>
+<button class="btn btn-default">Default</button>
+<button class="btn btn-default btn-lg">Large</button>`
+				},
+			],
+			options: {
+				height: '100',
+			},
+		}));
+
+		it('should have the correct 3rd example', () => expect(components[0].getExamples()['handlebars-button']).to.deep.equal({
+			blocks: [
+				{
+					language: 'handlebars',
+					hidden: false,
+					content: `{{#bs-button}}Button{{/bs-button}}`
+				},
+			],
+			options: {},
+		}));
+
+		it('should have the correct 4rd example', () => expect(components[0].getExamples()['react-button']).to.deep.equal({
+			blocks: [
+				{
+					language: 'jsx',
+					hidden: false,
+					content: `<Button>Button</Button>`
+				},
+			],
+			options: {},
+		}));
+
+		it('should have the correct 5rd example', () => expect(components[0].getExamples()['angular-button']).to.deep.equal({
+			blocks: [
+				{
+					language: 'html',
+					hidden: false,
+					content: `<button class="btn btn-default">{{ text }}</button>`
+				},
+				{
+					language: 'angularjs',
+					hidden: false,
+					content: `text = 'Button'`
+				},
+			],
+			options: {},
+		}));
+
+		it('should have the correct 6rd example', () => expect(components[0].getExamples()['disabled']).to.deep.equal({
+			blocks: [
+				{
+					language: 'html',
+					hidden: false,
+					content: `<button class="btn btn-primary" disabled>Disabled button</button>`
+				},
+			],
+			options: {},
+		}));
 	});
 
-	describe('Second doc', () => {
-		it('should have the correct doc name', () => expect(docs[1].getName()).to.equal('Link'));
-		it('should have the correct doc category', () => expect(docs[1].getCategory()).to.equal('Text'));
-		it('should have the correct doc meta', () => expect(docs[1].getMeta()).to.deep.equal({}));
-		it('should have the correct doc description', () => expect(docs[1].getDescription()).to.equal(
+	describe('second component', () => {
+		it('should have the correct component name', () => expect(components[1].getName()).to.equal('Link'));
+		it('should have the correct component category', () => expect(components[1].getCategory()).to.equal('Text'));
+		it('should have the correct component meta', () => expect(components[1].getMeta()).to.deep.equal({}));
+		it('should have the correct component description', () => expect(components[1].getDescription()).to.equal(
 			fs.readFileSync('test/expected-2.md', 'utf8')
 		));
+		it('should have the correct number of examples', () => expect(_.size(components[1].getExamples())).to.equal(1));
+
+		it('should have the correct 1st example', () => expect(components[1].getExamples().link).to.deep.equal({
+			blocks: [
+				{
+					language: 'html',
+					hidden: false,
+					content: `<a href="#" class="text-link">Click me</a>`
+				},
+			],
+			options: {},
+		}));
 	});
 });

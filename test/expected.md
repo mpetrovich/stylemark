@@ -1,5 +1,10 @@
 
-A button can be used with `<button>`, `<a>`, and `<input>` elements.
+A button can be used with `<button>` and `<a>` elements.
+
+```html
+<a class="btn btn-default" href="#">Button</a>
+<button class="btn btn-default">Button</button>
+```
 
 
 Types
@@ -26,7 +31,7 @@ Buttons have different sizes available:
 - `btn-sm`
 - `btn-lg`
 
-<example name="sizes"></example>
+<example name="sizes" height="100"></example>
 
 
 Frameworks

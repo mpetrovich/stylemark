@@ -11,11 +11,11 @@ class Parser {
 	 * Parses components from source content.
 	 *
 	 * @param {String} source
-	 * @param {String} [extension]
+	 * @param {String} [language]
 	 * @return {Array.<Component>}
 	 */
-	parse(content, extension) {
-		var components = _(getDocBlocks(content, extension))
+	parse(content, language) {
+		var components = _(getDocBlocks(content, language))
 			.map(parseDocBlock)
 			.filter()
 			.thru(Component.merge)
@@ -25,22 +25,22 @@ class Parser {
 	}
 }
 
-function getDocBlocks(fileContent, fileExtension) {
-	return isMarkdown(fileExtension)
-		? getMarkdownDocBlocks(fileContent)
-		: getSourceCodeDocBlocks(fileContent);
+function getDocBlocks(content, language) {
+	return isMarkdown(language)
+		? getMarkdownDocBlocks(content)
+		: getSourceCodeDocBlocks(content);
 }
 
-function isMarkdown(fileExtension) {
-	return _.includes(['markdown', 'mdown', 'md'], fileExtension);
+function isMarkdown(language) {
+	return _.includes(['markdown', 'mdown', 'md'], language);
 }
 
-function getMarkdownDocBlocks(fileContent) {
-	return [fileContent];
+function getMarkdownDocBlocks(content) {
+	return [content];
 }
 
-function getSourceCodeDocBlocks(fileContent) {
-	var docBlocks = fileContent.match(/\/\*([\s\S]+?)\*\//g);
+function getSourceCodeDocBlocks(content) {
+	var docBlocks = content.match(/\/\*([\s\S]+?)\*\//g);
 
 	// Removes extraneous asterisks from the start & end of comment blocks
 	docBlocks = _.map(docBlocks, (docBlock) => /\/\*[\s\*]*([\s\S]+?)?[ \t\*]*\*\//g.exec(docBlock)[1]);
@@ -91,10 +91,10 @@ function parseDescriptionMarkdown(markdown, component) {
 	var optionsByExample = {};
 
 	// Extracts examples from description blocks
-	_.forEach(blocks, function(block) {
+	_.forEach(blocks, (block) => {
 		var matches = block.match(/```\s*([^\.\s]+)\.(\w+)(.*)\n/);
 		var name = matches ? matches[1] : null;
-		var extension = matches ? matches[2] : null;
+		var language = matches ? matches[2] : null;
 		var optionsString = matches ? matches[3] : '';
 
 		if (!name) {
@@ -103,12 +103,12 @@ function parseDescriptionMarkdown(markdown, component) {
 		}
 
 		var content = block
-			.replace(/```.*\n/m, '')  // Removes leading ```[extension]
+			.replace(/```.*\n/m, '')  // Removes leading ```[language]
 			.replace(/\n```.*/m, '');  // Removes trailing ```
 
 		var options = _(optionsString)
 			.split(' ')
-			.transform(function(options, optionStr) {
+			.transform((options, optionStr) => {
 				var parts = optionStr.split('=');
 				var name = parts[0];
 				var value = parts[1];
@@ -117,14 +117,10 @@ function parseDescriptionMarkdown(markdown, component) {
 			.value();
 
 		var block = {
-			extension: extension,
+			language: language,
 			content: content,
 			hidden: _.has(options, 'hidden'),
 		};
-
-		if (options.height) {
-			block.height = options.height;
-		}
 
 		blocksByExample[name] = blocksByExample[name] || [];
 		blocksByExample[name].push(block);
@@ -136,7 +132,7 @@ function parseDescriptionMarkdown(markdown, component) {
 		}
 	});
 
-	_.forEach(blocksByExample, function(blocks, exampleName) {
+	_.forEach(blocksByExample, (blocks, exampleName) => {
 		var options = optionsByExample[exampleName];
 		component.addExample(exampleName, blocks, options);
 	});
@@ -144,20 +140,20 @@ function parseDescriptionMarkdown(markdown, component) {
 	var hasExample = {};
 
 	// Adds <example> tags for renderable HTML examples
-	_.forEach(component.getExamples(), function(example, name) {
+	_.forEach(component.getExamples(), (example, name) => {
 		var exampleHtml = example.options.height
 			? '<example name="' + name + '" height="' + example.options.height + '"></example>\n'
 			: '<example name="' + name + '"></example>\n';
 
 		description = description.replace(
 			new RegExp('```\\s*' + name + '\\.(html|jsx|handlebars|hbs)', 'gm'),
-			function(match, extension) {
+			(match, language) => {
 				if (hasExample[name]) {
-					return '```' + extension;
+					return '```' + language;
 				}
 				else {
 					hasExample[name] = true;
-					return exampleHtml + '```' + extension;
+					return exampleHtml + '```' + language;
 				}
 			}
 		);
