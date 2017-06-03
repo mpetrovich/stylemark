@@ -5,7 +5,17 @@ var Parser = rfr('src/parser');
 var fs = require('fs');
 var _ = require('lodash');
 
-describe('A processed Markdown file', () => {
+describe('A Markdown file without front matter', () => {
+	var filepath = 'test/input-without-front-matter.md';
+	var content = fs.readFileSync(filepath, 'utf8');
+	var parser = new Parser();
+	var language = path.extname(filepath).substr(1);
+	var components = parser.parse(content, language);
+
+	it('should not be processed', () => expect(components.length).to.equal(0));
+});
+
+describe('A Markdown file', () => {
 	var filepath = 'test/input.md';
 	var content = fs.readFileSync(filepath, 'utf8');
 	var parser = new Parser();
