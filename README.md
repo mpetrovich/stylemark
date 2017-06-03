@@ -72,8 +72,6 @@ Installation
 Available on [npm](https://www.npmjs.com/package/stylemark):
 ```sh
 npm install stylemark
-# or
-yarn add stylemark
 ```
 
 
