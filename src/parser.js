@@ -51,6 +51,12 @@ function getSourceCodeDocBlocks(content) {
 // @todo Refactor below
 
 function parseDocBlock(docBlock) {
+
+	if (!_.isString(docBlock)) {
+		// Malformed docblock
+		return null;
+	}
+
 	var markdown = matter(docBlock);
 
 	if (!markdown.data.name) {
