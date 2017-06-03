@@ -1,4 +1,4 @@
-Stylemark &nbsp; [![Build Status](https://travis-ci.org/LivingStyleGuides/Stylemark.svg?branch=master)](https://travis-ci.org/LivingStyleGuides/Stylemark)
+Stylemark &nbsp; [![Build Status](https://travis-ci.org/LivingStyleGuides/Stylemark.svg?branch=master)](https://travis-ci.org/LivingStyleGuides/stylemark)
 =========
 Stylemark is a standard for documenting [living style guides](https://www.google.com/search?q=what+is+a+living+style+guide) like [these](http://styleguides.io/examples.html).
 
