@@ -67,7 +67,7 @@ For more details and examples, see the full [Stylemark spec](doc/spec.md).
 
 Installation
 ---
-Available on [npm](https://www.npmjs.com/package/stylemark):
+Requires Node 6.x+ (but 4.x support coming soon)
 ```sh
 npm install stylemark
 ```

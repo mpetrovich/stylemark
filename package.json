@@ -22,7 +22,7 @@
   "author": "Mike Petrovich <michael.c.petrovich@gmail.com>",
   "license": "MIT",
   "engine": {
-    "node": "4.x"
+    "node": "6.x"
   },
   "bundleDependencies": [
     "rfr"
