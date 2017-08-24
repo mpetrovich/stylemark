@@ -1,11 +1,10 @@
 Stylemark Spec
-==============
+===
 Stylemark is an extension of [GitHub-flavored Markdown](https://guides.github.com/features/mastering-markdown/) with executable code blocks.
 
 
-
 Executable code blocks
-----------------------
+---
 A fenced code block with a name will be identified as an executable example. To name a code block, prefix the language string with the name followed by a period, eg. `name.js`. Names can have any characters except whitespace or periods.
 
 #### Example
