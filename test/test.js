@@ -1,3 +1,5 @@
+'use strict';
+
 var rfr = require('rfr');
 var path = require('path');
 var expect = require('chai').expect;
