@@ -37,6 +37,7 @@ describe('A Markdown file', () => {
 	it('should have the correct number of examples', () => expect(_.size(component.getExamples())).to.equal(6));
 
 	it('should have the correct 1st example', () => expect(component.getExamples().types).to.deep.equal({
+		name: "types",
 		blocks: [
 			{
 				language: 'html',
@@ -60,6 +61,7 @@ describe('A Markdown file', () => {
 	}));
 
 	it('should have the correct 2nd example', () => expect(component.getExamples().sizes).to.deep.equal({
+		name: "sizes",
 		blocks: [
 			{
 				language: 'html',
@@ -75,6 +77,7 @@ describe('A Markdown file', () => {
 	}));
 
 	it('should have the correct 3rd example', () => expect(component.getExamples()['handlebars-button']).to.deep.equal({
+		name: "handlebars-button",
 		blocks: [
 			{
 				language: 'handlebars',
@@ -86,6 +89,7 @@ describe('A Markdown file', () => {
 	}));
 
 	it('should have the correct 4rd example', () => expect(component.getExamples()['react-button']).to.deep.equal({
+		name: "react-button",
 		blocks: [
 			{
 				language: 'jsx',
@@ -97,6 +101,7 @@ describe('A Markdown file', () => {
 	}));
 
 	it('should have the correct 5rd example', () => expect(component.getExamples()['angular-button']).to.deep.equal({
+		name: "angular-button",
 		blocks: [
 			{
 				language: 'html',
@@ -113,6 +118,7 @@ describe('A Markdown file', () => {
 	}));
 
 	it('should have the correct 6rd example', () => expect(component.getExamples()['disabled']).to.deep.equal({
+		name: "disabled",
 		blocks: [
 			{
 				language: 'html',
@@ -147,6 +153,7 @@ describe('A processed source code file', () => {
 		it('should have the correct number of examples', () => expect(_.size(components[0].getExamples())).to.equal(6));
 
 		it('should have the correct 1st example', () => expect(components[0].getExamples().types).to.deep.equal({
+			name: "types",
 			blocks: [
 				{
 					language: 'html',
@@ -169,6 +176,7 @@ describe('A processed source code file', () => {
 			options: {},
 		}));
 		it('should have the correct 2nd example', () => expect(components[0].getExamples().sizes).to.deep.equal({
+			name: "sizes",
 			blocks: [
 				{
 					language: 'html',
@@ -184,6 +192,7 @@ describe('A processed source code file', () => {
 		}));
 
 		it('should have the correct 3rd example', () => expect(components[0].getExamples()['handlebars-button']).to.deep.equal({
+			name: "handlebars-button",
 			blocks: [
 				{
 					language: 'handlebars',
@@ -195,6 +204,7 @@ describe('A processed source code file', () => {
 		}));
 
 		it('should have the correct 4rd example', () => expect(components[0].getExamples()['react-button']).to.deep.equal({
+			name: "react-button",
 			blocks: [
 				{
 					language: 'jsx',
@@ -206,6 +216,7 @@ describe('A processed source code file', () => {
 		}));
 
 		it('should have the correct 5rd example', () => expect(components[0].getExamples()['angular-button']).to.deep.equal({
+			name: "angular-button",
 			blocks: [
 				{
 					language: 'html',
@@ -222,6 +233,7 @@ describe('A processed source code file', () => {
 		}));
 
 		it('should have the correct 6rd example', () => expect(components[0].getExamples()['disabled']).to.deep.equal({
+			name: "disabled",
 			blocks: [
 				{
 					language: 'html',
@@ -243,6 +255,7 @@ describe('A processed source code file', () => {
 		it('should have the correct number of examples', () => expect(_.size(components[1].getExamples())).to.equal(1));
 
 		it('should have the correct 1st example', () => expect(components[1].getExamples().link).to.deep.equal({
+			name: "link",
 			blocks: [
 				{
 					language: 'html',
