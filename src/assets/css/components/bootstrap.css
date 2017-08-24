@@ -1,0 +1,57 @@
+body, input {
+	font-family: system-ui, sans-serif;
+}
+
+.text-code, code, kbd, pre, samp {
+	font-family: "Source Code Pro", "Courier New", Courier, monospace;
+}
+
+.bg-plain {
+	background-color: rgb(255, 255, 255);
+}
+.bg-plain-sheet {
+	background: transparent linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95) 75%, rgba(255, 255, 255, 0));
+}
+.bg-plain-sheet-fade-down {
+}
+.bg-none {
+	background: none;
+}
+
+.btn,
+.text-white {
+	-webkit-font-smoothing: antialiased;
+}
+
+a.card-block:hover {
+	text-decoration: none;
+}
+
+.relative {
+	position: relative;
+}
+
+a.i-no-line:hover {
+	text-decoration: none;
+}
+
+.btn-outline-white {
+	border-color: #fff;
+}
+
+.overflow-x-off {
+	overflow-x: hidden;
+}
+
+i {
+	font-family: Georgia, serif;
+}
+
+.op-75 { opacity: 0.50 }
+.op-50 { opacity: 0.50 }
+.op-30 { opacity: 0.30 }
+.op-25 { opacity: 0.25 }
+.op-20 { opacity: 0.20 }
+.op-15 { opacity: 0.15 }
+.op-10 { opacity: 0.10 }
+.op-5 { opacity: 0.05 }

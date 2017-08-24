@@ -1,0 +1,31 @@
+#!/usr/bin/env node
+
+var rfr = require('rfr');
+var fs = require('fs');
+var args = require('yargs').argv;
+var yaml = require('js-yaml');
+var path = require('path');
+var parser = rfr('src/parser');
+var generator = rfr('src/generator');
+
+var input = args.i;
+var output = args.o;
+var configPath = args.c || path.join(input, '.livingstyleguides.yml');
+var options = configPath ? getConfig(configPath) : {};
+
+parser.parseDir(input, options, (error, docs) => {
+	if (error) {
+		console.error(error);
+		return;
+	}
+	generator.generate(docs, output, options);
+});
+
+function getConfig(filepath) {
+	if (!fs.existsSync(filepath)) {
+		return {};
+	}
+	var contents = fs.readFileSync(filepath, 'utf8');
+	var config = yaml.safeLoad(contents);
+	return config;
+}

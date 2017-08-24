@@ -28,9 +28,21 @@
     "rfr"
   ],
   "dependencies": {
+    "babel-core": "^6.25.0",
+    "babel-preset-react": "^6.24.1",
+    "bluebird": "^3.5.0",
+    "fs-extra": "^4.0.0",
     "gray-matter": "^2.1.1",
+    "handlebars": "^4.0.10",
+    "iframe-resizer": "^3.5.14",
+    "js-yaml": "^3.9.0",
     "lodash": "^4.17.2",
-    "rfr": "^1.2.3"
+    "marked": "^0.3.6",
+    "mkdirp": "^0.5.1",
+    "moment": "^2.18.1",
+    "node-dir": "^0.1.17",
+    "rfr": "^1.2.3",
+    "system-font-css": "^2.0.1"
   },
   "devDependencies": {
     "chai": "^1.10.0",

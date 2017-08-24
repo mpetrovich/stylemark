@@ -1,4 +1,5 @@
 var rfr = require('rfr');
-var Parser = rfr('src/parser');
+var parser = rfr('src/parser');
+var generator = rfr('src/generator');
 
-module.exports = new Parser();
+module.exports = { parser, generator };

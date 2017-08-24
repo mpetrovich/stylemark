@@ -1,14 +1,13 @@
 var rfr = require('rfr');
 var path = require('path');
 var expect = require('chai').expect;
-var Parser = rfr('src/parser');
+var parser = rfr('src/parser');
 var fs = require('fs');
 var _ = require('lodash');
 
 describe('A Markdown file without front matter', () => {
 	var filepath = 'test/input-without-front-matter.md';
 	var content = fs.readFileSync(filepath, 'utf8');
-	var parser = new Parser();
 	var language = path.extname(filepath).substr(1);
 	var components = parser.parse(content, language);
 
@@ -18,7 +17,6 @@ describe('A Markdown file without front matter', () => {
 describe('A Markdown file', () => {
 	var filepath = 'test/input.md';
 	var content = fs.readFileSync(filepath, 'utf8');
-	var parser = new Parser();
 	var language = path.extname(filepath).substr(1);
 	var components = parser.parse(content, language);
 	var component = components[0];
@@ -127,7 +125,6 @@ describe('A Markdown file', () => {
 describe('A processed source code file', () => {
 	var filepath = 'test/input.css';
 	var content = fs.readFileSync(filepath, 'utf8');
-	var parser = new Parser();
 	var language = path.extname(filepath).substr(1);
 	var components = parser.parse(content, language);
 

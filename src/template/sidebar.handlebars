@@ -1,0 +1,43 @@
+<div class="text-center pt-3 pb-4">
+	<a href="/" class="i-muted -more -hover">
+		<img src="img/logo/logo-white-200.png" width="100" alt="Living Style Guides">
+	</a>
+</div>
+
+<h1 class="h4">{{name}}</h1>
+
+<form class="relative mt-2 mb-4 px-0">
+	<div class="i-search-input">
+		<input id="search-filter" name="filter" type="search" placeholder="Search" class="form-control i-sidebar-item-filter">
+		<label for="search-filter" class="search-input-icon fa fa-search i-muted"></label>
+		<button type="button" class="i-search-input-reset" aria-label="Clear">
+			<i class="fa fa-remove"></i>
+		</button>
+	</div>
+</form>
+
+{{#each groups}}
+	<div class="i-sidebar-list-group">
+
+		<h5 class="text-white mt-2 mb-1">
+			<b>{{key}}</b>
+		</h5>
+
+		<div data-collapse-target="{{key}}" class="mb-2 collapse show">
+			{{#each docs}}
+				<a
+					href="#{{slug}}"
+					class="i-sidebar-list-item text-white"
+					data-element-name="{{name}}"
+				>
+					<span>{{name}}</span>
+				</a>
+			{{/each}}
+		</div>
+
+	</div>
+{{/each}}
+
+<div class="i-sidebar-filter-no-results i-muted i-pad-horiz-2">
+	No matches.
+</div>

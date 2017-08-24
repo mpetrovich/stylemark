@@ -84,6 +84,7 @@ class Component {
 	addExample(name, blocks, options) {
 		this.examples = this.examples || {};
 		this.examples[name] = {
+			name: name,
 			blocks: blocks,
 			options: options || {},
 		};

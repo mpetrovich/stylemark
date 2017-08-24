@@ -1,0 +1,22 @@
+.i-search-input-reset {
+	display: none;
+	position: absolute;
+	right: 5px;
+	top: 50%;
+	padding: 10px;
+	color: #fff;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+.i-search-input-reset:focus {
+	outline: none;
+}
+input.has-value ~ .i-search-input-reset {
+	display: block;
+}

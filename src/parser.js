@@ -4,8 +4,53 @@ var rfr = require('rfr');
 var _ = require('lodash');
 var Component = rfr('src/component');
 var matter = require('gray-matter');
+var dir = require('node-dir');
+var path = require('path');
 
 class Parser {
+
+	/**
+	 * @param {string} dirpath
+	 * @param {object} options
+	 * @param {Function} callback
+	 * @param {Array} options.filesToIgnore List of file pattern regexes to ignore
+	 */
+	parseDir(dirpath, options = {}, callback = _.noop) {
+		var docs = [];
+
+		var filesToIgnore = [
+			'.git/',
+			'node_modules/',
+		].concat(options.filesToIgnore || []);
+
+		dir.readFiles(
+			dirpath,
+			(error, content, filepath, next) => {
+				if (error) {
+					console.error(error);
+					return next();
+				}
+
+				let isIgnoredFile = _.some(filesToIgnore, pattern => (new RegExp(pattern)).test(filepath));
+				if (isIgnoredFile) {
+					return next();
+				}
+
+				try {
+					let language = path.extname(filepath).substr(1);
+					docs = docs.concat(this.parse(content, language));
+				}
+				catch (e) {
+					console.error(`Error parsing "${filepath}": ${e}`);
+				}
+
+				next();
+			},
+			error => {
+				callback(error, docs);
+			}
+		);
+	}
 
 	/**
 	 * Parses components from source content.
@@ -174,4 +219,4 @@ function parseDescriptionMarkdown(markdown, component) {
 	return description;
 }
 
-module.exports = Parser;
+module.exports = new Parser();

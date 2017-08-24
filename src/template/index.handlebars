@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en-us" id="insta">
+	<head>
+		<meta chartset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<link rel="icon" type="image/png" href="img/logo/logo-196.png" sizes="196x196">
+		<link rel="icon" type="image/png" href="img/logo/logo-128.png" sizes="128x128">
+		<link rel="icon" type="image/png" href="img/logo/logo-96.png" sizes="96x96">
+		<link rel="icon" type="image/png" href="img/logo/logo-32.png" sizes="32x32">
+		<link rel="icon" type="image/png" href="img/logo/logo-16.png" sizes="16x16">
+
+		<link href="css/all.css" rel="stylesheet">
+		<script src="https://use.fontawesome.com/6dd56ad32d.js"></script>
+
+		<title>Automagic UI Component Libraries | Living Style Guides</title>
+	</head>
+	<body class="overflow-x-off i-page">
+		<div class="i-grid">
+			<div class="i-page__content">
+				{{#each groups}}
+					{{#each docs}}
+						{{{html}}}
+					{{/each}}
+				{{/each}}
+			</div>
+			<div class="i-page__sidebar text-white">
+				{{> sidebar}}
+			</div>
+		</div>
+
+		<script src="js/vendor/jquery-3.1.1.slim.min.js"></script>
+		<script src="js/vendor/tether.min.js"></script>
+		<script src="js/vendor/bootstrap.min.js"></script>
+		<script src="js/vendor/iframeResizer.min.js"></script>
+		<script src="js/vendor/lazyframe.min.js"></script>
+		<script src="js/vendor/highlight.min.js"></script>
+		<script src="js/app.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+	</body>
+</html>
