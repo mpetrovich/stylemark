@@ -17,7 +17,7 @@ npm install stylemark
 
 Documenting style guide components
 ---
-Documenting style guide components is as easy as writing Markdown. Components can be documented in dedicated Markdown files or as comment blocks within any source code. [**See the full Stylemark spec**](doc/spec.md).
+Documenting style guide components is as easy as writing Markdown. Components can be documented in dedicated Markdown files or as comment blocks within any source code. [**See the full Stylemark spec**](README-SPEC.md).
 
 #### As a dedicated Markdown file
 ~~~markdown
