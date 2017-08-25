@@ -1,0 +1,13 @@
+.i-example {
+	padding: 20px 0;
+}
+.i-example__heading {
+	text-transform: uppercase;
+	font-weight: 500;
+	font-size: 14px;
+	color: #aaa;
+}
+.i-example iframe {
+	width: 100%;
+	border: none;
+}

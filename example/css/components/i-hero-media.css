@@ -1,0 +1,26 @@
+.i-hero-media-image img {
+	width: 100%;
+}
+.i-hero-media-image.-shadow img {
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+@media (min-width: 992px) {
+	.i-hero-media-text {
+		width: 50%;
+		float: right;
+	}
+	.i-hero-media.-alt .i-hero-media-text {
+		float: left;
+	}
+}
+
+@media (min-width: 992px) {
+	.i-hero-media-image {
+		width: 50%;
+		float: left;
+	}
+	.i-hero-media.-alt .i-hero-media-image {
+		float: right;
+	}
+}

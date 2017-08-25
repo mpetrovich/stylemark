@@ -1,0 +1,12 @@
+.i-muted {
+	opacity: 0.5;
+	transition: 100ms opacity ease;
+}
+
+.i-muted.-more {
+	opacity: 0.3;
+}
+
+.i-muted.-hover:hover {
+	opacity: 1;
+}
