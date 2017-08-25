@@ -1,5 +1,6 @@
-var rfr = require('rfr');
-var parser = rfr('src/parser');
-var generator = rfr('src/generator');
+'use strict';
 
-module.exports = { parser, generator };
+var rfr = require('rfr');
+var stylemark = rfr('src/stylemark');
+
+module.exports = stylemark;

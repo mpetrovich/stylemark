@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var rfr = require('rfr');
+var args = require('yargs').argv;
+var stylemark = rfr('src/stylemark');
+
+var input = args.i;
+var output = args.o;
+var configPath = args.c;
+
+stylemark({
+	input: input,
+	output: output,
+	configPath: configPath,
+});
