@@ -1,11 +1,23 @@
-Stylemark &nbsp; [![Build Status](https://travis-ci.org/LivingStyleGuides/Stylemark.svg?branch=master)](https://travis-ci.org/LivingStyleGuides/stylemark)
+Stylemark &nbsp; [![npm version](https://badge.fury.io/js/stylemark.svg)](https://badge.fury.io/js/stylemark) [![Build Status](https://travis-ci.org/LivingStyleGuides/Stylemark.svg?branch=master)](https://travis-ci.org/LivingStyleGuides/stylemark)
 ===
-Stylemark is a standard for documenting [living style guides](https://www.google.com/search?q=what+is+a+living+style+guide) like [these](http://styleguides.io/examples.html).
+A living style guide generator.
+
+Document your style guide components in code comments or Markdown files, and Stylemark will generate a static HTML site with live, interactive components. [**See an example**](https://stylemark.github.io).
+
+![Bootstrap style guide](https://user-images.githubusercontent.com/1235062/29730805-d8150cb6-89af-11e7-8ded-5d4810cab462.png)
 
 
-Syntax
+Installation
 ---
-Documenting style guide components is as easy as writing Markdown. Components can be documented in dedicated Markdown files or as comment blocks within any source code.
+Requires Node 6.x+ (4.x support coming soon)
+```sh
+npm install stylemark
+```
+
+
+Documenting style guide components
+---
+Documenting style guide components is as easy as writing Markdown. Components can be documented in dedicated Markdown files or as comment blocks within any source code. [**See the full Stylemark spec**](doc/spec.md).
 
 #### As a dedicated Markdown file
 ~~~markdown
@@ -29,6 +41,7 @@ Types of buttons:
 ~~~
 
 #### As a comment block within source code
+The language of your source code doesn't matter as long as the docs are in `/* … */` comments.
 ~~~css
 /*
 ---
@@ -60,64 +73,43 @@ Types of buttons:
 }
 ~~~
 
-In both cases, the output will be the same.
 
-For more details and examples, see the full [Stylemark spec](doc/spec.md).
-
-
-Installation
+Generating the HTML style guide
 ---
-Requires Node 6.x+ (but 4.x support coming soon)
-```sh
-npm install stylemark
-```
 
-
-Usage
----
+#### In Node.js
 ```js
-docs = stylemark.parse(content, syntax)
+stylemark({ input, output, configPath });
 ```
 
 Name | Type | Description
 --- | --- | ---
-`content` | string | File content
-`syntax` | string | File extension
+`input` | string | Directory where to read from
+`output` | string | Directory where to save the generated HTML
+`configPath` | string | (optional) Filepath of the stylemark YAML configuration file, defaults to `.stylemark.yml` within the input directory
 
-Returns a list of docs extracted from `content`.
-
-#### Example
-_Extracts components from a CSS file._
-
+Example:
 ```js
-var fs = require('fs');
-var stylemark = require('stylemark');
-
-var content = fs.readFileSync('button.css', 'utf8');
-var syntax = 'md';
-var docs = stylemark.parse(content, syntax);
-
-console.log(JSON.stringify(docs));
+stylemark({
+	input: '~/git/acme-source-code',
+	output: '~/acme-style-guide',
+	configPath: '~/acme-source-code/config/stylemark.yml',
+});
 ```
-Outputs:
-```json
-[
-  {
-    "name": "Button",
-    "category": "Components",
-    "description": "Buttons can be used with `<a>`, `<button>`, and `<input>` elements.\n\nTypes of buttons:\n- Default: Standard button\n- Primary: Provides extra visual weight and identifies the primary action in a set of buttons\n- Success: Indicates a successful or positive action\n\n<example name=\"types\"></example>\n```html\n<button class=\"btn btn-default\">Default</button>\n<button class=\"btn btn-primary\">Primary</button>\n<button class=\"btn btn-success\">Success</button>\n```",
-    "examples": {
-      "types": {
-        "blocks": [
-          {
-            "syntax": "html",
-            "content": "<button class=\"btn btn-default\">Default</button>\n<button class=\"btn btn-primary\">Primary</button>\n<button class=\"btn btn-success\">Success</button>",
-            "hidden": false
-          }
-        ],
-        "options": {}
-      }
-    }
-  }
-]
+
+
+#### On the command-line
+```sh
+bin/stylemark -i <input> -o <output> -c <configPath>
 ```
+
+Example:
+```sh
+bin/stylemark -i ~/git/acme-source-code -o ~/acme-style-guide -c ~/acme-source-code/config/stylemark.yml
+```
+
+Name | Description
+---  | ---
+`-i` | Directory where to read from
+`-o` | Directory where to save the generated HTML
+`-c` | (optional) Filepath of the stylemark YAML configuration file, defaults to `.stylemark.yml` within the input directory
