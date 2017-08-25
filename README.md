@@ -2,7 +2,7 @@ Stylemark &nbsp; [![npm version](https://badge.fury.io/js/stylemark.svg)](https:
 ===
 A living style guide generator.
 
-Document your style guide components in code comments or Markdown files, and Stylemark will generate a static HTML site with live, interactive components. [**See an example**](https://stylemark.github.io).
+Document your style guide components in code comments or Markdown files, and Stylemark will generate a static HTML site with live, interactive components. [**See an example**](https://livingstyleguides.github.io/stylemark/).
 
 ![Bootstrap style guide](https://user-images.githubusercontent.com/1235062/29730805-d8150cb6-89af-11e7-8ded-5d4810cab462.png)
 
