@@ -80,31 +80,5 @@
 			});
 		});
 
-		// Confirm dialog for forms
-		$('[data-confirm]').each(function() {
-			var $form = $(this);
-			var msg = $form.data('confirm');
-
-			$form.submit(function(event) {
-				var confirmed = window.confirm(msg);
-				if (!confirmed) {
-					event.preventDefault();
-				}
-			});
-		});
-
-		// Confirm field for forms
-		$('[data-confirm-disable]').each(function() {
-			var $elem = $(this);
-			var $form = $elem.closest('form');
-			var confirmValue = $elem.data('confirmDisable');
-			var confirmField = $elem.data('confirmField');
-			var $field = $form.find('[name="' + confirmField + '"]');
-
-			$field.keyup(function(event) {
-				var isConfirmed = ($field.val().toLowerCase() === confirmValue.toLowerCase());
-				$elem.prop('disabled', !isConfirmed);
-			});
-		});
 	});
 })(jQuery);
