@@ -156,7 +156,7 @@ class Generator {
 		example.slug = _.kebabCase(example.name);
 
 		var output = Handlebars.compile(exampleTemplate)({ doc, example, options });
-		var directory = path.join(destination, 'examples');
+		var directory = path.join(destination, 'html');
 		var filepath = path.join(directory, `${doc.slug}-${example.slug}.html`);
 
 		mkdirp(directory, (error) => {
