@@ -5,8 +5,8 @@ var _ = require('lodash');
 var mkdirp = require('mkdirp');
 var fs = require('fs-extra');
 var path = require('path');
-var Handlebars = rfr('src/util/handlebars');
-var marked = rfr('src/util/marked');
+var Handlebars = rfr('src/handlebars');
+var marked = rfr('src/marked');
 var babel = require('babel-core');
 
 var docTemplate = fs.readFileSync('./src/template/doc.handlebars', 'utf8');
