@@ -86,7 +86,7 @@ class Generator {
 					<h5 class="i-example__heading">
 						Example
 						<a
-							href="examples/${doc.slug}-$1.html"
+							href="html/${doc.slug}-$1.html"
 							target="_blank"
 							class="fa fa-external-link"
 							data-toggle="tooltip"
@@ -97,7 +97,7 @@ class Generator {
 					<div
 						class="i-example__iframe"
 						lazyframe
-						data-src="examples/${doc.slug}-$1.html"
+						data-src="html/${doc.slug}-$1.html"
 						data-initinview="true"
 						data-title="Loading…"
 						$2
