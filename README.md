@@ -1,8 +1,8 @@
-Stylemark &nbsp; [![npm version](https://badge.fury.io/js/stylemark.svg)](https://badge.fury.io/js/stylemark) [![Build Status](https://travis-ci.org/LivingStyleGuides/Stylemark.svg?branch=master)](https://travis-ci.org/LivingStyleGuides/stylemark)
+Stylemark &nbsp; [![npm version](https://badge.fury.io/js/stylemark.svg)](https://badge.fury.io/js/stylemark) [![Build Status](https://travis-ci.org/mpetrovich/Stylemark.svg?branch=master)](https://travis-ci.org/mpetrovich/stylemark)
 ===
 A living style guide generator for everything&mdash;CSS, JS, React, Angular, and more.
 
-### [Demo](https://livingstyleguides.github.io/stylemark/)
+### [Demo](https://mpetrovich.github.io/stylemark/)
 
 Document your style guide components in code comments or Markdown files, and Stylemark will generate a static HTML site with live, interactive components.
 
@@ -128,7 +128,7 @@ webpackAppPath: For React apps, this is the `output.library` value in your webpa
 emberAppName: For Ember apps, this is the name of the Ember app exported to the window object
 ```
 
-Here's an example for [React Boostrap](https://github.com/LivingStyleGuides/react-bootstrap/):
+Here's an example for [React Boostrap](https://github.com/mpetrovich/react-bootstrap/):
 ```yaml
 name: React Bootstrap
 
