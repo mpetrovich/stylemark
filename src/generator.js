@@ -9,9 +9,9 @@ var Handlebars = rfr('src/handlebars');
 var marked = rfr('src/marked');
 var babel = require('babel-core');
 
-var docTemplate = fs.readFileSync('./src/template/doc.handlebars', 'utf8');
-var exampleTemplate = fs.readFileSync('./src/template/example.handlebars', 'utf8');
-var indexTemplate = fs.readFileSync('./src/template/index.handlebars', 'utf8');
+var docTemplate = fs.readFileSync(path.join(__dirname, 'template/doc.handlebars'), 'utf8');
+var exampleTemplate = fs.readFileSync(path.join(__dirname, 'template/example.handlebars'), 'utf8');
+var indexTemplate = fs.readFileSync(path.join(__dirname, 'template/index.handlebars'), 'utf8');
 
 class Generator {
 
@@ -71,7 +71,7 @@ class Generator {
 			let filepath = path.join(destination, 'index.html');
 			fs.writeFile(filepath, html, 'utf8', error => error ? console.log(error) : null);
 
-			fs.copy('./src/assets', destination, error => error ? console.log(error) : null);
+			fs.copy(path.join(__dirname, 'assets'), destination, error => error ? console.log(error) : null);
 		});
 	}
 
@@ -134,7 +134,8 @@ class Generator {
 		_.forEach(doc.examples, example => {
 			example.blocks = _.map(example.blocks, block => {
 				if (block.language === 'jsx') {
-					block.content = babel.transform(block.content, { presets: ['react'] }).code;
+					var preset = path.join(__dirname, '../node_modules/babel-preset-react');
+					block.content = babel.transform(block.content, { presets: [preset] }).code;
 
 					// Prefixes React.createElement(Component) component names with the exported library name (ie. Library.Component)
 					block.content = block.content.replace(

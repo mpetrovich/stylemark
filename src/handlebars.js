@@ -1,5 +1,6 @@
 var rfr = require('rfr');
 var fs = require('fs');
+var path = require('path');
 var Handlebars = require('handlebars');
 var marked = rfr('src/marked');
 var _ = require('lodash');
@@ -79,11 +80,11 @@ var helpers = {
 };
 
 var partials = {
-	sidebar: 'src/template/sidebar.handlebars',
-	doc: 'src/template/doc.handlebars',
+	sidebar: 'template/sidebar.handlebars',
+	doc: 'template/doc.handlebars',
 };
 
 _.forEach(helpers, (func, name) => Handlebars.registerHelper(name, func));
-_.forEach(partials, (filepath, name) => Handlebars.registerPartial(name, fs.readFileSync(filepath, 'utf8')));
+_.forEach(partials, (filepath, name) => Handlebars.registerPartial(name, fs.readFileSync(path.join(__dirname, filepath), 'utf8')));
 
 module.exports = Handlebars;
