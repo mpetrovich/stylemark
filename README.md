@@ -1,10 +1,10 @@
 Stylemark &nbsp; [![npm version](https://badge.fury.io/js/stylemark.svg)](https://badge.fury.io/js/stylemark) [![Build Status](https://travis-ci.org/mpetrovich/Stylemark.svg?branch=master)](https://travis-ci.org/mpetrovich/stylemark)
 ===
-A living style guide generator for everything&mdash;CSS, JS, React, Angular, and more.
-
-### [Demo](https://mpetrovich.github.io/stylemark/)
+**A living style guide generator for everything.** CSS, LESS, SASS, JS, React, Angular, Ember&mdash;you name it.
 
 Document your style guide components in code comments or Markdown files, and Stylemark will generate a static HTML site with live, interactive components.
+
+### Demo: &nbsp; [Bootstrap](http://stylemark-bootstrap.surge.sh/) &nbsp; [React](http://stylemark-react.surge.sh/) &nbsp; [Ember](http://stylemark-ember.surge.sh/)
 
 ![Bootstrap style guide](https://user-images.githubusercontent.com/1235062/29730805-d8150cb6-89af-11e7-8ded-5d4810cab462.png)
 
