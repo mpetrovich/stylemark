@@ -92,7 +92,7 @@ Name | Type | Description
 --- | --- | ---
 `input` | string | Directory where to read from
 `output` | string | Directory where to save the generated HTML
-`configPath` | string | (optional) Filepath of the stylemark YAML configuration file, defaults to `.stylemark.yml` within the input directory
+`configPath` | string | (optional) Filepath of the stylemark YAML configuration file, defaults to `.stylemark.yml` within the input directory. See [Configuration](#configuration-file)
 
 Example:
 ```js
@@ -119,7 +119,7 @@ Name | Description
 ---  | ---
 `-i` | Directory where to read from
 `-o` | Directory where to save the generated HTML
-`-c` | (optional) Filepath of the stylemark YAML configuration file, defaults to `.stylemark.yml` within the input directory
+`-c` | (optional) Filepath of the stylemark YAML configuration file, defaults to `.stylemark.yml` within the input directory. See [Configuration](#configuration-file)
 
 
 ### Configuration file
