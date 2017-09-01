@@ -1,12 +1,26 @@
 {
   "name": "stylemark",
   "version": "0.2.2",
-  "description": "A standard for documenting living style guides",
+  "description": "A living style guide generator for everything",
   "keywords": [
-    "style guide doc",
-    "livingstyleguide",
+    "styleguide generator",
+    "style guide generator",
+    "living styleguide generator",
+    "living style guide generator",
+    "react styleguide",
+    "react style guide",
+    "angular styleguide",
+    "angular style guide",
+    "ember styleguide",
+    "ember style guide",
+    "css styleguide",
+    "css style guide",
+    "less styleguide",
+    "less style guide",
+    "sass styleguide",
+    "sass style guide",
+    "living styleguide",
     "living style guide",
-    "style guide",
     "component library",
     "design pattern"
   ],
@@ -17,10 +31,10 @@
   "bin": {
     "stylemark": "bin/stylemark"
   },
-  "homepage": "https://github.com/LivingStyleGuides/stylemark",
-  "repository": "https://github.com/LivingStyleGuides/stylemark.git",
+  "homepage": "https://github.com/mpetrovich/stylemark",
+  "repository": "https://github.com/mpetrovich/stylemark.git",
   "bugs": {
-    "url": "https://github.com/LivingStyleGuides/stylemark/issues"
+    "url": "https://github.com/mpetrovich/stylemark/issues"
   },
   "author": "Mike Petrovich <michael.c.petrovich@gmail.com>",
   "license": "MIT",
