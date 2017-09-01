@@ -14,6 +14,9 @@
   "scripts": {
     "test": "./node_modules/.bin/gulp test"
   },
+  "bin": {
+    "stylemark": "bin/stylemark"
+  },
   "homepage": "https://github.com/LivingStyleGuides/stylemark",
   "repository": "https://github.com/LivingStyleGuides/stylemark.git",
   "bugs": {
