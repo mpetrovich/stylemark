@@ -13,17 +13,15 @@
 		<title>{{name}}</title>
 	</head>
 	<body class="overflow-x-off i-page">
-		<div class="i-grid">
-			<div class="i-page__content">
-				{{#each groups}}
-					{{#each docs}}
-						{{{html}}}
-					{{/each}}
+		<div class="i-page__content">
+			{{#each groups}}
+				{{#each docs}}
+					{{{html}}}
 				{{/each}}
-			</div>
-			<div class="i-page__sidebar text-white">
-				{{> sidebar}}
-			</div>
+			{{/each}}
+		</div>
+		<div class="i-page__sidebar text-white">
+			{{> sidebar}}
 		</div>
 
 		<script src="js/vendor/jquery-3.1.1.slim.min.js"></script>
