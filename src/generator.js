@@ -71,7 +71,7 @@ class Generator {
 			let filepath = path.join(destination, 'index.html');
 			fs.writeFile(filepath, html, 'utf8', error => error ? console.log(error) : null);
 
-			fs.copy(path.join(__dirname, 'assets'), destination, error => error ? console.log(error) : null);
+			fs.copy(path.join(__dirname, 'asset'), destination, error => error ? console.log(error) : null);
 		});
 	}
 
