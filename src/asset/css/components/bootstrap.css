@@ -23,7 +23,7 @@ body, input {
 	-webkit-font-smoothing: antialiased;
 }
 
-a.card-block:hover {
+a.card-body:hover {
 	text-decoration: none;
 }
 

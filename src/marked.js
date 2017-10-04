@@ -36,8 +36,8 @@ renderer.heading = function(text, level) {
 
 renderer.code = function(code, lang) {
 	return `
-<div class="card mb-3">
-	<div class="card-block">
+<div class="i-code-block card mb-3">
+	<div class="card-body">
 		<pre class="mb-0"><code class="lang-${lang}">${_.escape(code)}</code></pre>
 	</div>
 </div>`;

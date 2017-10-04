@@ -8,6 +8,7 @@
 @import "components/highlight.css";
 @import "components/lazyframe.css";
 
+@import "components/i-code-block.css";
 @import "components/i-library.css";
 @import "components/i-example.css";
 @import "components/i-muted.css";
