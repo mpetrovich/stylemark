@@ -14,6 +14,20 @@
 	</head>
 	<body class="overflow-x-off i-page">
 		<div class="i-page__content">
+
+			<div class="i-nav-select">
+				<form class="form">
+					<select class="form-control form-control-lg">
+						{{#each groups}}
+							<optgroup label="{{key}}"></optgroup>
+							{{#each docs}}
+								<option>{{{name}}}</option>
+							{{/each}}
+						{{/each}}
+					</select>
+				</form>
+			</div>
+
 			{{#each groups}}
 				{{#each docs}}
 					{{{html}}}

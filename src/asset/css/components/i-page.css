@@ -16,6 +16,11 @@
 	padding-top: 1px;  /* Prevents background masking from inner margin */
 	background: #f0f0f0;
 }
+.i-nav-select {
+	margin: 0 0 10px;
+	padding: 20px 40px;
+	background: #fff;
+}
 
 @media (min-width: 992px) {
 	.i-page__sidebar {
@@ -35,5 +40,8 @@
 	}
 	.i-page__content {
 		margin-left: 20%;
+	}
+	.i-nav-select {
+		display: none;
 	}
 }
