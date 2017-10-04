@@ -71,8 +71,12 @@ class Generator {
 
 			// Copies logo asset
 			let logo;
-			if (options.logo) {
+			if (options.logo && options.logo.startsWith('http')) {
+				logo = options.logo;
+			}
+			else if (options.logo) {
 				logo = path.join(destination, 'asset', 'img', path.basename(options.logo));
+
 				fs.copy(
 					path.join(options.input, options.logo),
 					logo,
