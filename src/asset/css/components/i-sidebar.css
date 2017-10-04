@@ -1,5 +1,8 @@
-.i-sidebar-list-group {
-	margin-bottom: 1rem;
+.i-sidebar-title {
+	line-height: 40px;
+}
+.i-sidebar-logo {
+	vertical-align: bottom;
 }
 
 .i-sidebar-list-item {

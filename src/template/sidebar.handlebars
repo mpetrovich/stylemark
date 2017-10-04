@@ -1,17 +1,14 @@
-<div class="text-center pt-3 pb-4">
-	<a href="/" class="i-muted -more -hover">
-		<img src="img/logo-inverse-200.png" width="100" alt="Living Style Guides">
-	</a>
-</div>
+<h1 class="i-sidebar-title h4 mt-4">
+	<img class="i-sidebar-logo" src="img/logo-inverse-200.png" height="40" alt="Logo">
+	{{name}}
+</h1>
 
-<h1 class="h4">{{name}}</h1>
-
-<form class="relative mt-2 mb-4 px-0">
+<form class="relative mt-2 mb-2 px-0">
 	<div class="i-search-input">
 		<input id="search-filter" name="filter" type="search" placeholder="Search" class="form-control i-sidebar-item-filter">
 		<label for="search-filter" class="search-input-icon fa fa-search i-muted"></label>
 		<button type="button" class="i-search-input-reset" aria-label="Clear">
-			<i class="fa fa-remove"></i>
+			<i class="fa fa-remove fa-lg"></i>
 		</button>
 	</div>
 </form>
@@ -19,16 +16,19 @@
 {{#each groups}}
 	<div class="i-sidebar-list-group">
 
-		<h5 class="text-white mt-2 mb-1">
+		<h5
+			class="text-white pt-4 mb-1"
+			data-filter-value="{{#each docs}} {{name}} {{/each}}"
+		>
 			<b>{{key}}</b>
 		</h5>
 
-		<div data-collapse-target="{{key}}" class="mb-2 collapse show">
+		<div>
 			{{#each docs}}
 				<a
 					href="#{{slug}}"
 					class="i-sidebar-list-item text-white"
-					data-element-name="{{name}}"
+					data-filter-value="{{name}}"
 				>
 					<span>{{name}}</span>
 				</a>

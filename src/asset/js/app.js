@@ -10,46 +10,32 @@
 		// Bootstrap tooltips
 		$('[data-toggle="tooltip"]').tooltip();
 
-		// Sidebar search filter
-		var $elements = $('.i-sidebar-list-item');
-
+		// Search filter
 		$('.i-sidebar-item-filter').keyup(function() {
-			var $filter = $(this);
-			var searchText = $filter.val();
-			var searchRegex = new RegExp(searchText, 'i');
+			var $input = $(this);
+			var query = $input.val().trim();
+			var selector = query ? '[data-filter-value*="' + query + '" i]' : '[data-filter-value]';
 
-			$filter.toggleClass('has-value', !!searchText);
-
-			if (!searchText) {
-				$('.i-sidebar-list-group').removeClass('i-filtered i-hidden-by-filter i-shown-by-filter');
-				return;
+			if (event.keyCode === 27) {
+				// Escape key pressed
+				resetSearch($input);
 			}
 
-			$('.i-sidebar-list-group').each(function() {
-				var $group = $(this);
-				var isEmpty = true;
+			$input.parent('.i-search-input').toggleClass('has-value', !!query);
 
-				$group.addClass('i-filtered');
-
-				$group.find('.i-sidebar-list-item').each(function() {
-					var $element = $(this);
-					var isMatch = ($element.attr('data-element-name').search(searchRegex) !== -1);
-
-					$element.toggleClass('i-hidden-by-filter', !isMatch);
-					$element.toggleClass('i-shown-by-filter', isMatch);
-
-					isEmpty = isEmpty && !isMatch;
-				});
-
-				$group.toggleClass('i-hidden-by-filter', isEmpty);
-				$group.toggleClass('i-shown-by-filter', !isEmpty);
-			});
+			$('.i-page__sidebar [data-filter-value]').css('display', 'none');
+			$('.i-page__sidebar ' + selector).css('display', 'block');
 		});
 
-		// i-search-input-reset
+		// Search filter reset
+		function resetSearch($input) {
+			$input.siblings('.i-sidebar-item-filter').val('');
+			$input.parent('.i-search-input').removeClass('has-value');
+			$('.i-page__sidebar [data-filter-value]').css('display', 'block');
+		}
+
 		$('.i-search-input-reset').click(function() {
-			$(this).siblings('input').val('').removeClass('has-value');
-			$('.i-sidebar-list-group, .i-sidebar-list-item').removeClass('i-filtered i-hidden-by-filter i-shown-by-filter');
+			resetSearch($(this));
 		});
 
 		// Lazy-loaded iframes
