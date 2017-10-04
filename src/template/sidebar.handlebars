@@ -20,7 +20,9 @@
 			class="text-white pt-4 mb-1"
 			data-filter-value="{{#each docs}} {{name}} {{/each}}"
 		>
-			<b>{{key}}</b>
+			<a href="#{{docs.0.slug}}" class="i-sidebar-list-item text-white">
+				<b>{{key}}</b>
+			</a>
 		</h5>
 
 		<div>
