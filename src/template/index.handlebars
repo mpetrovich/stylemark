@@ -20,7 +20,13 @@
 				{{/each}}
 			{{/each}}
 		</div>
-		<div class="i-page__sidebar text-white">
+		<div
+			class="i-page__sidebar text-white"
+			style="
+				background-color: {{sidebar.bgColor}};
+				color: {{sidebar.textColor}};
+			"
+		>
 			{{> sidebar}}
 		</div>
 
