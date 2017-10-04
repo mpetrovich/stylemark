@@ -66,12 +66,31 @@ class Generator {
 				.sortBy(['rank', 'key'])
 				.value();
 
-			let html = Handlebars.compile(indexTemplate)({ name: options.name, groups });
+			// Copies static assets
+			fs.copy(path.join(__dirname, 'asset'), destination, error => error ? console.log(error) : null);
+
+			// Copies logo asset
+			let logo;
+			if (options.logo) {
+				logo = path.join(destination, 'asset', 'img', path.basename(options.logo));
+				fs.copy(
+					path.join(options.input, options.logo),
+					logo,
+					error => error ? console.log(error) : null
+				);
+			}
+			else {
+				logo = '';
+			}
+
+			let html = Handlebars.compile(indexTemplate)({
+				name: options.name,
+				logo: logo,
+				groups
+			});
 
 			let filepath = path.join(destination, 'index.html');
 			fs.writeFile(filepath, html, 'utf8', error => error ? console.log(error) : null);
-
-			fs.copy(path.join(__dirname, 'asset'), destination, error => error ? console.log(error) : null);
 		});
 	}
 

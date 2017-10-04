@@ -11,6 +11,9 @@ function generate(params) {
 	var configPath = params.configPath || path.join(params.input, '.stylemark.yml');
 	var options = configPath ? getConfig(configPath) : {};
 
+	options.input = input;
+	options.output = output;
+
 	parser.parseDir(input, options, (error, docs) => {
 		if (error) {
 			console.error(error);
