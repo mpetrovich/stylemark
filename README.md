@@ -6,7 +6,7 @@ Document your style guide components in code comments or Markdown files, and Sty
 
 ### Demo: &nbsp; [Bootstrap](http://stylemark-bootstrap.surge.sh/) &nbsp; [React](http://stylemark-react.surge.sh/) &nbsp; [Ember](http://stylemark-ember.surge.sh/)
 
-![Bootstrap style guide](https://user-images.githubusercontent.com/1235062/29730805-d8150cb6-89af-11e7-8ded-5d4810cab462.png)
+![Bootstrap style guide](https://user-images.githubusercontent.com/1235062/31162015-ead3b5c4-a8a8-11e7-8d22-69cd07923fa8.png)
 
 
 Installation
@@ -125,7 +125,11 @@ Name | Description
 ### Configuration file
 The Stylemark configuration file is a [YAML](https://en.wikipedia.org/wiki/YAML) file that contains settings to use when generating the HTML style guide:
 ```yaml
-name: name of the style guide
+name: Name of the style guide
+logo: (optional) Relative filepath or absolute URL of your logo
+sidebar:
+  bgColor: (optional) Background color of the sidebar; hex colors should be quoted
+  textColor: (optional) Text color of the sidebar; hex colors should be quoted
 doctypeTag: (optional) For example iframes, the HTML doctype to use; defaults to "<!doctype html>"
 headHtml: (optional) For example iframes, HTML to insert before the closing </head> tag
 bodyHtml: (optional) For example iframes, HTML to insert before the closing </body> tag
@@ -136,6 +140,11 @@ emberAppName: For Ember apps, this is the name of the Ember app exported to the 
 Here's an example for [React Boostrap](https://github.com/mpetrovich/react-bootstrap/):
 ```yaml
 name: React Bootstrap
+logo: docs/assets/logo.png
+
+sidebar:
+  bgColor: "#008299"
+  textColor: "#fff"
 
 headHtml: |
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
