@@ -90,6 +90,7 @@ class Generator {
 			let html = Handlebars.compile(indexTemplate)({
 				name: options.name,
 				logo: logo,
+				livereload: options.livereload,
 				sidebar: options.sidebar,
 				groups
 			});

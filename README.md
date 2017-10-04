@@ -127,6 +127,7 @@ The Stylemark configuration file is a [YAML](https://en.wikipedia.org/wiki/YAML)
 ```yaml
 name: Name of the style guide
 logo: (optional) Relative filepath or absolute URL of your logo
+livereload: (optional) Port number for Livereload
 sidebar:
   bgColor: (optional) Background color of the sidebar; hex colors should be quoted
   textColor: (optional) Text color of the sidebar; hex colors should be quoted

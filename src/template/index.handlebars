@@ -53,5 +53,14 @@
 		<script src="js/vendor/highlight.min.js"></script>
 		<script src="js/app.js"></script>
 		<script>hljs.initHighlightingOnLoad();</script>
+		{{#if livereload}}
+		<script>
+			(function () {
+				var s = document.createElement('script');
+				s.src = 'http://' + (location.host || 'localhost').split(':')[0] + ':{{livereload}}/livereload.js?snipver=1';
+				document.body.appendChild(s);
+			})()
+		</script>
+		{{/if}}
 	</body>
 </html>
