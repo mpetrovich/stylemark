@@ -6,7 +6,7 @@ Document your style guide components in code comments or Markdown files, and Sty
 
 ### Demo: &nbsp; [Bootstrap](http://stylemark-bootstrap.surge.sh/) &nbsp; [React](http://stylemark-react.surge.sh/) &nbsp; [Ember](http://stylemark-ember.surge.sh/)
 
-![Bootstrap style guide](https://user-images.githubusercontent.com/1235062/31162015-ead3b5c4-a8a8-11e7-8d22-69cd07923fa8.png)
+![Bootstrap style guide](https://user-images.githubusercontent.com/1235062/31162551-2d8f6da6-a8ac-11e7-8874-9e8a2c1c6680.png)
 
 
 Installation
