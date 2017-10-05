@@ -6,11 +6,10 @@
 	padding-left: 45px;
 	padding-bottom: 0.3em;
 	font-size: 16px;
-	color: #fff;
 	-webkit-font-smoothing: antialiased;
 	background: transparent;
 	border: none;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+	border-bottom: 1px solid;
 	border-radius: 0;
 	box-shadow: none;
 	transition-duration: 0s;
@@ -22,7 +21,6 @@
 	padding-top: 0.5em;
 	padding-bottom: 0.4em;
 	font-size: 18px;
-	color: #fff;
 	background: rgba(0, 0, 0, 0.1);
 	border-color: transparent;
 	box-shadow: none;
@@ -30,14 +28,11 @@
 	opacity: 1;
 }
 .i-search-input input::-webkit-input-placeholder {
-	color: rgba(255, 255, 255, 0.75);
 	-webkit-font-smoothing: antialiased;
 }
 .i-search-input input::-moz-placeholder {
-	color: rgba(255, 255, 255, 0.75);
 }
 .i-search-input input::placeholder {
-	color: rgba(255, 255, 255, 0.75);
 	-webkit-font-smoothing: antialiased;
 }
 .i-search-input .search-input-icon {
@@ -45,7 +40,6 @@
 	top: 50%;
 	left: 22px;
 	transform: translateY(-50%);
-	color: rgba(255, 255, 255, 0.75);
 }
 .i-search-input input:focus ~ .search-input-icon {
 	left: 16px;
@@ -57,7 +51,6 @@
 	left: 10px;
 	top: 50%;
 	padding: 10px;
-	color: #fff;
 	background: transparent;
 	border: none;
 	cursor: pointer;
