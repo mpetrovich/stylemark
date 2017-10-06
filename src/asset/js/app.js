@@ -66,5 +66,11 @@
 			});
 		});
 
+		// Mobile nav select
+		$('.i-nav-select').change(function() {
+			var slug = $(this).find('option:selected').val();
+			window.location.hash = slug;
+		});
+
 	});
 })(jQuery);
