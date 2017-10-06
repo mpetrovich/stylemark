@@ -145,7 +145,7 @@ describe('A processed source code file', () => {
 			tags: ['element', 'interactive', 'form'],
 			version: '1.0.3',
 			todos: ['fix padding', 'improve colors'],
-			author: 'mpetrovich',
+			author: 'nextbigsoundinc',
 		}));
 		it('should have the correct component description', () => expect(components[0].getDescription()).to.equal(
 			fs.readFileSync('test/expected.md', 'utf8')
