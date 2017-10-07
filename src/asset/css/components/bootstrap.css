@@ -1,5 +1,6 @@
 body, input {
 	font-family: system-ui, sans-serif;
+	-webkit-font-smoothing: antialiased;
 }
 
 .text-code, code, kbd, pre, samp {
@@ -16,11 +17,6 @@ body, input {
 }
 .bg-none {
 	background: none;
-}
-
-.btn,
-.text-white {
-	-webkit-font-smoothing: antialiased;
 }
 
 a.card-body:hover {
