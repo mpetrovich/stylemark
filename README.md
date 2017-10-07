@@ -130,16 +130,40 @@ The Stylemark configuration file is a [YAML](https://en.wikipedia.org/wiki/YAML)
 ```yaml
 name: Name of the style guide
 logo: (optional) Relative filepath or absolute URL of your logo
+
 sidebar:
   bgColor: (optional) Background color of the sidebar; hex colors should be quoted
   textColor: (optional) Text color of the sidebar; hex colors should be quoted
+
 doctypeTag: (optional) For example iframes, the HTML doctype to use; defaults to "<!doctype html>"
 headHtml: (optional) For example iframes, HTML to insert before the closing </head> tag
 bodyHtml: (optional) For example iframes, HTML to insert before the closing </body> tag
+
 webpackAppPath: For React apps, this is the `output.library` value in your webpack config
 emberAppName: For Ember apps, this is the name of the Ember app exported to the window object
+
+categoryOrder: (optional) See below
 ```
 
+##### Category order
+The relative order of categories can be defined by prefixing a category name with `+`, `-`, or nothing:
+- Categories prefixed with `+` will be listed first
+- Categories prefixed with `-` will be listed last
+- Unprefixed categories will be listed in between
+
+Omitted categories are ordered as if they were included but unprefixed.
+
+Within each of the `+`-, `-`-, and un-prefixed groups, the specified order will be preserved. Example:
+```
++ Getting Started
++ Overview
++ Grid
+Typography
+- Extras
+- Other
+```
+
+##### Example
 Here's an example for [React Boostrap](https://github.com/mpetrovich/react-bootstrap/):
 ```yaml
 name: React Bootstrap
