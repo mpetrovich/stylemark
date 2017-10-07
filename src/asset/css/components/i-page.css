@@ -12,6 +12,9 @@
 .i-page__sidebar > * {
 	padding: 0 20px;
 }
+.i-page__sidebar a {
+	color: inherit;
+}
 .i-page__content {
 	padding-top: 60px;
 	background: #f0f0f0;
@@ -46,7 +49,6 @@
 		padding: 10px 0;
 		overflow-x: hidden;
 		overflow-y: auto;
-		background: #0b7564;
 	}
 	.i-nav-select {
 		display: none;

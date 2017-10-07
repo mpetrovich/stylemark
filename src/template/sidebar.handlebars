@@ -17,10 +17,10 @@
 	<div class="i-sidebar-list-group">
 
 		<h5
-			class="text-white pt-4 mb-1"
+			class="pt-4 mb-1"
 			data-filter-value="{{#each docs}} {{name}} {{/each}}"
 		>
-			<a href="#{{docs.0.slug}}" class="i-sidebar-list-item text-white">
+			<a href="#{{docs.0.slug}}" class="i-sidebar-list-item">
 				<b>{{key}}</b>
 			</a>
 		</h5>
@@ -29,7 +29,7 @@
 			{{#each docs}}
 				<a
 					href="#{{slug}}"
-					class="i-sidebar-list-item text-white"
+					class="i-sidebar-list-item"
 					data-filter-value="{{name}}"
 				>
 					<span>{{name}}</span>
@@ -46,7 +46,7 @@
 
 <div class="row no-gutters mt-auto pt-3 pb-2">
 	<span class="col">
-		<span class="text-white i-muted">by</span>
-		<a class="text-white i-muted -hover" href="https://github.com/nextbigsoundinc/stylemark">Stylemark</a>
+		<span class="i-muted">by</span>
+		<a class="i-muted -hover" href="https://github.com/nextbigsoundinc/stylemark">Stylemark</a>
 	</span>
 </div>
