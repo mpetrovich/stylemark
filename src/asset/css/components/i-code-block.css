@@ -2,3 +2,21 @@
 	background: #f7f7f7;
 	border-color: #f7f7f7;
 }
+.i-code-block__lang {
+	display: block;
+	margin: 0;
+	padding: 0.5em;
+	font-size: 0.8em;
+	font-weight: 500;
+	text-transform: uppercase;
+	text-align: left;
+	color: #888;
+	background: transparent;
+	border: none;
+	-webkit-font-smoothing: antialiased;
+	user-select: none;
+	cursor: pointer;
+}
+.i-code-block__lang:focus {
+	outline: none;
+}

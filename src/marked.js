@@ -37,9 +37,10 @@ renderer.heading = function(text, level) {
 renderer.code = function(code, lang) {
 	var escaped = _.escape(code);
 	return `
-<div class="i-code-block card mb-3">
-	<div class="card-body">
-		<button class="btn btn-outline-primary btn-sm i-copy-button" data-clipboard-text="${escaped}" data-toggle="tooltip" data-placement="top" title="Tooltip on top">Copy</button>
+<div class="i-code-block card mb-2">
+	<button type="button" class="i-code-block__lang"><i class="fa fa-caret-right fa-fw"></i> ${lang}</button>
+	<div class="card-body hidden">
+		<button type="button" class="btn btn-outline-primary btn-sm i-copy-button" data-clipboard-text="${escaped}" data-toggle="tooltip" data-placement="top" title="Tooltip on top">Copy</button>
 		<pre class="mb-0"><code class="lang-${lang}">${escaped}</code></pre>
 	</div>
 </div>`;

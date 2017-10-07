@@ -31,6 +31,10 @@ a.card-body:hover {
 	position: relative;
 }
 
+.hidden {
+	display: none !important;
+}
+
 a.i-no-line:hover {
 	text-decoration: none;
 }
