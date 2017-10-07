@@ -19,7 +19,7 @@
 
 .i-nav-select {
 	position: fixed;
-	z-index: 2;
+	z-index: 100;
 	top: 0;
 	width: 100%;
 	min-height: 60px;
