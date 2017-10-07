@@ -105,12 +105,12 @@ stylemark({
 
 ### On the command-line
 ```sh
-bin/stylemark -i <input> -o <output> -c <configPath>
+bin/stylemark -i <input> -o <output> -c <configPath> -w [<delay>]
 ```
 
 Example:
 ```sh
-bin/stylemark -i ~/git/acme-source-code -o ~/acme-style-guide -c ~/acme-source-code/config/stylemark.yml
+bin/stylemark -i ~/git/acme-source-code -o ~/acme-style-guide -c ~/acme-source-code/config/stylemark.yml -w
 ```
 
 Name | Description
@@ -118,6 +118,7 @@ Name | Description
 `-i` | Directory where to read from
 `-o` | Directory where to save the generated HTML
 `-c` | (optional) Filepath of the stylemark YAML configuration file, defaults to `.stylemark.yml` within the input directory. See [Configuration](#configuration-file)
+`-w` | (optional) Will watch for file changes in `<input>` and regenerate the style guide, waiting at least `<delay>` milliseconds between successive changes (defaults to `2000`)
 
 
 ### Configuration file
