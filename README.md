@@ -105,7 +105,7 @@ stylemark({
 
 ### On the command-line
 ```sh
-bin/stylemark -i <input> -o <output> -c <configPath> -w [<delay>] -b [<port>]
+stylemark -i <input> -o <output> -c <configPath> -w [<delay>] -b [<port>]
 ```
 
 Name | Description
@@ -118,12 +118,12 @@ Name | Description
 
 **Example:** Generate a style guide from `path/to/source/code` with a custom config file location, and save the generated HTML to `path/to/style/guide`
 ```sh
-bin/stylemark -i path/to/source/code -o path/to/style/guide -c ~/acme-source-code/config/stylemark.yml
+stylemark -i path/to/source/code -o path/to/style/guide -c ~/acme-source-code/config/stylemark.yml
 ```
 
 **Example:** Generate and open the style guide in a browser, and automatically re-generate and reload it when the source code is modified
 ```sh
-bin/stylemark -i path/to/source/code -o path/to/style/guide -w -b
+stylemark -i path/to/source/code -o path/to/style/guide -w -b
 ```
 
 
