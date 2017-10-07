@@ -16,11 +16,7 @@ Installation
 ---
 Requires Node 6.x+ (4.x support coming soon)
 ```sh
-npm install stylemark
-```
-To enable command-line usage, use `--link`:
-```sh
-npm install stylemark --link
+npm install -g stylemark
 ```
 
 
@@ -108,7 +104,6 @@ stylemark({
 
 
 ### On the command-line
-Note: Stylemark must be installed with the `--link` flag to enable CLI usage. See [Installation](#installation) notes.
 ```sh
 bin/stylemark -i <input> -o <output> -c <configPath>
 ```
