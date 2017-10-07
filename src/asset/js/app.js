@@ -10,6 +10,26 @@
 		// Bootstrap tooltips
 		$('[data-toggle="tooltip"]').tooltip();
 
+		// Click-to-copy
+		(function() {
+			var elements = document.querySelectorAll('[data-clipboard-text]');
+			var clipboard = new Clipboard(elements);
+
+			clipboard.on('success', function(e) {
+				setText($(e.trigger), 'Copied!');
+			});
+			clipboard.on('error', function(e) {
+				setText($(e.trigger), 'Error!');
+			});
+
+			function setText(element, text) {
+				element.text(text);
+				window.setTimeout(function() {
+					element.text('Copy');
+				}, 3000);
+			}
+		})();
+
 		// Search filter
 		$('.i-sidebar-item-filter').keyup(function() {
 			var $input = $(this);
