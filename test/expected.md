@@ -18,7 +18,7 @@ class | description
 `btn-success` | Indicates a successful or positive action
 
 <example name="types"></example>
-```html
+```types.html
 <button class="btn btn-default">Default</button>
 <button class="btn btn-primary">Primary</button>
 <button class="btn btn-success">Success</button>
@@ -40,22 +40,22 @@ Buttons can be used with Handlebars, React/JSX, and AngularJS.
 
 In Handlebars:
 <example name="handlebars-button"></example>
-```handlebars
+```handlebars-button.handlebars
 {{#bs-button}}Button{{/bs-button}}
 ```
 
 In React/JSX:
 <example name="react-button"></example>
-```jsx
+```react-button.jsx
 <Button>Button</Button>
 ```
 
 In AngularJS:
 <example name="angular-button"></example>
-```html
+```angular-button.html
 <button class="btn btn-default">{{ text }}</button>
 ```
-```angularjs
+```angular-button.angularjs
 text = 'Button'
 ```
 
@@ -77,6 +77,6 @@ Disabled state
 Buttons can be disabled too.
 
 <example name="disabled"></example>
-```html
+```disabled.html
 <button class="btn btn-primary" disabled>Disabled button</button>
 ```
