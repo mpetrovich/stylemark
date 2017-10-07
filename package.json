@@ -48,6 +48,7 @@
     "babel-core": "^6.25.0",
     "babel-preset-react": "^6.24.1",
     "bluebird": "^3.5.0",
+    "browser-sync": "^2.18.13",
     "chokidar": "^1.7.0",
     "fs-extra": "^4.0.0",
     "gray-matter": "^2.1.1",

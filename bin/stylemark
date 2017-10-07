@@ -5,7 +5,9 @@
 var rfr = require('rfr');
 var args = require('yargs').argv;
 var chokidar = require('chokidar');
+var bs = require('browser-sync').create();
 var _ = require('lodash');
+var path = require('path');
 var stylemark = rfr('src/stylemark');
 
 var input = args.i;
@@ -13,6 +15,8 @@ var output = args.o;
 var configPath = args.c;
 var watch = args.w;
 var delay = (watch === true) ? 2000 : watch;
+var browser = args.b;
+var port = _.isNumber(browser) ? browser : null;
 
 var generate = _.throttle(
 	function() {
@@ -40,4 +44,20 @@ if (watch) {
 		console.log(event, path);
 		generate();
 	});
+}
+
+if (browser) {
+	console.log('Launching browser...');
+	var options = {
+		ui: false,
+		files: path.join(output, '**', '*.*'),
+		watchEvents: ['add', 'change'],
+		server: output,
+		reloadDelay: 500,
+		notify: false,
+	};
+	if (port) {
+		options.port = port;
+	}
+	bs.init(options);
 }
