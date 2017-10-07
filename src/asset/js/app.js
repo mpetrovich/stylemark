@@ -93,7 +93,7 @@
 		});
 
 		// Code block toggle
-		$('.i-code-block__lang').click(function() {
+		$('.i-code-block__lang.-collapsible').click(function() {
 			var $lang = $(this);
 			$lang.find('i').toggleClass('fa-caret-right').toggleClass('fa-caret-down');
 			$lang.siblings('.card-body').toggleClass('hidden');

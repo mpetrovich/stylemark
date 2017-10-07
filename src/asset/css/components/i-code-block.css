@@ -5,6 +5,7 @@
 .i-code-block__lang {
 	display: block;
 	margin: 0;
+	margin-left: 0.5em;
 	padding: 0.5em;
 	font-size: 0.8em;
 	font-weight: 500;
@@ -15,6 +16,9 @@
 	border: none;
 	-webkit-font-smoothing: antialiased;
 	user-select: none;
+}
+.i-code-block__lang.-collapsible {
+	margin-left: 0;
 	cursor: pointer;
 }
 .i-code-block__lang:focus {

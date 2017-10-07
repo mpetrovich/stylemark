@@ -129,7 +129,7 @@ class Generator {
 				</div>\n`
 			);
 
-				// Adds 'table' class to <table> tags
+			// Adds 'table' class to <table> tags
 			doc.description = doc.description.replace(
 				/<table/g,
 				'<table class="table"'

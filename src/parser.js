@@ -200,11 +200,11 @@ function parseDescriptionMarkdown(markdown, component) {
 			new RegExp('```\\s*' + name + '\\.(html|jsx|handlebars|hbs)', 'gm'),
 			(match, language) => {
 				if (hasExample[name]) {
-					return '```' + language;
+					return '```' + name + '.' + language;
 				}
 				else {
 					hasExample[name] = true;
-					return exampleHtml + '```' + language;
+					return exampleHtml + '```' + name + '.' + language;
 				}
 			}
 		);
@@ -214,7 +214,7 @@ function parseDescriptionMarkdown(markdown, component) {
 	description = description.replace(/\n?```[^\n]+hidden(?:.*\n)+?```/g, '');
 
 	// Removes custom block annotations
-	description = description.replace(/```([^\.\s,]+)\.(\w+)(?:,(\S+))?/g, '```$2');
+	description = description.replace(/```([^\.\s,]+)\.(\w+)(?:,(\S+))?/g, '```$1.$2');
 
 	return description;
 }
