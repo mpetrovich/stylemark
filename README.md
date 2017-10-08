@@ -19,6 +19,8 @@ Requires Node 6.x+ (4.x support coming soon)
 npm install -g stylemark
 ```
 
+For a native app with auto-updating and hot-reloading, see [Stylemark on Electron](https://github.com/nextbigsoundinc/stylemark-electron).
+
 
 Documenting style guide components
 ---
