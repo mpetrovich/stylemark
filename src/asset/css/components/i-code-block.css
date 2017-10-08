@@ -14,7 +14,6 @@
 	color: #888;
 	background: transparent;
 	border: none;
-	-webkit-font-smoothing: antialiased;
 	user-select: none;
 }
 .i-code-block__lang.-collapsible {

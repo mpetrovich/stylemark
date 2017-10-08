@@ -6,7 +6,6 @@
 	padding-left: 45px;
 	font-size: 18px;
 	color: #fff;
-	-webkit-font-smoothing: antialiased;
 	background: transparent;
 	border: none;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.5);
@@ -26,14 +25,12 @@
 }
 .i-search-input input::-webkit-input-placeholder {
 	color: rgba(255, 255, 255, 0.75);
-	-webkit-font-smoothing: antialiased;
 }
 .i-search-input input::-moz-placeholder {
 	color: rgba(255, 255, 255, 0.75);
 }
 .i-search-input input::placeholder {
 	color: rgba(255, 255, 255, 0.75);
-	-webkit-font-smoothing: antialiased;
 }
 .i-search-input .search-input-icon {
 	position: absolute;
