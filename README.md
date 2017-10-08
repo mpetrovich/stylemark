@@ -19,7 +19,7 @@ Requires Node 6.x+ (4.x support coming soon)
 npm install -g stylemark
 ```
 
-For native apps with built-in auto-updating/hot-reloading, see [Stylemark Native](https://github.com/nextbigsoundinc/stylemark-native).
+For a native app with built-in auto-updating/hot-reloading, see [Stylemark App](https://github.com/nextbigsoundinc/stylemark-app).
 
 
 Documenting style guide components
