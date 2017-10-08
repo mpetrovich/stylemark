@@ -1,3 +1,21 @@
 html, body {
 	height: 100%;
 }
+
+body, input {
+	font-family: system-ui, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	overflow-x: hidden;
+}
+
+.text-code, code, kbd, pre, samp {
+	font-family: "Source Code Pro", "Courier New", Courier, monospace;
+}
+
+.relative {
+	position: relative;
+}
+
+.hidden {
+	display: none !important;
+}
