@@ -136,7 +136,7 @@ name: Name of the style guide
 logo: (optional) Relative filepath or absolute URL of your logo
 
 sidebar:
-  bgColor: (optional) Background color of the sidebar; hex colors should be quoted
+  background: (optional) Background color of the sidebar; hex colors should be quoted
   textColor: (optional) Text color of the sidebar; hex colors should be quoted
 
 doctypeTag: (optional) For example iframes, the HTML doctype to use; defaults to "<!doctype html>"
@@ -174,7 +174,7 @@ name: React Bootstrap
 logo: docs/assets/logo.png
 
 sidebar:
-  bgColor: "#008299"
+  background: "#008299"
   textColor: "#fff"
 
 headHtml: |
