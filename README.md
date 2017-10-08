@@ -113,15 +113,15 @@ Name | Description
 `-i` | Directory where to read from
 `-o` | Directory where to save the generated HTML
 `-c` | (optional) Filepath of the stylemark YAML configuration file, defaults to `.stylemark.yml` within the input directory. See [Configuration](#configuration-file)
-`-w` | (optional) Will watch for file changes in `<input>` and regenerate the style guide, waiting at least `<delay>` milliseconds between successive changes (defaults to `2000`)
+`-w` | (optional) Will watch for file changes in `<input>` and rebuild the style guide, waiting at least `<delay>` milliseconds between successive changes (defaults to `2000`)
 `-b` | (optional) Will open the style guide in your default browser at `http://localhost:<port>` and will automatically reload it when the style guide is updated. The port will be chosen automatically if not provided.
 
-**Example:** Generate a style guide from `path/to/source/code` with a custom config file location, and save the generated HTML to `path/to/style/guide`
+**Example:** Build a style guide from `path/to/source/code` with a custom config file location, and save the generated HTML to `path/to/style/guide`
 ```sh
 stylemark -i path/to/source/code -o path/to/style/guide -c ~/acme-source-code/config/stylemark.yml
 ```
 
-**Example:** Generate and open the style guide in a browser, and automatically re-generate and reload it when the source code is modified
+**Example:** Build and open the style guide in a browser, and automatically rebuild and reload it when the source code is modified
 ```sh
 stylemark -i path/to/source/code -o path/to/style/guide -w -b
 ```
