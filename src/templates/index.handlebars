@@ -20,10 +20,11 @@
 					<select class="form-control form-control-lg">
 						<option disabled selected>Go to…</option>
 						{{#each groups}}
-							<optgroup label="{{key}}"></optgroup>
-							{{#each docs}}
-								<option value="{{slug}}">{{{name}}}</option>
-							{{/each}}
+							<optgroup label="{{key}}">
+								{{#each docs}}
+									<option value="{{slug}}">{{{name}}}</option>
+								{{/each}}
+							</optgroup>
 						{{/each}}
 					</select>
 				</form>
