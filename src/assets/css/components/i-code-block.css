@@ -1,4 +1,5 @@
 .i-code-block {
+	position: relative;
 	background: #f7f7f7;
 	border-color: #f7f7f7;
 	margin: 10px 0 20px;
