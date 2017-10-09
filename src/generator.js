@@ -9,9 +9,9 @@ var Handlebars = rfr('src/handlebars');
 var marked = rfr('src/marked');
 var babel = require('babel-core');
 
-var docTemplate = fs.readFileSync(path.join(__dirname, 'template/doc.handlebars'), 'utf8');
-var exampleTemplate = fs.readFileSync(path.join(__dirname, 'template/example.handlebars'), 'utf8');
-var indexTemplate = fs.readFileSync(path.join(__dirname, 'template/index.handlebars'), 'utf8');
+var docTemplate = fs.readFileSync(path.join(__dirname, 'templates/doc.handlebars'), 'utf8');
+var exampleTemplate = fs.readFileSync(path.join(__dirname, 'templates/example.handlebars'), 'utf8');
+var indexTemplate = fs.readFileSync(path.join(__dirname, 'templates/index.handlebars'), 'utf8');
 
 class Generator {
 

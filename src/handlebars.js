@@ -80,8 +80,8 @@ var helpers = {
 };
 
 var partials = {
-	sidebar: 'template/sidebar.handlebars',
-	doc: 'template/doc.handlebars',
+	sidebar: 'templates/sidebar.handlebars',
+	doc: 'templates/doc.handlebars',
 };
 
 _.forEach(helpers, (func, name) => Handlebars.registerHelper(name, func));
