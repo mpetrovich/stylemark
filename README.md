@@ -134,6 +134,7 @@ The Stylemark configuration file is a [YAML](https://en.wikipedia.org/wiki/YAML)
 ```yaml
 name: Name of the style guide
 logo: (optional) Relative filepath or absolute URL of your logo
+assets: (optional) List of relative file/directory paths to copy and mirror in the generated style guide
 
 sidebar:
   background: (optional) Background color of the sidebar; hex colors should be quoted
@@ -168,24 +169,26 @@ Typography
 ```
 
 ##### Example
-Here's an example for [React Boostrap](https://github.com/mpetrovich/react-bootstrap/):
+Here's an example for [Boostrap](https://github.com/mpetrovich/bootstrap/):
 ```yaml
-name: React Bootstrap
-logo: docs/assets/logo.png
+name: Bootstrap
+logo: docs/assets/brand/bootstrap-solid.svg
+
+assets:
+  - dist
+  - fonts
 
 sidebar:
-  background: "#008299"
+  bgColor: "#3b2a55"
   textColor: "#fff"
 
 headHtml: |
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
-  <script>window._LIBRARY = 'ReactBootstrap';</script>
+  <link rel="stylesheet" href="dist/css/bootstrap.min.css">
 
 bodyHtml: |
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.30.8/react-bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="dist/js/bootstrap.min.js"></script>
 
-webpackAppPath: ReactBootstrap
+order:
+  - Getting Started
 ```

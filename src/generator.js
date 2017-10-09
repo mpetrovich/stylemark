@@ -66,7 +66,7 @@ class Generator {
 				.sortBy(['rank', 'key'])
 				.value();
 
-			// Copies static assets
+			// Copies stylemark assets
 			fs.copy(
 				path.join(__dirname, 'assets'),
 				path.join(destination, '_stylemark'),
@@ -79,16 +79,26 @@ class Generator {
 				logo = options.logo;
 			}
 			else if (options.logo) {
-				logo = path.join('_stylemark', 'img', path.basename(options.logo));
-
+				logo = options.logo;
 				fs.copy(
 					path.join(options.input, options.logo),
-					logo,
+					path.join(options.output, options.logo),
 					error => error ? console.log(error) : null
 				);
 			}
 			else {
 				logo = '';
+			}
+
+			// Copies user-defined assets
+			if (options.assets) {
+				_.forEach(options.assets, (asset) => {
+					fs.copy(
+						path.join(options.input, asset),
+						path.join(options.output, asset),
+						error => error ? console.log(error) : null
+					);
+				});
 			}
 
 			let html = Handlebars.compile(indexTemplate)({
