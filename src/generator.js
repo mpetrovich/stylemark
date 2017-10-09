@@ -33,10 +33,10 @@ class Generator {
 			let groups = _(docs)
 				.groupBy(doc => doc.category || 'Other')
 				.map((docs, category) => {
-					var categoryOrder = _.isEmpty(options.categoryOrder) ? ['-Other'] : options.categoryOrder;
-					var normalizedCategoryOrder = _.map(categoryOrder, category => category.replace(/^-/, ''));
+					var order = _.isEmpty(options.order) ? ['-Other'] : options.order;
+					var normalizedCategoryOrder = _.map(order, category => category.replace(/^-/, ''));
 					var orderIndex = _.indexOf(normalizedCategoryOrder, category);
-					var isLast = (orderIndex !== -1) ? categoryOrder[orderIndex].startsWith('-') : null;
+					var isLast = (orderIndex !== -1) ? order[orderIndex].startsWith('-') : null;
 
 					// Lower ranks will be listed first
 					var rank;
@@ -49,7 +49,7 @@ class Generator {
 						}
 						else {
 							// rank < 0 for explicit categories to list first
-							rank = orderIndex - categoryOrder.length;
+							rank = orderIndex - order.length;
 						}
 					}
 					// Unspecified category order

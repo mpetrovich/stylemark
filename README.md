@@ -147,7 +147,7 @@ bodyHtml: (optional) For example iframes, HTML to insert before the closing </bo
 webpackAppPath: For React apps, this is the `output.library` value in your webpack config
 emberAppName: For Ember apps, this is the name of the Ember app exported to the window object
 
-categoryOrder: (optional) See below
+order: (optional) See below
 ```
 
 ##### Category order
