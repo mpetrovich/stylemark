@@ -46,6 +46,12 @@ var helpers = {
 	},
 	markdown: function(markdown) {
 		markdown = markdown || '';
+
+		// Escapes '<object>'
+		markdown = markdown
+			.replace(/<Object>/g, '&lt;Object&gt;')
+			.replace(/<object>/g, '&lt;object&gt;');
+
 		return new Handlebars.SafeString(marked(markdown));
 	},
 	isArray: function(value) {
