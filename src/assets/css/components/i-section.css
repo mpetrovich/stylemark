@@ -38,16 +38,16 @@ h4[id] .fa-link,
 h5[id] .fa-link,
 h6[id] .fa-link {
 	display: none;
-	padding: 7px;
 	position: absolute;
-	left: 0;
-	top: 50%;
+	top: 32px;
+	left: 0.4em;
+	width: 1.4em;
 	color: #ccc;
 
-	-webkit-transform: translate(-100%, -50%);
-	-moz-transform: translate(-100%, -50%);
-	-ms-transform: translate(-100%, -50%);
-	transform: translate(-100%, -50%);
+	-webkit-transform: translate(-100%, 0%) scale(0.7);
+	-moz-transform: translate(-100%, 0%) scale(0.7);
+	-ms-transform: translate(-100%, 0%) scale(0.7);
+	transform: translate(-100%, 0%) scale(0.7);
 }
 .i-section[id]:hover .i-section__link.-heading,
 h1[id]:hover .fa-link,
@@ -65,5 +65,6 @@ h3[id] .fa-link:hover,
 h4[id] .fa-link:hover,
 h5[id] .fa-link:hover,
 h6[id] .fa-link:hover {
-	color: #337ab7;  /* Bootstrap default link color */
+	color: #000;
+	text-decoration: none;
 }
