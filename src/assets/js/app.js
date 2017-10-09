@@ -81,7 +81,7 @@
 				return librarySlug + '-' + id;
 			});
 
-			$library.find('a[href*="#"]').attr('href', function(index, href) {
+			$library.find('a[href^="#"]').attr('href', function(index, href) {
 				return href.replace(/^#(.*)/, '#' + librarySlug + '-$1');
 			});
 		});
