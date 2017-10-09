@@ -67,7 +67,11 @@ class Generator {
 				.value();
 
 			// Copies static assets
-			fs.copy(path.join(__dirname, 'asset'), destination, error => error ? console.log(error) : null);
+			fs.copy(
+				path.join(__dirname, 'assets'),
+				path.join(destination, '_stylemark'),
+				error => error ? console.log(error) : null
+			);
 
 			// Copies logo asset
 			let logo;
@@ -75,7 +79,7 @@ class Generator {
 				logo = options.logo;
 			}
 			else if (options.logo) {
-				logo = path.join(destination, 'asset', 'img', path.basename(options.logo));
+				logo = path.join('_stylemark', 'img', path.basename(options.logo));
 
 				fs.copy(
 					path.join(options.input, options.logo),
