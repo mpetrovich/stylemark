@@ -2,6 +2,7 @@
 @import "vendor/highlight-github-gist.css";
 @import "vendor/lazyframe.css";
 @import "vendor/system-font.css";
+@import "vendor/icomoon.css";
 
 @import "components/base.css";
 @import "components/fonts.css";
