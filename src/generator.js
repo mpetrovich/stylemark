@@ -110,7 +110,7 @@ class Generator {
 					<h5 class="i-example__heading">
 						Example
 						<a
-							href="html/${doc.slug}-$1.html"
+							href="${doc.slug}-$1.html"
 							target="_blank"
 							class="fa fa-external-link"
 							data-toggle="tooltip"
@@ -121,7 +121,7 @@ class Generator {
 					<div
 						class="i-example__iframe"
 						lazyframe
-						data-src="html/${doc.slug}-$1.html"
+						data-src="${doc.slug}-$1.html"
 						data-initinview="true"
 						data-title="Loading…"
 						$2
@@ -181,17 +181,9 @@ class Generator {
 		example.slug = _.kebabCase(example.name);
 
 		var output = Handlebars.compile(exampleTemplate)({ doc, example, options });
-		var directory = path.join(destination, 'html');
-		var filepath = path.join(directory, `${doc.slug}-${example.slug}.html`);
+		var filepath = path.join(destination, `${doc.slug}-${example.slug}.html`);
 
-		mkdirp(directory, (error) => {
-			if (error) {
-				console.error(error);
-			}
-			else {
-				fs.writeFile(filepath, output, 'utf8', error => error ? console.log(error) : null);
-			}
-		});
+		fs.writeFile(filepath, output, 'utf8', error => error ? console.log(error) : null);
 	}
 }
 
