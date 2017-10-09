@@ -26,7 +26,7 @@
 		<main
 			role="main"
 			id="stylemark-root"
-			ng-controller="stylemark-{{doc.name}}-{{example.name}}"
+			ng-controller="stylemark-{{doc.slug}}-{{example.name}}"
 			style="
 				display: block;
 				padding: {{renderOptions.padding}};
@@ -63,10 +63,10 @@
 				}
 				else {
 					// Creates a new module
-					module = angular.module('stylemark-{{doc.name}}-{{example.name}}', []);
+					module = angular.module('stylemark-{{doc.slug}}-{{example.name}}', []);
 				}
 
-				module.controller('stylemark-{{doc.name}}-{{example.name}}', function($scope) {
+				module.controller('stylemark-{{doc.slug}}-{{example.name}}', function($scope) {
 					$scope.$eval(getStylemarkBlock('angularjs'));
 				});
 			})(window.angular);
