@@ -55,6 +55,7 @@ if (browser) {
 		server: output,
 		reloadDelay: 500,
 		notify: false,
+		ghostMode: false,  // ghost mode causes cross-iframe weirdness
 	};
 	if (port) {
 		options.port = port;
