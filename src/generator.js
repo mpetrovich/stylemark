@@ -126,20 +126,20 @@ class Generator {
 						<a
 							href="${doc.slug}-$1.html"
 							target="_blank"
-							class="fa fa-external-link"
-							data-toggle="tooltip"
-							data-placement="top"
-							title="View in its own window"
+							class="icon-new-tab"
+							title="Open in a new window"
 						></a>
 					</h5>
-					<div
-						class="i-example__iframe"
-						lazyframe
-						data-src="${doc.slug}-$1.html"
-						data-initinview="true"
-						data-title="Loading…"
-						$2
-					></div>
+					<div class="i-example__body">
+						<div
+							class="i-example__iframe"
+							lazyframe
+							data-src="${doc.slug}-$1.html"
+							data-initinview="true"
+							data-title="Loading…"
+							$2
+						></div>
+					</div>
 				</div>\n`
 			);
 

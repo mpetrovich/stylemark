@@ -2,6 +2,10 @@
 	background: #f7f7f7;
 	border-color: #f7f7f7;
 }
+.i-example + .i-code-block {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
 .i-code-block__lang {
 	display: block;
 	margin: 0;
