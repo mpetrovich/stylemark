@@ -27,7 +27,7 @@
 
 		<main
 			role="main"
-			id="living-style-guides-root"
+			id="stylemark-root"
 			ng-controller="stylemark-{{doc.name}}-{{example.name}}"
 			style="
 				display: block;
@@ -43,7 +43,7 @@
 		{{{options.bodyHtml}}}
 
 		{{#each example.blocks}}
-			<script type="text/x-living-style-guides" data-language="{{language}}">{{{content}}}</script>
+			<script type="text/x-stylemark" data-language="{{language}}">{{{content}}}</script>
 		{{/each}}
 
 		<script>
@@ -81,7 +81,7 @@
 				}
 
 				var Component = eval(getStylemarkBlock('jsx'));
-				var rootNode = document.getElementById('living-style-guides-root');
+				var rootNode = document.getElementById('stylemark-root');
 				ReactDOM.render(Component, rootNode);
 			})(window.ReactDOM);
 		</script>
@@ -130,7 +130,7 @@
 					};
 
 					compile(container, template, context).then(function(elem) {
-						jQuery('#living-style-guides-root').append(elem);
+						jQuery('#stylemark-root').append(elem);
 					});
 				};
 
