@@ -74,20 +74,23 @@ class Generator {
 			);
 
 			// Copies logo asset
-			let logo;
-			if (options.logo && options.logo.startsWith('http')) {
-				logo = options.logo;
-			}
-			else if (options.logo) {
-				logo = options.logo;
+			let logo = options.logo || '';
+			if (logo && !logo.startsWith('http')) {
 				fs.copy(
-					path.join(options.input, options.logo),
-					path.join(options.output, options.logo),
+					path.join(options.input, logo),
+					path.join(options.output, logo),
 					error => error ? console.log(error) : null
 				);
 			}
-			else {
-				logo = '';
+
+			// Copies favicon asset
+			let favicon = options.favicon || '';
+			if (favicon && !favicon.startsWith('http')) {
+				fs.copy(
+					path.join(options.input, favicon),
+					path.join(options.output, favicon),
+					error => error ? console.log(error) : null
+				);
 			}
 
 			// Copies user-defined assets
@@ -103,8 +106,9 @@ class Generator {
 
 			let html = Handlebars.compile(indexTemplate)({
 				name: options.name,
-				logo: logo,
 				sidebar: options.sidebar,
+				logo,
+				favicon,
 				groups
 			});
 
