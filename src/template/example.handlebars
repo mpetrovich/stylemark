@@ -28,7 +28,7 @@
 		<main
 			role="main"
 			id="living-style-guides-root"
-			ng-controller="{{url}}"
+			ng-controller="stylemark-{{doc.name}}-{{example.name}}"
 			style="
 				display: block;
 				padding: {{renderOptions.padding}};
@@ -65,10 +65,10 @@
 				}
 				else {
 					// Creates a new module
-					module = angular.module('{{url}}', []);
+					module = angular.module('stylemark-{{doc.name}}-{{example.name}}', []);
 				}
 
-				module.controller('{{url}}', function($scope) {
+				module.controller('stylemark-{{doc.name}}-{{example.name}}', function($scope) {
 					$scope.$eval(getStylemarkBlock('angularjs'));
 				});
 			})(window.angular);
