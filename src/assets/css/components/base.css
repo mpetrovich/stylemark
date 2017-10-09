@@ -20,19 +20,15 @@ body, input {
 	display: none !important;
 }
 
-a[class*="icon-"] {
+a.plain-link {
 	color: inherit;
 }
-a[class*="icon-"]:link,
-a[class*="icon-"]:visited {
+a.plain-link:link,
+a.plain-link:visited {
 	text-decoration: none;
 	color: inherit;
 }
-a[class*="icon-"]:hover,
-a[class*="icon-"]:active {
+a.plain-link:hover,
+a.plain-link:active {
 	color: #000;
-}
-
-a.icon-new-tab {
-	font-size: 0.9em;
 }

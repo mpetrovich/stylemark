@@ -96,7 +96,7 @@
 		$('.i-code-block__lang.-collapsible').click(function() {
 			var $lang = $(this);
 			$lang.find('i').toggleClass('fa-caret-right').toggleClass('fa-caret-down');
-			$lang.siblings('.card-body').toggleClass('hidden');
+			$lang.siblings('.i-code-block__content').toggleClass('hidden');
 		});
 
 	});

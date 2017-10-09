@@ -1,13 +1,19 @@
 .i-code-block {
 	background: #f7f7f7;
 	border-color: #f7f7f7;
+	margin: 10px 0 20px;
+	border-radius: 0;
+}
+.i-code-block + .i-code-block {
+	margin-top: -17px;  /* = border - margin */
 }
 .i-example + .i-code-block {
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
+	margin-top: -23px;  /* = example margin + border */
 }
+
 .i-code-block__lang {
 	display: block;
+	width: 100%;
 	margin: 0;
 	margin-left: 0.5em;
 	padding: 0.5em;
@@ -26,4 +32,8 @@
 }
 .i-code-block__lang:focus {
 	outline: none;
+}
+
+.i-code-block__content {
+	padding: 15px 25px 25px;
 }

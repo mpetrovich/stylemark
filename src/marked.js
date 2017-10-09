@@ -44,9 +44,9 @@ renderer.code = function(code, name) {
 	var icon = name ? '<i class="fa fa-caret-right fa-fw"></i>' : '';
 	var collapsible = name ? '-collapsible' : '';
 	return `
-<div class="i-code-block card mb-2">
+<div class="i-code-block">
 	<button type="button" class="i-code-block__lang ${collapsible}">${icon} ${lang}</button>
-	<div class="card-body ${initialState}">
+	<div class="i-code-block__content ${initialState}">
 		<button type="button" class="btn btn-outline-primary btn-sm i-copy-button" data-clipboard-text="${escaped}" data-toggle="tooltip" data-placement="top" title="Tooltip on top">Copy</button>
 		<pre class="mb-0"><code class="lang-${lang}">${escaped}</code></pre>
 	</div>

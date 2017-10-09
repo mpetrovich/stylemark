@@ -126,13 +126,13 @@ class Generator {
 				/<example name="([^"]+)"( height="\d+")?><\/example>/g,
 				`<div class="i-example">
 					<h5 class="i-example__heading">
-						Example
 						<a
 							href="${doc.slug}-$1.html"
 							target="_blank"
-							class="icon-new-tab"
+							class="fa fa-external-link-square fa-fw plain-link"
 							title="Open in a new window"
 						></a>
+						Example
 					</h5>
 					<div class="i-example__body">
 						<div
