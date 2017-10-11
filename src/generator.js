@@ -34,7 +34,7 @@ class Generator {
 				.groupBy(doc => doc.category || 'Other')
 				.map((docs, category) => {
 					var order = _.isEmpty(options.order) ? ['-Other'] : options.order;
-					var normalizedCategoryOrder = _.map(order, category => category.replace(/^-/, ''));
+					var normalizedCategoryOrder = _.map(order, category => category.replace(/^[-+]/, ''));
 					var orderIndex = _.indexOf(normalizedCategoryOrder, category);
 					var isLast = (orderIndex !== -1) ? order[orderIndex].startsWith('-') : null;
 
