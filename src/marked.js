@@ -17,7 +17,7 @@ renderer.heading = function(text, level) {
 
 	if (level <= 2) {
 		var slug = _.kebabCase(text);
-		var link = '<a href="#' + slug + '" class="fa fa-link fa-xs i-section__link -heading"></a>';
+		var link = '<a href="#' + slug + '" class="icon-link i-section__link -heading"></a>';
 
 		html = '<div id="' + slug + '" class="i-pad-top-5 i-section">'
 			+ '<h' + level + ' class="i-pad-top-3 i-position-container">'

@@ -31,16 +31,16 @@ h6[id] {
 	position: relative;
 }
 .i-section[id] .i-section__link.-heading,
-h1[id] .fa-link,
-h2[id] .fa-link,
-h3[id] .fa-link,
-h4[id] .fa-link,
-h5[id] .fa-link,
-h6[id] .fa-link {
+h1[id] .icon-link,
+h2[id] .icon-link,
+h3[id] .icon-link,
+h4[id] .icon-link,
+h5[id] .icon-link,
+h6[id] .icon-link {
 	display: none;
 	position: absolute;
 	top: 32px;
-	left: 0.4em;
+	left: 0.3em;
 	width: 1.4em;
 	color: #ccc;
 
@@ -50,21 +50,21 @@ h6[id] .fa-link {
 	transform: translate(-100%, 0%) scale(0.7);
 }
 .i-section[id]:hover .i-section__link.-heading,
-h1[id]:hover .fa-link,
-h2[id]:hover .fa-link,
-h3[id]:hover .fa-link,
-h4[id]:hover .fa-link,
-h5[id]:hover .fa-link,
-h6[id]:hover .fa-link {
+h1[id]:hover .icon-link,
+h2[id]:hover .icon-link,
+h3[id]:hover .icon-link,
+h4[id]:hover .icon-link,
+h5[id]:hover .icon-link,
+h6[id]:hover .icon-link {
 	display: block;
 }
 .i-section[id] .i-section__link.-heading:hover,
-h1[id] .fa-link:hover,
-h2[id] .fa-link:hover,
-h3[id] .fa-link:hover,
-h4[id] .fa-link:hover,
-h5[id] .fa-link:hover,
-h6[id] .fa-link:hover {
+h1[id] .icon-link:hover,
+h2[id] .icon-link:hover,
+h3[id] .icon-link:hover,
+h4[id] .icon-link:hover,
+h5[id] .icon-link:hover,
+h6[id] .icon-link:hover {
 	color: #000;
 	text-decoration: none;
 }
