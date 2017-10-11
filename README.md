@@ -160,12 +160,13 @@ Omitted categories are ordered as if they were included but unprefixed.
 
 Within each of the `+`-, `-`-, and un-prefixed groups, the specified order will be preserved. Example:
 ```
-+ Getting Started
-+ Overview
-+ Grid
-Typography
-- Extras
-- Other
+order:
+  - +Getting Started
+  - +Overview
+  - +Grid
+  - Topography
+  - -Extras
+  - -Other
 ```
 
 ##### Example
@@ -179,7 +180,7 @@ assets:
   - fonts
 
 sidebar:
-  bgColor: "#3b2a55"
+  background: "#3b2a55"
   textColor: "#fff"
 
 headHtml: |
