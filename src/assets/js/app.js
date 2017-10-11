@@ -82,7 +82,14 @@
 			});
 
 			$library.find('a[href^="#"]').attr('href', function(index, href) {
-				return href.replace(/^#(.*)/, '#' + librarySlug + '-$1');
+				if (href.startsWith('#category-')) {
+					// Preserve hash
+					return href;
+				}
+				else {
+					// Prefix hash
+					return href.replace(/^#(.*)/, '#' + librarySlug + '-$1');
+				}
 			});
 		});
 

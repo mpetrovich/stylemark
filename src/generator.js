@@ -60,6 +60,7 @@ class Generator {
 					return {
 						rank: rank,
 						key: category,
+						slug: category.toLowerCase(),
 						docs: docs,
 					};
 				})

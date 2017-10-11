@@ -37,6 +37,10 @@
 	top: 45%;
 	left: 22px;
 	transform: translateY(-50%);
+	opacity: 0.5;
+}
+.i-search-input input:focus ~ .search-input-icon {
+	opacity: 1;
 }
 
 .i-search-input-reset {

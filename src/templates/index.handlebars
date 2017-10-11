@@ -32,9 +32,11 @@
 			</div>
 
 			{{#each groups}}
-				{{#each docs}}
-					{{{html}}}
-				{{/each}}
+				<div id="category-{{slug}}">
+					{{#each docs}}
+						{{{html}}}
+					{{/each}}
+				</div>
 			{{/each}}
 		</div>
 		<div

@@ -6,7 +6,7 @@
 <form class="relative mt-3 mb-2 px-0">
 	<div class="i-search-input">
 		<input id="search-filter" name="filter" type="search" placeholder="Search" class="form-control i-sidebar-item-filter">
-		<label for="search-filter" class="search-input-icon fa fa-search i-muted"></label>
+		<label for="search-filter" class="search-input-icon fa fa-search"></label>
 		<button type="button" class="i-search-input-reset" aria-label="Clear">
 			<i class="fa fa-remove fa-lg"></i>
 		</button>
@@ -20,7 +20,7 @@
 			class="pt-4 mb-1"
 			data-filter-value="{{#each docs}} {{name}} {{/each}}"
 		>
-			<a href="#{{docs.0.slug}}" class="i-sidebar-list-item">
+			<a href="#category-{{slug}}" class="i-sidebar-list-item">
 				<b>{{key}}</b>
 			</a>
 		</h5>
