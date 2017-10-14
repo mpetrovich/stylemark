@@ -191,5 +191,5 @@ bodyHtml: |
   <script src="dist/js/bootstrap.min.js"></script>
 
 order:
-  - Getting Started
+  - +Getting Started
 ```
