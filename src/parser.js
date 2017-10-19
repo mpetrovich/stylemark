@@ -12,27 +12,24 @@ class Parser {
 	/**
 	 * @param {string} dirpath
 	 * @param {object} options
+	 * @param {Array} [options.match]
+	 * @param {Array} [options.matchDir]
+	 * @param {Array} [options.exclude]
+	 * @param {Array} [options.excludeDir]
 	 * @param {Function} callback
-	 * @param {Array} options.filesToIgnore List of file pattern regexes to ignore
 	 */
 	parseDir(dirpath, options = {}, callback = _.noop) {
 		var docs = [];
 
-		var filesToIgnore = [
-			'.git/',
-			'node_modules/',
-		].concat(options.filesToIgnore || []);
-
 		dir.readFiles(
 			dirpath,
+			{
+				match: options.match,
+				excludeDir: options.excludeDir,
+			},
 			(error, content, filepath, next) => {
 				if (error) {
 					console.error(error);
-					return next();
-				}
-
-				let isIgnoredFile = _.some(filesToIgnore, pattern => (new RegExp(pattern)).test(filepath));
-				if (isIgnoredFile) {
 					return next();
 				}
 

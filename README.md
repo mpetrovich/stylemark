@@ -136,6 +136,9 @@ name: Name of the style guide
 logo: (optional) Relative filepath or absolute URL of your logo
 assets: (optional) List of relative file/directory paths to copy and mirror in the generated style guide
 
+excludeDir: (optional) Regex pattern (in double quotes) or list of directories to exclude; .git and node_modules are always excluded
+match: (optional) Regex pattern or list of files to process; by default, common source files are included
+
 sidebar:
   background: (optional) Background color of the sidebar; hex colors should be quoted
   textColor: (optional) Text color of the sidebar; hex colors should be quoted
@@ -174,6 +177,10 @@ Here's an example for [Boostrap](https://github.com/mpetrovich/bootstrap/):
 ```yaml
 name: Bootstrap
 logo: docs/assets/brand/bootstrap-solid.svg
+
+excludeDir:
+  - dist
+  - docs
 
 assets:
   - dist

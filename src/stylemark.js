@@ -4,6 +4,18 @@ var path = require('path');
 var yaml = require('js-yaml');
 var parser = rfr('src/parser');
 var generator = rfr('src/generator');
+var _ = require('lodash');
+
+var jsExtensions = require('common-js-file-extensions');
+var markdownExtensions = require('markdown-extensions');
+var cssExtensions = ['css', 'less', 'scss', 'sass'];
+var defaultMatchExtensions = _(jsExtensions.code)
+	.concat(markdownExtensions)
+	.concat(cssExtensions)
+	.thru(exts => new RegExp('\\.(' + exts.join('|') + ')$'))
+	.value();
+
+var defaultExcludeDirectories = ['.git', 'node_modules'];
 
 function generate(params) {
 	var input = params.input;
@@ -13,6 +25,12 @@ function generate(params) {
 
 	options.input = input;
 	options.output = output;
+	options.match = options.match || defaultMatchExtensions;
+	options.excludeDir = defaultExcludeDirectories.concat(options.excludeDir);
+
+	['match', 'excludeDir'].forEach(name => {
+		options[name] = _.isString(options[name]) ? new RegExp(options[name]) : options[name];
+	});
 
 	parser.parseDir(input, options, (error, docs) => {
 		if (error) {
