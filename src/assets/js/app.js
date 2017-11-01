@@ -63,12 +63,16 @@
 			lazyload: true,
 			debounce: 50,
 			onAppend: function(iframe) {
-				$(iframe)
-					.attr('id', 'frame-' + Math.random().toString().substr(2))
-					.iFrameResize({
-						heightCalculationMethod: 'lowestElement',
-						warningTimeout: 10000,
-					});
+				// delay the iFrameResize call to allow the iframeResizer.contentWindow.min.js script
+				// to load in the iframe first
+				setTimeout(function() {
+					$(iframe)
+						.attr('id', 'frame-' + Math.random().toString().substr(2))
+						.iFrameResize({
+							heightCalculationMethod: 'lowestElement',
+							warningTimeout: 10000,
+						});
+				}, 100);
 			},
 		});
 
