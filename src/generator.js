@@ -23,7 +23,7 @@ class Generator {
 			}
 
 			docs = _(docs)
-				.sortBy('name')
+				.sortBy((doc) => (doc.meta === undefined ? doc.name : doc.meta.order))
 				.map(doc => {
 					doc.html = this.generateDoc(doc, destination, options);
 					return doc;
