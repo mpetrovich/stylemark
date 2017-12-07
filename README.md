@@ -30,6 +30,7 @@ Documenting style guide components is as easy as writing Markdown. Components ca
 ~~~markdown
 ---
 name: Button
+order: 1
 category: Components
 ---
 
@@ -170,6 +171,17 @@ order:
   - Topography
   - -Extras
   - -Other
+```
+
+#### Name order
+If you want to order documents within their categories, you can do so by adding an `order` property to the YAML front matter. If you choose not to they will be ordered by name.
+
+```yaml
+---
+name: Button
+order: 1
+category: Components
+---
 ```
 
 ##### Example
