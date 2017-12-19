@@ -53,3 +53,78 @@ button {
 }
 ```
 ~~~
+
+
+External example files
+---
+Additionally, you can reference code written in external files, using the following syntax:
+
+
+~~~markdown
+```<name>:<path>
+```
+~~~
+where:
+
+`<name>` is the example name (without file extension)
+
+`<path>` is the filepath, by default relative to the current file unless explicitly absolute by prefixing with `/`
+
+#### Example
+This first example uses a 'data' object from a shared JS file:
+~~~markdown
+```example-1.js
+console.log('Example 1: ' + data);
+```
+```example-1:/path/to/data/data.js
+```
+~~~
+
+This second example uses the same shared JS file:
+~~~markdown
+```example-2.js
+console.log('Example 2: ' + data);
+```
+```example-2:/path/to/data/data.js
+```
+~~~
+Where `/path/to/data/data.js` contains:
+
+```
+data = { … }
+```
+
+#### Wildcards
+Given the following files:
+
+```
+// in /path/to/data/data.js:
+data = { … }
+
+// in /path/to/somewhere/foo.html:
+Data: <div id="data"></div>
+
+// in /path/to/somewhere/bar.js:
+document.getElementById('data').innerHTML = JSON.stringify(data);
+```
+you could write:
+
+~~~markdown
+```example-3:/path/to/data/data.js
+```
+```example-3:/path/to/somewhere/*
+```
+~~~
+which would be equivalent to this inline version:
+
+~~~markdown
+```example-3.js
+data = { … }
+```
+```example-3.html
+Data: <div id="data"></div>
+```
+```example-3.js
+document.getElementById('data').innerHTML = JSON.stringify(data);
+```
+~~~
