@@ -11,7 +11,7 @@ describe('A Markdown file without front matter', () => {
 	var filepath = 'test/input-without-front-matter.md';
 	var content = fs.readFileSync(filepath, 'utf8');
 	var language = path.extname(filepath).substr(1);
-	var components = parser.parse(content, language);
+	var components = parser.parse(content, language, filepath);
 
 	it('should not be processed', () => expect(components.length).to.equal(0));
 });
@@ -20,7 +20,7 @@ describe('A Markdown file', () => {
 	var filepath = 'test/input.md';
 	var content = fs.readFileSync(filepath, 'utf8');
 	var language = path.extname(filepath).substr(1);
-	var components = parser.parse(content, language);
+	var components = parser.parse(content, language, filepath);
 	var component = components[0];
 
 	it('should have a single component', () => expect(components.length).to.equal(1));
@@ -134,7 +134,7 @@ describe('A processed source code file', () => {
 	var filepath = 'test/input.css';
 	var content = fs.readFileSync(filepath, 'utf8');
 	var language = path.extname(filepath).substr(1);
-	var components = parser.parse(content, language);
+	var components = parser.parse(content, language, filepath);
 
 	it('should have the correct number of components', () => expect(components.length).to.equal(2));
 
@@ -265,5 +265,99 @@ describe('A processed source code file', () => {
 			],
 			options: {},
 		}));
+	});
+});
+
+describe('A processed source code file with external source examples', () => {
+	var filepath = 'test/external-sources-examples.js';
+	var content = fs.readFileSync(filepath, 'utf8');
+	var language = path.extname(filepath).substr(1);
+	var components = parser.parse(content, language, filepath);
+
+	it('should have the correct number of components', () => expect(components.length).to.equal(1));
+
+	describe('component', () => {
+		it('should have the correct number of examples', () => expect(_.size(components[0].getExamples())).to.equal(5));
+
+		it('should have the correct 1st example', () => expect(components[0].getExamples()['single-source-relative']).to.deep.equal({
+			name: 'single-source-relative',
+			blocks: [
+				{
+					language: 'html',
+					hidden: false,
+					content: `<div id="data">External Example Template</div>\n`
+				},
+			],
+			options: {},
+		}));
+
+		it('should have the correct 2nd example', () => expect(components[0].getExamples()['mixed-sources']).to.deep.equal({
+			name: 'mixed-sources',
+			blocks: [
+				{
+					language: 'html',
+					hidden: false,
+					content: `<div id="data">External Example Template</div>\n`
+				},
+				{
+					language: 'js',
+					hidden: false,
+					content: `var data2 = {};`
+				},
+			],
+			options: {},
+		}));
+
+		it('should have the correct 3rd example', () => expect(components[0].getExamples()['multiple-sources']).to.deep.equal({
+			name: 'multiple-sources',
+			blocks: [
+				{
+					language: 'html',
+					hidden: false,
+					content: `<div id="data">External Example Template</div>\n`
+				},
+				{
+					language: 'js',
+					hidden: false,
+					content: `var data = {};\n`
+				},
+			],
+			options: {},
+		}));
+
+		it('should have the correct 4th example', () => expect(components[0].getExamples()['multiple-sources-wildcard']).to.deep.equal({
+			name: 'multiple-sources-wildcard',
+			blocks: [
+				{
+					language: 'js',
+					hidden: false,
+					content: `var data = {};\n`
+				},
+				{
+					language: 'html',
+					hidden: false,
+					content: `<div id="data">External Example Template</div>\n`
+				},
+			],
+			options: {},
+		}));
+
+		it('should have the correct 5th example', () => expect(components[0].getExamples()['hidden-sources']).to.deep.equal({
+			name: 'hidden-sources',
+			blocks: [
+				{
+					language: 'js',
+					hidden: true,
+					content: `var data = {};\n`
+				},
+				{
+					language: 'html',
+					hidden: false,
+					content: `<div id="data-2">Inline Source Template</div>`
+				},
+			],
+			options: {},
+		}));
+
 	});
 });

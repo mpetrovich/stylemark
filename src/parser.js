@@ -6,6 +6,7 @@ var Component = rfr('src/component');
 var matter = require('gray-matter');
 var dir = require('node-dir');
 var path = require('path');
+var fs = require('fs');
 
 class Parser {
 
@@ -35,7 +36,7 @@ class Parser {
 
 				try {
 					let language = path.extname(filepath).substr(1);
-					docs = docs.concat(this.parse(content, language));
+					docs = docs.concat(this.parse(content, language, filepath));
 				}
 				catch (e) {
 					console.error(`Error parsing "${filepath}": ${e}`);
@@ -54,11 +55,12 @@ class Parser {
 	 *
 	 * @param {String} source
 	 * @param {String} [language]
+	 * @param {String} filepath
 	 * @return {Array.<Component>}
 	 */
-	parse(content, language) {
+	parse(content, language, filepath) {
 		var components = _(getDocBlocks(content, language))
-			.map(parseDocBlock)
+			.map(docBlock => parseDocBlock(docBlock, filepath))
 			.filter()
 			.thru(Component.merge)
 			.value();
@@ -92,7 +94,7 @@ function getSourceCodeDocBlocks(content) {
 
 // @todo Refactor below
 
-function parseDocBlock(docBlock) {
+function parseDocBlock(docBlock, filepath) {
 
 	if (!_.isString(docBlock)) {
 		// Malformed docblock
@@ -109,6 +111,7 @@ function parseDocBlock(docBlock) {
 	var component = new Component();
 	component.setName(markdown.data.name);
 	component.setCategory(markdown.data.category);
+	component.setFilepath(filepath);
 
 	var metadata = _.omit(markdown.data, ['name', 'category']);
 
@@ -138,32 +141,7 @@ function parseDescriptionMarkdown(markdown, component) {
 	var blocksByExample = {};
 	var optionsByExample = {};
 
-	// Extracts examples from description blocks
-	_.forEach(blocks, (block) => {
-		var matches = block.match(/```\s*([^\.\s]+)\.(\w+)(.*)\n/);
-		var name = matches ? matches[1] : null;
-		var language = matches ? matches[2] : null;
-		var optionsString = matches ? matches[3] : '';
-
-		if (!name) {
-			// Unnamed examples are not renderable
-			return;
-		}
-
-		var content = block
-			.replace(/```.*\n/m, '')  // Removes leading ```[language]
-			.replace(/\n```.*/m, '');  // Removes trailing ```
-
-		var options = _(optionsString)
-			.split(' ')
-			.transform((options, optionStr) => {
-				var parts = optionStr.split('=');
-				var name = parts[0];
-				var value = parts[1];
-				options[name] = value;
-			}, {})
-			.value();
-
+	const addBlocktoExample = (name, language, content, options) => {
 		var block = {
 			language: language,
 			content: content,
@@ -178,6 +156,55 @@ function parseDescriptionMarkdown(markdown, component) {
 		if (height) {
 			optionsByExample[name].height = height;
 		}
+	};
+
+	// Extracts examples from description blocks
+	_.forEach(blocks, (block) => {
+		var matches = block.match(/```\s*([^\.\s\:]+)(?:\:([^\.\s]+))?(?:(\*)|(?:\.(\w+)))(.*)\n/);
+		var name = matches ? matches[1] : null;
+		var externalSource = matches ? matches[2] : null;
+		var externalSourceWildcard = matches ? matches[3] : null;
+		var language = matches ? matches[4] : null;
+		var optionsString = matches ? matches[5] : '';
+
+		if (!name) {
+			// Unnamed examples are not renderable
+			return;
+		}
+
+		var options = _(optionsString)
+			.split(' ')
+			.transform((options, optionStr) => {
+				var parts = optionStr.split('=');
+				var name = parts[0];
+				var value = parts[1];
+				options[name] = value;
+			}, {})
+			.value();
+
+		var content;
+
+		if (externalSource) {
+			var componentDir = path.dirname(component.getFilepath());
+			if (externalSourceWildcard) {
+				var externalSourceFiles = dir.files(path.resolve(componentDir, externalSource), {sync: true});
+				_.forEach(externalSourceFiles, filepath => {
+					var language = path.extname(filepath).substr(1);
+					var content = fs.readFileSync(filepath, 'utf8');
+					addBlocktoExample(name, language, content, options);
+				});
+				return;
+			} else {
+				var externalSourceFilename = `${externalSource}.${language}`;
+				content = fs.readFileSync(path.resolve(componentDir, externalSourceFilename), 'utf8');
+			}
+		} else {
+			content = block
+				.replace(/```.*\n/m, '')  // Removes leading ```[language]
+				.replace(/\n```.*/m, '');  // Removes trailing ```
+		}
+
+		addBlocktoExample(name, language, content, options);
 	});
 
 	_.forEach(blocksByExample, (blocks, exampleName) => {
