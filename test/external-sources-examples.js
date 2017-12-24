@@ -6,9 +6,14 @@ category: Tests
 
 Single Source
 -------------
-An example can reference a single external source with an absolute path or a relative path:
+An example can reference a single external source with a relative path:
 
 ```single-source-relative:external_examples/external-template.html
+```
+
+Or with an absolute path (based on the runtime directory):
+
+```single-source-absolute:/test/external_examples/external-template.html
 ```
 
 Mixed with Inline Sources

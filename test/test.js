@@ -277,7 +277,7 @@ describe('A processed source code file with external source examples', () => {
 	it('should have the correct number of components', () => expect(components.length).to.equal(1));
 
 	describe('component', () => {
-		it('should have the correct number of examples', () => expect(_.size(components[0].getExamples())).to.equal(5));
+		it('should have the correct number of examples', () => expect(_.size(components[0].getExamples())).to.equal(6));
 
 		it('should have the correct 1st example', () => expect(components[0].getExamples()['single-source-relative']).to.deep.equal({
 			name: 'single-source-relative',
@@ -291,7 +291,19 @@ describe('A processed source code file with external source examples', () => {
 			options: {},
 		}));
 
-		it('should have the correct 2nd example', () => expect(components[0].getExamples()['mixed-sources']).to.deep.equal({
+        it('should have the correct 2nd example', () => expect(components[0].getExamples()['single-source-absolute']).to.deep.equal({
+            name: 'single-source-absolute',
+            blocks: [
+                {
+                    language: 'html',
+                    hidden: false,
+                    content: `<div id="data">External Example Template</div>\n`
+                },
+            ],
+            options: {},
+        }));
+
+		it('should have the correct 3rd example', () => expect(components[0].getExamples()['mixed-sources']).to.deep.equal({
 			name: 'mixed-sources',
 			blocks: [
 				{
@@ -308,7 +320,7 @@ describe('A processed source code file with external source examples', () => {
 			options: {},
 		}));
 
-		it('should have the correct 3rd example', () => expect(components[0].getExamples()['multiple-sources']).to.deep.equal({
+		it('should have the correct 4th example', () => expect(components[0].getExamples()['multiple-sources']).to.deep.equal({
 			name: 'multiple-sources',
 			blocks: [
 				{
@@ -325,7 +337,7 @@ describe('A processed source code file with external source examples', () => {
 			options: {},
 		}));
 
-		it('should have the correct 4th example', () => expect(components[0].getExamples()['multiple-sources-wildcard']).to.deep.equal({
+		it('should have the correct 5th example', () => expect(components[0].getExamples()['multiple-sources-wildcard']).to.deep.equal({
 			name: 'multiple-sources-wildcard',
 			blocks: [
 				{
@@ -342,7 +354,7 @@ describe('A processed source code file with external source examples', () => {
 			options: {},
 		}));
 
-		it('should have the correct 5th example', () => expect(components[0].getExamples()['hidden-sources']).to.deep.equal({
+		it('should have the correct 6th example', () => expect(components[0].getExamples()['hidden-sources']).to.deep.equal({
 			name: 'hidden-sources',
 			blocks: [
 				{
