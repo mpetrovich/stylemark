@@ -68,7 +68,9 @@ where:
 
 `<name>` is the example name (without file extension)
 
-`<path>` is the filepath, by default relative to the current file unless explicitly absolute by prefixing with `/`
+`<path>` is the filepath, by default relative to the current file. If prefixed with `/`, then the
+path will be relative to the directory that `stylemark` is executed in (which would normally be
+root of your project).
 
 #### Example
 This first example uses a 'data' object from a shared JS file:
