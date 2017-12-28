@@ -291,17 +291,17 @@ describe('A processed source code file with external source examples', () => {
 			options: {},
 		}));
 
-        it('should have the correct 2nd example', () => expect(components[0].getExamples()['single-source-absolute']).to.deep.equal({
-            name: 'single-source-absolute',
-            blocks: [
-                {
-                    language: 'html',
-                    hidden: false,
-                    content: `<div id="data">External Example Template</div>\n`
-                },
-            ],
-            options: {},
-        }));
+		it('should have the correct 2nd example', () => expect(components[0].getExamples()['single-source-absolute']).to.deep.equal({
+			name: 'single-source-absolute',
+			blocks: [
+				{
+					language: 'html',
+					hidden: false,
+					content: `<div id="data">External Example Template</div>\n`
+				},
+			],
+			options: {},
+		}));
 
 		it('should have the correct 3rd example', () => expect(components[0].getExamples()['mixed-sources']).to.deep.equal({
 			name: 'mixed-sources',

@@ -202,8 +202,8 @@ function parseDescriptionMarkdown(markdown, component) {
 					content = fs.readFileSync(path.resolve(process.cwd(), externalSourceFilename.slice(1)), 'utf8');
 				} else {
 					// otherwise, resolve the source file relative to the component file's directory
-                    content = fs.readFileSync(path.resolve(componentDir, externalSourceFilename), 'utf8');
-                }
+					content = fs.readFileSync(path.resolve(componentDir, externalSourceFilename), 'utf8');
+				}
 			}
 		} else {
 			content = block
