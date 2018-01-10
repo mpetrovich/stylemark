@@ -1,0 +1,60 @@
+
+Single Source
+-------------
+An example can reference a single external source with a relative path:
+
+<example name="single-source-relative"></example>
+```single-source-relative.html
+<div id="data">External Example Template</div>
+```
+
+Or with an absolute path (based on the runtime directory):
+
+<example name="single-source-absolute"></example>
+```single-source-absolute.html
+<div id="data">External Example Template</div>
+```
+
+Mixed with Inline Sources
+----------------------------
+An example can combine external sources with inline sources:
+
+<example name="mixed-sources"></example>
+```mixed-sources.html
+<div id="data">External Example Template</div>
+```
+```mixed-sources.js
+var data2 = {};
+```
+
+Multiple Sources
+----------------
+An example can reference multiple sources individually:
+
+<example name="multiple-sources"></example>
+```multiple-sources.html
+<div id="data">External Example Template</div>
+```
+```multiple-sources.js
+var data = {};
+```
+
+or with a wildcard:
+
+```multiple-sources-wildcard.js
+var data = {};
+```
+<example name="multiple-sources-wildcard"></example>
+```multiple-sources-wildcard.html
+<div id="data">External Example Template</div>
+```
+
+Hidden Sources
+--------------
+An external source can also be hidden:
+
+<example name="hidden-sources"></example>
+```hidden-sources.html
+<div id="data-2">Inline Source Template</div>
+```
+

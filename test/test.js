@@ -269,6 +269,8 @@ describe('A processed source code file', () => {
 });
 
 describe('A processed source code file with external source examples', () => {
+	var expectedOutputFilepath = 'test/external-sources-examples-expected-output.txt';
+	var expectedOutput = fs.readFileSync(expectedOutputFilepath, 'utf8');
 	var filepath = 'test/external-sources-examples.js';
 	var content = fs.readFileSync(filepath, 'utf8');
 	var language = path.extname(filepath).substr(1);
@@ -371,5 +373,8 @@ describe('A processed source code file with external source examples', () => {
 			options: {},
 		}));
 
+		it('should have replaced the external source references in the description', () => expect(components[0].getDescription()).to.equal(
+			expectedOutput
+		));
 	});
 });

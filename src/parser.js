@@ -158,6 +158,12 @@ function parseDescriptionMarkdown(markdown, component) {
 		}
 	};
 
+	const createBlockFromExternalSource = (name, language, content, optionsString) => {
+	    return '```' + name + '.' + language + optionsString + '\n' +
+            content +
+            '```';
+	};
+
 	// Extracts examples from description blocks
 	_.forEach(blocks, (block) => {
 		var matches = block.match(/```\s*([^\.\s\:]+)(?:\:([^\.\s]+))?(?:(\*)|(?:\.(\w+)))(.*)\n/);
@@ -187,12 +193,20 @@ function parseDescriptionMarkdown(markdown, component) {
 		if (externalSource) {
 			var componentDir = path.dirname(component.getFilepath());
 			if (externalSourceWildcard) {
-				var externalSourceFiles = dir.files(path.resolve(componentDir, externalSource), {sync: true});
+			    var externalSourceFiles = dir.files(path.resolve(componentDir, externalSource), {sync: true});
+			    var extractedExampleBlocks = [];
 				_.forEach(externalSourceFiles, filepath => {
 					var language = path.extname(filepath).substr(1);
 					var content = fs.readFileSync(filepath, 'utf8');
 					addBlocktoExample(name, language, content, options);
+					extractedExampleBlocks.push(createBlockFromExternalSource(name, language, content, optionsString));
 				});
+
+				// replace the external source definition block in the description with the content from the external
+				// sources matched by the wildcard
+				var regexp = new RegExp('```\\s*' + name + '(.*\\n)+?```', 'gm');
+				description = description.replace(regexp, () => extractedExampleBlocks.join('\n'));
+
 				return;
 			} else {
 				var externalSourceFilename = `${externalSource}.${language}`;
@@ -204,6 +218,11 @@ function parseDescriptionMarkdown(markdown, component) {
 					// otherwise, resolve the source file relative to the component file's directory
 					content = fs.readFileSync(path.resolve(componentDir, externalSourceFilename), 'utf8');
 				}
+
+
+                // replace the external source definition block in the description with the content from the external source
+                var regexp = new RegExp('```\\s*' + name + '\\:' + externalSource + '\\.' + language + '(.*\n)+?```', 'gm');
+                description = description.replace(regexp, () => createBlockFromExternalSource(name, language, content, optionsString));
 			}
 		} else {
 			content = block
