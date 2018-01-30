@@ -173,7 +173,7 @@ order:
 ```
 
 ##### Example
-Here's an example for [Boostrap](https://github.com/mpetrovich/bootstrap/):
+Here's an example for [Bootstrap](https://github.com/mpetrovich/bootstrap/):
 ```yaml
 name: Bootstrap
 logo: docs/assets/brand/bootstrap-solid.svg
