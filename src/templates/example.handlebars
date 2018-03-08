@@ -20,10 +20,37 @@
 		</style>
 
 		<script>
-			function getStylemarkBlock(language, defaultIfEmpty) {
-				defaultIfEmpty = defaultIfEmpty || '';
-				var script = document.querySelector('script[data-language="' + language + '"]');
-				return script ? script.innerText : defaultIfEmpty;
+			function findAndHandleStylemarkBlocks(languages, handler) {
+				var blocks = getStylemarkBlocks(languages);
+				handleStylemarkBlocks(blocks, handler);
+			}
+
+			function getStylemarkBlocks(languages) {
+				languages = typeof languages === 'string' ? [languages] : languages;
+
+				var selectors = [];
+
+				for (var i = 0; i < languages.length; i++) {
+					selectors.push('script[data-language="' + languages[i] + '"]');
+				}
+
+				var selector = selectors.join(',');
+				var scripts = document.querySelectorAll(selector);
+				var blocks = [];
+
+				for (var i = 0, length = scripts.length; i < length; i++) {
+					if (scripts[i].innerText) {
+						blocks.push(scripts[i].innerText);
+					}
+				}
+
+				return blocks;
+			}
+
+			function handleStylemarkBlocks(blocks, handler) {
+				for (var i = 0, length = blocks.length; i < length; i++) {
+					handler(blocks[i], i);
+				}
 			}
 		</script>
 	</head>
@@ -38,10 +65,10 @@
 				<main ng-controller="stylemark-{{doc.slug}}-{{example.name}}"></main>
 			{{/if~}}
 			{{~#if (compare language "==" "jsx")}}
-				<main id="stylemark-react-root"></main>
+				<main class="stylemark-react-root"></main>
 			{{/if~}}
 			{{~#if (or (compare language "==" "handlebars") (compare language "==" "hbs"))}}
-				<main id="stylemark-ember-root"></main>
+				<main class="stylemark-ember-root"></main>
 			{{/if~}}
 		{{/each~}}
 
@@ -51,9 +78,19 @@
 			<script type="text/x-stylemark" data-language="{{language}}">{{{content}}}</script>
 		{{/each}}
 
+		<!--
+			Vanilla JS
+		-->
+
 		<script>
-			eval(getStylemarkBlock('js'));
+			findAndHandleStylemarkBlocks('js', function(block) {
+				eval(block);
+			});
 		</script>
+
+		<!--
+			AngularJS
+		-->
 
 		<script>
 			(function(angular) {
@@ -62,29 +99,29 @@
 					return;
 				}
 
-				var block = getStylemarkBlock('angularjs');
+				findAndHandleStylemarkBlocks('angularjs', function(block, index) {
+					var moduleElem = document.querySelector('[ng-app]');
+					var module;
 
-				if (!block) {
-					return;
-				}
+					if (moduleElem) {
+						// Uses an existing module
+						module = angular.module(moduleElem.getAttribute('ng-app'));
+					}
+					else {
+						// Creates a new module
+						module = angular.module('stylemark-{{doc.slug}}-{{example.name}}', []);
+					}
 
-				var moduleElem = document.querySelector('[ng-app]');
-				var module;
-
-				if (moduleElem) {
-					// Uses an existing module
-					module = angular.module(moduleElem.getAttribute('ng-app'));
-				}
-				else {
-					// Creates a new module
-					module = angular.module('stylemark-{{doc.slug}}-{{example.name}}', []);
-				}
-
-				module.controller('stylemark-{{doc.slug}}-{{example.name}}', function($scope) {
-					$scope.$eval(block);
+					module.controller('stylemark-{{doc.slug}}-{{example.name}}-' + index, function($scope) {
+						$scope.$eval(block);
+					});
 				});
 			})(window.angular);
 		</script>
+
+		<!--
+			React / JSX
+		-->
 
 		<script>
 			(function(ReactDOM) {
@@ -93,17 +130,17 @@
 					return;
 				}
 
-				var block = getStylemarkBlock('jsx');
-
-				if (!block) {
-					return;
-				}
-
-				var rootNode = document.getElementById('stylemark-react-root');
-				var Component = eval(block);
-				ReactDOM.render(Component, rootNode);
+				findAndHandleStylemarkBlocks('jsx', function(block, index) {
+					var rootNode = document.querySelectorAll('.stylemark-react-root')[index];
+					var Component = eval(block);
+					ReactDOM.render(Component, rootNode);
+				});
 			})(window.ReactDOM);
 		</script>
+
+		<!--
+			Ember
+		-->
 
 		<script>
 			(function(Ember) {
@@ -112,73 +149,71 @@
 					return;
 				}
 
-				var block = getStylemarkBlock('handlebars') || getStylemarkBlock('hbs');
+				findAndHandleStylemarkBlocks(['handlebars', 'hbs'], function(block, index) {
+					var render = function() {
+						var app = window.{{or options.emberAppName 'noop'}}
+						var container = app.__container__;
+						var renderer = container.lookup('renderer:-dom');
+						var template = Ember.HTMLBars.compile(block);
 
-				if (!block) {
-					return;
-				}
+						var jsBlocks = getStylemarkBlocks('js');
+						var jsBlock = jsBlocks && jsBlocks[0] ? jsBlocks[0] : '{}';
+						var context;
+						eval('context = ' + jsBlock);
 
-				var render = function() {
-					var app = window.{{or options.emberAppName 'noop'}}
-					var container = app.__container__;
-					var renderer = container.lookup('renderer:-dom');
-					var template = Ember.HTMLBars.compile(block);
+						// Credit:
+						// http://stackoverflow.com/questions/27950413/render-ember-js-hbs-template-to-a-string#answer-35625858
+						var compile = function(container, template, context) {
+							return new Ember.RSVP.Promise(function(resolve) {
+								Ember.Component.extend(Ember.merge({
+									style: 'display:none;',
+									layout: template,
+									container: container,
+									renderer: renderer,
 
-					var context;
-					eval('context = ' + getStylemarkBlock('js', '{}'));
+									init: function() {
+										this._super.apply(this, arguments);
+										Ember.setOwner(this, container);
+									},
 
-					// Credit:
-					// http://stackoverflow.com/questions/27950413/render-ember-js-hbs-template-to-a-string#answer-35625858
-					var compile = function(container, template, context) {
-						return new Ember.RSVP.Promise(function(resolve) {
-							Ember.Component.extend(Ember.merge({
-								style: 'display:none;',
-								layout: template,
-								container: container,
-								renderer: renderer,
+									didRender: function() {
+										var elem = this.$();
+										resolve(elem);
+										this.destroy();
+									}
+								}, context))
+									.create()
+									.append();
 
-								init: function() {
-									this._super.apply(this, arguments);
-									Ember.setOwner(this, container);
-								},
+							});
+						};
 
-								didRender: function() {
-									var elem = this.$();
-									resolve(elem);
-									this.destroy();
-								}
-							}, context))
-								.create()
-								.append();
-
+						compile(container, template, context).then(function(elem) {
+							var node = document.querySelectorAll('.stylemark-ember-root')[index];
+							jQuery(node).append(elem);
 						});
 					};
 
-					compile(container, template, context).then(function(elem) {
-						jQuery('#stylemark-ember-root').append(elem);
-					});
-				};
+					var isReady = function() {
+						return window.{{or options.emberAppName 'noop'}}
+							&& window.{{or options.emberAppName 'noop'}}.__container__;
+					};
 
-				var isReady = function() {
-					return window.{{or options.emberAppName 'noop'}}
-						&& window.{{or options.emberAppName 'noop'}}.__container__;
-				};
+					var checkReady = function() {
+						if (isReady()) {
+							render();
+						}
+						else {
+							setTimeout(checkReady, 20);
+						}
+					};
 
-				var checkReady = function() {
-					if (isReady()) {
-						render();
-					}
-					else {
-						setTimeout(checkReady, 20);
-					}
-				};
-
-				checkReady();
+					checkReady();
+				});
 
 			})(window.Ember);
 		</script>
 
 		<script src="_stylemark/js/vendor/iframeResizer.contentWindow.min.js"></script>
 	</body>
-
 </html>
