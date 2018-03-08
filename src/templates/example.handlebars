@@ -61,6 +61,13 @@
 					return;
 				}
 
+				var application = getStylemarkBlock('angularjs');
+
+				// There is no application to evaluate
+				if (!application) {
+					return;
+				}
+
 				var moduleElem = document.querySelector('[ng-app]');
 				var module;
 
@@ -74,7 +81,7 @@
 				}
 
 				module.controller('stylemark-{{doc.slug}}-{{example.name}}', function($scope) {
-					$scope.$eval(getStylemarkBlock('angularjs'));
+					$scope.$eval(application);
 				});
 			})(window.angular);
 		</script>
@@ -86,6 +93,12 @@
 				}
 
 				var Component = eval(getStylemarkBlock('jsx'));
+
+				// There is no Component to render
+				if (!Component) {
+					return;
+				}
+
 				var rootNode = document.getElementById('stylemark-root');
 				ReactDOM.render(Component, rootNode);
 			})(window.ReactDOM);
@@ -97,11 +110,17 @@
 					return;
 				}
 
+				var hbs = getStylemarkBlock('handlebars') || getStylemarkBlock('hbs');
+
+				// There is no template to render
+				if (!hbs) {
+					return;
+				}
+
 				var render = function() {
 					var app = window.{{or options.emberAppName 'noop'}}
 					var container = app.__container__;
 					var renderer = container.lookup('renderer:-dom');
-					var hbs = getStylemarkBlock('handlebars') || getStylemarkBlock('hbs');
 					var template = Ember.HTMLBars.compile(hbs);
 
 					var context;
