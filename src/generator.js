@@ -177,8 +177,7 @@ class Generator {
 		_.forEach(doc.examples, example => {
 			example.blocks = _.map(example.blocks, block => {
 				if (block.language === 'jsx') {
-					var preset = path.join(__dirname, '../node_modules/babel-preset-react');
-					block.content = babel.transform(block.content, { presets: [preset] }).code;
+					block.content = babel.transform(block.content, { presets: ['babel-preset-react'] }).code;
 
 					// Prefixes React.createElement(Component) component names with the exported library name (ie. Library.Component)
 					block.content = block.content.replace(
