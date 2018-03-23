@@ -40,6 +40,20 @@ class Component {
 	/**
 	 * @return {String}
 	 */
+	getHead() {
+		return this.head;
+	}
+
+	/**
+	 * @param {String} head
+	 */
+	setHead(head) {
+		this.head = head;
+	}
+
+	/**
+	 * @return {String}
+	 */
 	getCategory() {
 		return this.category;
 	}
@@ -81,10 +95,11 @@ class Component {
 	 * @param {Object} [options]
 	 * @param {Number} [options.height]
 	 */
-	addExample(name, blocks, options) {
+	addExample(name, head, blocks, options) {
 		this.examples = this.examples || {};
 		this.examples[name] = {
 			name: name,
+			head: head,
 			blocks: blocks,
 			options: options || {},
 		};
@@ -149,6 +164,7 @@ class Component {
 	 *
 	 * If set on this component, these fields will be overwritten in the given component:
 	 * - name
+	 * - head
 	 * - category
 	 * - source
 	 * - filepath
@@ -164,17 +180,20 @@ class Component {
 		var from = this;
 
 		to.name = from.name;
+		to.head = from.head || to.head;
 		to.category = from.category || to.category;
 		to.source = from.source || to.source;
 		to.filepath = from.filepath || to.filepath;
+
 
 		if (from.description) {
 			let description = to.description ? to.description + '\n' : '';
 			to.description = description + from.description;
 		}
 
+
 		_.each(from.getExamples(), (example, name) => {
-			to.addExample(name, example.blocks, example.options);
+			to.addExample(name, to.head, example.blocks, example.options);
 		});
 
 		_.each(from.getMeta(), (value, key) => {

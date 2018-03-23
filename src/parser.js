@@ -111,9 +111,10 @@ function parseDocBlock(docBlock, filepath) {
 	var component = new Component();
 	component.setName(markdown.data.name);
 	component.setCategory(markdown.data.category);
+	component.setHead(markdown.data.head);
 	component.setFilepath(filepath);
 
-	var metadata = _.omit(markdown.data, ['name', 'category']);
+	var metadata = _.omit(markdown.data, ['name', 'category', 'head']);
 
 	_.forEach(metadata, (value, key) => {
 		if (_.isArray(value)) {
@@ -188,6 +189,7 @@ function parseDescriptionMarkdown(markdown, component) {
 			}, {})
 			.value();
 
+
 		var content;
 
 		if (externalSource) {
@@ -223,6 +225,7 @@ function parseDescriptionMarkdown(markdown, component) {
 				// replace the external source definition block in the description with the content from the external source
 				var regexp = new RegExp('```\\s*' + name + '\\:' + externalSource + '\\.' + language + '(.*\n)+?```', 'gm');
 				description = description.replace(regexp, () => createBlockFromExternalSource(name, language, content, optionsString));
+
 			}
 		} else {
 			content = block
