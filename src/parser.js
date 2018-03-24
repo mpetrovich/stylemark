@@ -112,9 +112,10 @@ function parseDocBlock(docBlock, filepath) {
 	component.setName(markdown.data.name);
 	component.setCategory(markdown.data.category);
 	component.setHead(markdown.data.head);
+	component.setHeadHtml(markdown.data.headHtml);
 	component.setFilepath(filepath);
 
-	var metadata = _.omit(markdown.data, ['name', 'category', 'head']);
+	var metadata = _.omit(markdown.data, ['name', 'category', 'head', 'headHtml']);
 
 	_.forEach(metadata, (value, key) => {
 		if (_.isArray(value)) {

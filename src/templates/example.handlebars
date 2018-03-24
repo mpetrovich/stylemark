@@ -2,7 +2,13 @@
 {{{or options.htmlTag "<html>"}}}
 
 	<head>
-		{{{options.headHtml}}}
+		{{#example.headHtml}}
+			{{{this}}}
+		{{/example.headHtml}}
+		{{^example.headHtml}}
+			{{{options.headHtml}}}
+		{{/example.headHtml}}
+
 
 		{{{example.head}}}
 
