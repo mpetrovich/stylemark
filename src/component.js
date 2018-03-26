@@ -115,11 +115,19 @@ class Component {
 		this.examples = this.examples || {};
 		this.examples[name] = {
 			name: name,
-			head: head || false,
-			headHtml: headHtml || false,
+			// head: head || false,
+			// headHtml: headHtml || false,
 			blocks: blocks,
 			options: options || {},
 		};
+
+		if (headHtml) {
+			this.examples[name].headHtml = headHtml;
+		}
+
+		if (head) {
+			this.examples[name].head = head;
+		}
 	}
 
 	/**
