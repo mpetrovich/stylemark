@@ -111,12 +111,12 @@ class Component {
 	 * @param {Object} [options]
 	 * @param {Number} [options.height]
 	 */
-	addExample(name, head, headHtml, blocks, options) {
+	addExample(name, blocks, options, head, headHtml) {
 		this.examples = this.examples || {};
 		this.examples[name] = {
 			name: name,
-			head: head,
-			headHtml: headHtml,
+			head: head || false,
+			headHtml: headHtml || false,
 			blocks: blocks,
 			options: options || {},
 		};
@@ -211,7 +211,7 @@ class Component {
 		}
 
 		_.each(from.getExamples(), (example, name) => {
-			to.addExample(name, to.head, to.headHtml, example.blocks, example.options);
+			to.addExample(name, example.blocks, example.options, to.head, to.headHtml);
 		});
 
 		_.each(from.getMeta(), (value, key) => {
