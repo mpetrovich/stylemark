@@ -115,8 +115,6 @@ class Component {
 		this.examples = this.examples || {};
 		this.examples[name] = {
 			name: name,
-			// head: head || false,
-			// headHtml: headHtml || false,
 			blocks: blocks,
 			options: options || {},
 		};
