@@ -35,6 +35,8 @@ class Parser {
 				}
 
 				try {
+					content = content.replace(/\r\n/g, '\n');  // Replaces Windows CRLF with Unix newlines
+
 					let language = path.extname(filepath).substr(1);
 					docs = docs.concat(this.parse(content, language, filepath));
 				}
