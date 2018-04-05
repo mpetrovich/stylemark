@@ -57,6 +57,55 @@
 		<script src="_stylemark/js/vendor/lazyframe.min.js"></script>
 		<script src="_stylemark/js/vendor/highlight.min.js"></script>
 		<script src="_stylemark/js/vendor/clipboard.min.js"></script>
-		<script src="_stylemark/js/app.js"></script>
+		<script src="_stylemark/js/app.js"></script>	
+		<script>
+      		
+		      $(function() {
+
+			lastID = 0;
+
+			$('.i-library').each(function(){
+
+			  currentID = $(this).attr('id');
+			  console.log(currentID);
+			  if (lastID === currentID){
+
+			    $(this).addClass('repeated')
+
+			  }else{
+			    $(this).addClass('unic')
+			  }
+			  $('.repeated').css('margin-top','-10px');
+			  $('.repeated .display-4').hide();
+
+
+			  lastID = $(this).attr('id');
+
+			});
+
+			lastFilter = 0;
+
+			$('.i-sidebar-list-item').each(function(){
+
+			  currentFilter = $(this).attr('data-filter-value');
+			  console.log(currentFilter);
+			  if (lastFilter === currentFilter){
+
+			    $(this).addClass('repeated-item')
+
+			  }else{
+			    $(this).addClass('unic-item')
+			  }
+			  $('.repeated-item').hide();
+
+			  lastFilter = $(this).attr('data-filter-value');
+
+			});  
+
+		      });  		
+
+		</script>
+		
+		
 	</body>
 </html>
