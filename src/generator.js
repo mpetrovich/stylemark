@@ -148,12 +148,6 @@ class Generator {
 				</div>\n`
 			);
 
-			// Adds 'table' class to <table> tags
-			doc.description = doc.description.replace(
-				/<table/g,
-				'<table class="table"'
-			);
-
 			// Replaces <info|success|warning|danger> tags with alert divs
 			doc.description = doc.description.replace(
 				/<(info|success|warning|danger)>([\s\S]*?)<\/\1>/g,
