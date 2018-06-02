@@ -20,7 +20,7 @@ var defaultExcludeDirectories = ['.git', 'node_modules'];
 function generate(params) {
 	var input = params.input;
 	var output = params.output;
-	var configPath = params.configPath || path.join(params.input, '.stylemark.yml');
+	var configPath = params.configPath || path.resolve(params.input, '.stylemark.yml');
 	var options = configPath ? getConfig(configPath) : {};
 
 	options.input = input;

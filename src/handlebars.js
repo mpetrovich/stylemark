@@ -91,6 +91,6 @@ var partials = {
 };
 
 _.forEach(helpers, (func, name) => Handlebars.registerHelper(name, func));
-_.forEach(partials, (filepath, name) => Handlebars.registerPartial(name, fs.readFileSync(path.join(__dirname, filepath), 'utf8')));
+_.forEach(partials, (filepath, name) => Handlebars.registerPartial(name, fs.readFileSync(path.resolve(__dirname, filepath), 'utf8')));
 
 module.exports = Handlebars;

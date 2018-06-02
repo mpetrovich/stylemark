@@ -50,7 +50,7 @@ if (browser) {
 	console.log('Launching browser...');
 	var options = {
 		ui: false,
-		files: path.join(output, '**', '*.*'),
+		files: path.resolve(output, '**', '*.*'),
 		watchEvents: ['add', 'change'],
 		server: output,
 		reloadDelay: 500,

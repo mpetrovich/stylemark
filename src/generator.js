@@ -9,9 +9,9 @@ var Handlebars = rfr('src/handlebars');
 var marked = rfr('src/marked');
 var babel = require('babel-core');
 
-var docTemplate = fs.readFileSync(path.join(__dirname, 'templates/doc.handlebars'), 'utf8');
-var exampleTemplate = fs.readFileSync(path.join(__dirname, 'templates/example.handlebars'), 'utf8');
-var indexTemplate = fs.readFileSync(path.join(__dirname, 'templates/index.handlebars'), 'utf8');
+var docTemplate = fs.readFileSync(path.resolve(__dirname, 'templates/doc.handlebars'), 'utf8');
+var exampleTemplate = fs.readFileSync(path.resolve(__dirname, 'templates/example.handlebars'), 'utf8');
+var indexTemplate = fs.readFileSync(path.resolve(__dirname, 'templates/index.handlebars'), 'utf8');
 
 class Generator {
 
@@ -69,8 +69,8 @@ class Generator {
 
 			// Copies stylemark assets
 			fs.copy(
-				path.join(__dirname, 'assets'),
-				path.join(destination, '_stylemark'),
+				path.resolve(__dirname, 'assets'),
+				path.resolve(destination, '_stylemark'),
 				error => error ? console.log(error) : null
 			);
 
@@ -78,8 +78,8 @@ class Generator {
 			let logo = options.logo || '';
 			if (logo && !logo.startsWith('http')) {
 				fs.copy(
-					path.join(options.input, logo),
-					path.join(options.output, logo),
+					path.resolve(options.input, logo),
+					path.resolve(options.output, logo),
 					error => error ? console.log(error) : null
 				);
 			}
@@ -88,8 +88,8 @@ class Generator {
 			let favicon = options.favicon || '';
 			if (favicon && !favicon.startsWith('http')) {
 				fs.copy(
-					path.join(options.input, favicon),
-					path.join(options.output, favicon),
+					path.resolve(options.input, favicon),
+					path.resolve(options.output, favicon),
 					error => error ? console.log(error) : null
 				);
 			}
@@ -98,8 +98,8 @@ class Generator {
 			if (options.assets) {
 				_.forEach(options.assets, (asset) => {
 					fs.copy(
-						path.join(options.input, asset),
-						path.join(options.output, asset),
+						path.resolve(options.input, asset),
+						path.resolve(options.output, asset),
 						error => error ? console.log(error) : null
 					);
 				});
@@ -113,7 +113,7 @@ class Generator {
 				groups
 			});
 
-			let filepath = path.join(destination, 'index.html');
+			let filepath = path.resolve(destination, 'index.html');
 			fs.writeFile(filepath, html, 'utf8', error => error ? console.log(error) : null);
 		});
 	}
@@ -193,7 +193,7 @@ class Generator {
 		example.slug = _.kebabCase(example.name);
 
 		var output = Handlebars.compile(exampleTemplate)({ doc, example, options });
-		var filepath = path.join(destination, `${doc.slug}-${example.slug}.html`);
+		var filepath = path.resolve(destination, `${doc.slug}-${example.slug}.html`);
 
 		fs.writeFile(filepath, output, 'utf8', error => error ? console.log(error) : null);
 	}
