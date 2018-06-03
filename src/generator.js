@@ -105,12 +105,34 @@ class Generator {
 				});
 			}
 
+			// Copies theme assets
+			if (options.theme.assets) {
+				_.forEach(options.theme.assets, (asset) => {
+					fs.copy(
+						path.resolve(options.configDir, asset),
+						path.resolve(options.output, asset),
+						error => error ? console.log(error) : null
+					);
+				});
+
+				options.theme.stylesheets = _(options.theme.assets)
+					.filter(asset => _.endsWith(asset, '.css'))
+					.map(asset => `<link rel="stylesheet" href="${asset}">`)
+					.value();
+
+				options.theme.scripts = _(options.theme.assets)
+					.filter(asset => _.endsWith(asset, '.js'))
+					.map(asset => `<script src="${asset}"></script>`)
+					.value();
+			}
+
 			let html = Handlebars.compile(indexTemplate)({
 				name: options.name,
 				sidebar: options.sidebar,
 				logo,
 				favicon,
-				groups
+				groups,
+				options,
 			});
 
 			let filepath = path.resolve(destination, 'index.html');

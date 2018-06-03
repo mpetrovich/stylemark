@@ -12,6 +12,8 @@
 		<script src="https://use.fontawesome.com/6dd56ad32d.js"></script>
 
 		<title>{{name}}</title>
+
+		{{{options.theme.stylesheets}}}
 	</head>
 	<body class="overflow-x-off i-page">
 		<div class="i-page__content">
@@ -42,8 +44,12 @@
 		<div
 			class="i-page__sidebar"
 			style="
-				background: {{or sidebar.background "#0b7564"}};
-				color: {{or sidebar.textColor "#fff"}};
+				{{~#if sidebar.background~}}
+					background: {{sidebar.background}};
+				{{~/if~}}
+				{{~#if sidebar.textColor~}}
+					color: {{sidebar.textColor}};
+				{{~/if~}}
 			"
 		>
 			{{> sidebar}}
@@ -58,5 +64,7 @@
 		<script src="_stylemark/js/vendor/highlight.min.js"></script>
 		<script src="_stylemark/js/vendor/clipboard.min.js"></script>
 		<script src="_stylemark/js/app.js"></script>
+
+		{{{options.theme.scripts}}}
 	</body>
 </html>

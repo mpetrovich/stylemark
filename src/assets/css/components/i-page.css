@@ -8,6 +8,8 @@
 
 .i-page__sidebar {
 	display: none;
+	background: #0b7564;
+	color: #fff;
 }
 .i-page__sidebar > * {
 	padding: 0 20px;

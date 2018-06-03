@@ -145,6 +145,9 @@ sidebar:
   background: (optional) Background color of the sidebar; hex colors should be quoted
   textColor: (optional) Text color of the sidebar; hex colors should be quoted
 
+theme:
+  assets: (optional) List of any CSS or JS files to include at the bottom of the styleguide's <head> or <body>, respectively; see Theming section
+
 doctypeTag: (optional) For example iframes, the HTML doctype to use; defaults to "<!doctype html>"
 headHtml: (optional) For example iframes, HTML to insert before the closing </head> tag
 bodyHtml: (optional) For example iframes, HTML to insert before the closing </body> tag
@@ -191,6 +194,11 @@ assets:
 sidebar:
   background: "#3b2a55"
   textColor: "#fff"
+
+theme:
+  assets:
+    - "theme/theme.css"
+    - "theme/theme.js"
 
 headHtml: |
   <link rel="stylesheet" href="dist/css/bootstrap.min.css">
