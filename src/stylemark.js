@@ -23,11 +23,16 @@ function generate(params) {
 	var configPath = params.configPath ? path.resolve(params.configPath) : path.resolve(input, '.stylemark.yml');
 	var options = getConfig(configPath);
 
+	if (!fs.existsSync(configPath)) {
+		console.error('Missing configuration file');
+		process.exit(1);
+	}
+
 	options.input = input;
 	options.output = output;
 	options.match = options.match || defaultMatchExtensions;
 	options.excludeDir = defaultExcludeDirectories.concat(options.excludeDir);
-	options.configDir = fs.existsSync(configPath) ? path.dirname(configPath) : throw 'Missing configuration file';
+	options.configDir = path.dirname(configPath);
 
 	['match', 'excludeDir'].forEach(name => {
 		options[name] = _.isString(options[name]) ? new RegExp(options[name]) : options[name];
