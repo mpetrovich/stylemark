@@ -106,7 +106,7 @@ class Generator {
 			}
 
 			// Copies theme assets
-			if (options.theme.assets) {
+			if (_.has(options, 'theme.assets')) {
 				_.forEach(options.theme.assets, (asset) => {
 					fs.copy(
 						path.resolve(options.configDir, asset),
