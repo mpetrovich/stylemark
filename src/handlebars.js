@@ -83,6 +83,12 @@ var helpers = {
 	quote: function(string) {
 		return '"' + string + '"';
 	},
+	compile: function(template, content) {
+		return Handlebars.compile(template)({ content });
+	},
+	replace: function(string, find, replace) {
+		return string.replace(find, replace);
+	},
 };
 
 var partials = {

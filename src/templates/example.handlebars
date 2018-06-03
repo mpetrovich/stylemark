@@ -59,7 +59,11 @@
 
 		{{~#each example.blocks}}
 			{{~#if (compare language "==" "html")}}
-				{{{content}}}
+				{{~#if ../options.examples.template}}
+					{{{compile (replace ../options.examples.template "{html}" "{{{content}}}") content}}}
+				{{else}}
+					{{{content}}}
+				{{/if~}}
 			{{/if~}}
 			{{~#if (compare language "==" "angularjs")}}
 				<main ng-controller="stylemark-{{doc.slug}}-{{example.name}}"></main>

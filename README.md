@@ -147,6 +147,9 @@ theme:
         background: (optional) Background of the sidebar; any valid CSS background property allowed, but hex colors must be quoted
         textColor: (optional) Text color of the sidebar; any valid CSS color property allowed, but hex colors must be quoted
 
+examples:
+    template: (optional) HTML template of the example; the actual HTML content will be inserted in place of `{html}`
+
 doctypeTag: (optional) For example iframes, the HTML doctype to use; defaults to "<!doctype html>"
 headHtml: (optional) For example iframes, HTML to insert before the closing </head> tag
 bodyHtml: (optional) For example iframes, HTML to insert before the closing </body> tag
@@ -240,6 +243,12 @@ theme:
     assets:
     - "theme/theme.css"
     - "theme/theme.js"
+
+examples:
+    template: |
+        <div style="padding: 20px">
+            {html}
+        </div>
 
 headHtml: |
     <link rel="stylesheet" href="dist/css/bootstrap.min.css">
