@@ -141,24 +141,24 @@ assets: (optional) List of relative file/directory paths to copy and mirror in t
 excludeDir: (optional) Regex pattern (in double quotes) or list of directories to exclude; .git and node_modules are always excluded
 match: (optional) Regex pattern or list of files to process; by default, common source files are included
 
-sidebar:
-  background: (optional) Background color of the sidebar; hex colors should be quoted
-  textColor: (optional) Text color of the sidebar; hex colors should be quoted
-
 theme:
   assets: (optional) List of any CSS or JS files to include at the bottom of the styleguide's <head> or <body>, respectively; see Theming section
+  sidebar:
+    background: (optional) Background of the sidebar; any valid CSS background property allowed, but hex colors must be quoted
+    textColor: (optional) Text color of the sidebar; any valid CSS color property allowed, but hex colors must be quoted
 
 doctypeTag: (optional) For example iframes, the HTML doctype to use; defaults to "<!doctype html>"
 headHtml: (optional) For example iframes, HTML to insert before the closing </head> tag
 bodyHtml: (optional) For example iframes, HTML to insert before the closing </body> tag
 
-webpackAppPath: For React apps, this is the `output.library` value in your webpack config
+webpackAppPath: For Webpack apps (esp. React, Angular, etc.), this is the `output.library` value in your webpack config
 emberAppName: For Ember apps, this is the name of the Ember app exported to the window object
 
 order: (optional) See below
 ```
 
-##### Category order
+
+#### Category order
 The relative order of categories can be defined by prefixing a category name with `+`, `-`, or nothing:
 - Categories prefixed with `+` will be listed first
 - Categories prefixed with `-` will be listed last
@@ -177,7 +177,48 @@ order:
   - -Other
 ```
 
-##### Example
+
+#### Theming
+The look and feel of the generated styleguide can be customized in the `theme` section of the config.
+
+For example:
+```
+theme:
+    assets:
+    - "theme/theme.css"
+    - "theme/theme.js"
+
+    sidebar:
+        background: rgb(200, 0, 0)
+        textColor: "#fff"
+```
+With that configuration, Stylemark will include `theme/theme.css` and `theme/theme.js` in the generated styleguide. Note that the `background` and `textColor` styles defined in the `sidebar` section will override any similar styles set in `theme/theme.css`.
+
+Stylemark includes a number of CSS class hooks you can use to style specific elements. These CSS classes all start with `theme-` and include:
+- `theme-content`: The main scrollable page content
+- `theme-content-category`: Set of elements that make up a category
+- `theme-content-element`: An element, including its title and documentation
+- `theme-content-element-description`: An element's documentation, not including its title
+- `theme-content-element-title`: An element's title
+- `theme-mobile-nav`: The navigation view visible on smaller viewports
+- `theme-mobile-nav-select`: The `<select>` tag for the navigation dropdown visible on smaller viewports
+- `theme-page`: The entire page, including the content and sidebar
+- `theme-sidebar`: The sidebar
+- `theme-sidebar-categories`: The set of categories in the sidebar
+- `theme-sidebar-category`: A category in the sidebar, including its elements
+- `theme-sidebar-category-title`: A sidebar category's title
+- `theme-sidebar-element`: An element within a sidebar category
+- `theme-sidebar-footer`: Sidebar footer
+- `theme-sidebar-header`: Sidebar header
+- `theme-sidebar-header-logo`: Sidebar header logo
+- `theme-sidebar-header-title`: Sidebar header title that contains the styleguide name
+- `theme-sidebar-search`: Sidebar search module
+- `theme-sidebar-search-no-results`: Text that appears when no sidebar search results are found
+
+**IMPORTANT:** Use only these `theme-` classes when customizing your styleguide. Relying on any other internal classes will result in your styles breaking when those internal classes change or are removed.
+
+
+#### Example configuration
 Here's an example for [Bootstrap](https://github.com/mpetrovich/bootstrap/):
 ```yaml
 name: Bootstrap
