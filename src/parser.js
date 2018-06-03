@@ -34,7 +34,7 @@ class Parser {
 			},
 			(error, content, filepath, next) => {
 				if (error) {
-					console.error(error);
+					console.error(error, error.stack);
 					return next();
 				}
 
@@ -45,7 +45,7 @@ class Parser {
 					docs = docs.concat(this.parse(content, language, filepath));
 				}
 				catch (e) {
-					console.error(`Error parsing "${filepath}": ${e}`);
+					console.error(`Error parsing "${filepath}": ${e}`, e.stack);
 				}
 
 				next();

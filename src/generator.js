@@ -18,7 +18,7 @@ class Generator {
 	generate(docs, destination, options = {}) {
 		mkdirp(destination, error => {
 			if (error) {
-				console.error(`Unable to create destination directory: ${error}`);
+				console.error(`Unable to create destination directory: ${error}`, error.stack);
 				return;
 			}
 
