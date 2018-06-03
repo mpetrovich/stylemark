@@ -146,7 +146,16 @@ class Parser {
 
 		// Extracts examples from description blocks
 		_.forEach(blocks, (block) => {
-			var matches = block.match(/```\s*([^\.\s\:]+)(?:\:([^\.\s]+))?(?:(\*)|(?:\.(\w+)))(.*)\n/);
+			/*
+				Matches any of the following:
+
+				Inline example:      <name>.<extension>
+				External file:       <name>:<filepath>.<extension>
+				External directory:  <name>:<filepath>/*
+
+				where <filepath> can be an absolute path (`/foo/bar`) or relative path (`foo/bar`, `../foo`)
+			*/
+			var matches = block.match(/```\s*([^\.\s\:]+)(?:\:([^\s]+))?(?:(\*)|(?:\.(\w+)))(.*)\n/);
 			var name = matches ? matches[1] : null;
 			var externalSource = matches ? matches[2] : null;
 			var externalSourceWildcard = matches ? matches[3] : null;

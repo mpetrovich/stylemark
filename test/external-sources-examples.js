@@ -32,12 +32,17 @@ An example can reference multiple sources individually:
 
 ```multiple-sources:external_examples/external-template.html
 ```
-```multiple-sources:external_examples/external-data.js
+```multiple-sources:../test/external_examples/external-data.js
 ```
 
 or with a wildcard:
 
 ```multiple-sources-wildcard:external_examples/*
+```
+
+using a parent directory path:
+
+```multiple-sources-parent-wildcard:../test/external_examples/*
 ```
 
 Hidden Sources

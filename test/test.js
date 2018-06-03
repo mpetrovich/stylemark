@@ -283,7 +283,7 @@ describe('A processed source code file with external source examples', () => {
 	it('should have the correct number of components', () => expect(components.length).to.equal(1));
 
 	describe('component', () => {
-		it('should have the correct number of examples', () => expect(_.size(components[0].getExamples())).to.equal(6));
+		it('should have the correct number of examples', () => expect(_.size(components[0].getExamples())).to.equal(7));
 
 		it('should have the correct 1st example', () => expect(components[0].getExamples()['single-source-relative']).to.deep.equal({
 			name: 'single-source-relative',

@@ -49,6 +49,16 @@ var data = {};
 <div id="data">External Example Template</div>
 ```
 
+using a parent directory path:
+
+```multiple-sources-parent-wildcard.js
+var data = {};
+```
+<example name="multiple-sources-parent-wildcard"></example>
+```multiple-sources-parent-wildcard.html
+<div id="data">External Example Template</div>
+```
+
 Hidden Sources
 --------------
 An external source can also be hidden:
