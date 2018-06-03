@@ -14,7 +14,7 @@ Document your style guide components in code comments or Markdown files, and Sty
 
 Installation
 ---
-Requires Node 6.x+ (4.x support coming soon)
+Requires Node 6.x+
 ```sh
 npm install -g stylemark
 ```
