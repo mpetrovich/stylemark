@@ -142,10 +142,10 @@ excludeDir: (optional) Regex pattern (in double quotes) or list of directories t
 match: (optional) Regex pattern or list of files to process; by default, common source files are included
 
 theme:
-  assets: (optional) List of any CSS or JS files to include at the bottom of the styleguide's <head> or <body>, respectively; see Theming section
-  sidebar:
-    background: (optional) Background of the sidebar; any valid CSS background property allowed, but hex colors must be quoted
-    textColor: (optional) Text color of the sidebar; any valid CSS color property allowed, but hex colors must be quoted
+    assets: (optional) List of any CSS or JS files to include at the bottom of the styleguide's <head> or <body>, respectively; see Theming section
+    sidebar:
+        background: (optional) Background of the sidebar; any valid CSS background property allowed, but hex colors must be quoted
+        textColor: (optional) Text color of the sidebar; any valid CSS color property allowed, but hex colors must be quoted
 
 doctypeTag: (optional) For example iframes, the HTML doctype to use; defaults to "<!doctype html>"
 headHtml: (optional) For example iframes, HTML to insert before the closing </head> tag
@@ -169,12 +169,12 @@ Omitted categories are ordered as if they were included but unprefixed.
 Within each of the `+`-, `-`-, and un-prefixed groups, the specified order will be preserved. Example:
 ```
 order:
-  - +Getting Started
-  - +Overview
-  - +Grid
-  - Topography
-  - -Extras
-  - -Other
+- +Getting Started
+- +Overview
+- +Grid
+- Topography
+- -Extras
+- -Other
 ```
 
 
@@ -225,29 +225,29 @@ name: Bootstrap
 logo: docs/assets/brand/bootstrap-solid.svg
 
 excludeDir:
-  - dist
-  - docs
+- dist
+- docs
 
 assets:
-  - dist
-  - fonts
+- dist
+- fonts
 
 sidebar:
-  background: "#3b2a55"
-  textColor: "#fff"
+    background: "#3b2a55"
+    textColor: "#fff"
 
 theme:
-  assets:
+    assets:
     - "theme/theme.css"
     - "theme/theme.js"
 
 headHtml: |
-  <link rel="stylesheet" href="dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="dist/css/bootstrap.min.css">
 
 bodyHtml: |
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="dist/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
 
 order:
-  - +Getting Started
+- +Getting Started
 ```
