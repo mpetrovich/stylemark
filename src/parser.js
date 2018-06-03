@@ -202,8 +202,8 @@ class Parser {
 					let sourcePath;
 
 					if (externalSourceFilename[0] === '/') {
-						// this is an absolute path, so resolve the source file relative to the config directory
-						sourcePath = path.resolve(this.options.configDir, externalSourceFilename.slice(1));
+						// this is an absolute path, so resolve the source file relative to the base directory
+						sourcePath = path.resolve(this.options.baseDir, externalSourceFilename.slice(1));
 
 					} else {
 						// otherwise, resolve the source file relative to the component file's directory

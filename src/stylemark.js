@@ -5,6 +5,7 @@ var yaml = require('js-yaml');
 var Parser = rfr('src/parser');
 var generator = rfr('src/generator');
 var _ = require('lodash');
+var findRoot = require('find-root');
 
 var jsExtensions = require('common-js-file-extensions');
 var markdownExtensions = require('markdown-extensions');
@@ -32,7 +33,7 @@ function generate(params) {
 	options.output = output;
 	options.match = options.match || defaultMatchExtensions;
 	options.excludeDir = defaultExcludeDirectories.concat(options.excludeDir);
-	options.configDir = path.dirname(configPath);
+	options.baseDir = options.baseDir ? findRoot(path.resolve(options.baseDir)) : findRoot(process.cwd());
 
 	['match', 'excludeDir'].forEach(name => {
 		options[name] = _.isString(options[name]) ? new RegExp(options[name]) : options[name];

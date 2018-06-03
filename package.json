@@ -51,6 +51,7 @@
     "browser-sync": "^2.23.2",
     "chokidar": "^1.7.0",
     "common-js-file-extensions": "^1.0.2",
+    "find-root": "^1.1.0",
     "fs-extra": "^4.0.3",
     "gray-matter": "^2.1.1",
     "handlebars": "^4.0.11",

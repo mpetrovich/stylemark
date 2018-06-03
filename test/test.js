@@ -6,6 +6,7 @@ var expect = require('chai').expect;
 var Parser = rfr('src/parser');
 var fs = require('fs');
 var _ = require('lodash');
+var findRoot = require('find-root');
 
 describe('A Markdown file without front matter', () => {
 	var parser = new Parser();
@@ -272,7 +273,7 @@ describe('A processed source code file', () => {
 });
 
 describe('A processed source code file with external source examples', () => {
-	var parser = new Parser({ configDir: process.cwd() });
+	var parser = new Parser({ baseDir: findRoot(process.cwd()) });
 	var expectedOutputFilepath = 'test/external-sources-examples-expected-output.txt';
 	var expectedOutput = fs.readFileSync(expectedOutputFilepath, 'utf8');
 	var filepath = 'test/external-sources-examples.js';
