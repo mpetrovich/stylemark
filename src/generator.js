@@ -78,7 +78,7 @@ class Generator {
 			let logo = options.logo || '';
 			if (logo && !logo.startsWith('http')) {
 				fs.copy(
-					path.resolve(options.input, logo),
+					path.resolve(options.configDir, logo),
 					path.resolve(options.output, logo),
 					error => error ? console.log(error) : null
 				);
@@ -88,7 +88,7 @@ class Generator {
 			let favicon = options.favicon || '';
 			if (favicon && !favicon.startsWith('http')) {
 				fs.copy(
-					path.resolve(options.input, favicon),
+					path.resolve(options.configDir, favicon),
 					path.resolve(options.output, favicon),
 					error => error ? console.log(error) : null
 				);
@@ -98,7 +98,7 @@ class Generator {
 			if (options.assets) {
 				_.forEach(options.assets, (asset) => {
 					fs.copy(
-						path.resolve(options.input, asset),
+						path.resolve(options.configDir, asset),
 						path.resolve(options.output, asset),
 						error => error ? console.log(error) : null
 					);

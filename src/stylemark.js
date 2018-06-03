@@ -2,7 +2,7 @@ var rfr = require('rfr');
 var fs = require('fs');
 var path = require('path');
 var yaml = require('js-yaml');
-var parser = rfr('src/parser');
+var Parser = rfr('src/parser');
 var generator = rfr('src/generator');
 var _ = require('lodash');
 
@@ -18,23 +18,26 @@ var defaultMatchExtensions = _(jsExtensions.code)
 var defaultExcludeDirectories = ['.git', 'node_modules'];
 
 function generate(params) {
-	var input = params.input;
-	var output = params.output;
-	var configPath = params.configPath || path.resolve(params.input, '.stylemark.yml');
-	var options = configPath ? getConfig(configPath) : {};
+	var input = path.resolve(params.input);
+	var output = path.resolve(params.output);
+	var configPath = params.configPath ? path.resolve(params.configPath) : path.resolve(input, '.stylemark.yml');
+	var options = getConfig(configPath);
 
 	options.input = input;
 	options.output = output;
 	options.match = options.match || defaultMatchExtensions;
 	options.excludeDir = defaultExcludeDirectories.concat(options.excludeDir);
+	options.configDir = fs.existsSync(configPath) ? path.dirname(configPath) : throw 'Missing configuration file';
 
 	['match', 'excludeDir'].forEach(name => {
 		options[name] = _.isString(options[name]) ? new RegExp(options[name]) : options[name];
 	});
 
-	parser.parseDir(input, options, (error, docs) => {
+	var parser = new Parser(options);
+
+	parser.parseDir(input, (error, docs) => {
 		if (error) {
-			console.error(error);
+			console.error(error, error.stack);
 			return;
 		}
 		generator.generate(docs, output, options);

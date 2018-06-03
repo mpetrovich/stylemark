@@ -130,7 +130,9 @@ stylemark -i path/to/source/code -o path/to/style/guide -w -b
 
 
 ### Configuration file
-The Stylemark configuration file is a [YAML](https://en.wikipedia.org/wiki/YAML) file that contains settings to use when generating the HTML style guide:
+The Stylemark configuration file is a [YAML](https://en.wikipedia.org/wiki/YAML) file that contains settings to use when generating the HTML style guide.
+
+**NOTE:** All paths are relative to the configuration file.
 ```yaml
 name: Name of the style guide
 logo: (optional) Relative filepath or absolute URL of your logo

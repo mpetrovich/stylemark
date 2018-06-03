@@ -3,11 +3,12 @@
 var rfr = require('rfr');
 var path = require('path');
 var expect = require('chai').expect;
-var parser = rfr('src/parser');
+var Parser = rfr('src/parser');
 var fs = require('fs');
 var _ = require('lodash');
 
 describe('A Markdown file without front matter', () => {
+	var parser = new Parser();
 	var filepath = 'test/input-without-front-matter.md';
 	var content = fs.readFileSync(filepath, 'utf8');
 	var language = path.extname(filepath).substr(1);
@@ -17,6 +18,7 @@ describe('A Markdown file without front matter', () => {
 });
 
 describe('A Markdown file', () => {
+	var parser = new Parser();
 	var filepath = 'test/input.md';
 	var content = fs.readFileSync(filepath, 'utf8');
 	var language = path.extname(filepath).substr(1);
@@ -131,6 +133,7 @@ describe('A Markdown file', () => {
 });
 
 describe('A processed source code file', () => {
+	var parser = new Parser();
 	var filepath = 'test/input.css';
 	var content = fs.readFileSync(filepath, 'utf8');
 	var language = path.extname(filepath).substr(1);
@@ -269,6 +272,7 @@ describe('A processed source code file', () => {
 });
 
 describe('A processed source code file with external source examples', () => {
+	var parser = new Parser({ configDir: process.cwd() });
 	var expectedOutputFilepath = 'test/external-sources-examples-expected-output.txt';
 	var expectedOutput = fs.readFileSync(expectedOutputFilepath, 'utf8');
 	var filepath = 'test/external-sources-examples.js';
