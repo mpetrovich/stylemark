@@ -87,6 +87,7 @@ var helpers = {
 		return Handlebars.compile(template)({ content });
 	},
 	replace: function(string, find, replace) {
+		string = string || '';
 		return string.replace(find, replace);
 	},
 };

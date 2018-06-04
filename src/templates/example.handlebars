@@ -1,8 +1,8 @@
-{{{or options.doctypeTag "<!doctype html>"}}}
-{{{or options.htmlTag "<html>"}}}
+{{{or options.examples.doctypeTag "<!doctype html>"}}}
+{{{or options.examples.htmlTag "<html>"}}}
 
 	<head>
-		{{{options.headHtml}}}
+		{{{options.examples.headHtml}}}
 
 		<style>
 			{{#each example.blocks}}
@@ -53,14 +53,17 @@
 				}
 			}
 		</script>
+
+		{{{options.examples.stylesheets}}}
+		{{{options.examples.scripts}}}
 	</head>
 
-	{{{or options.bodyTag "<body>"}}}
+	{{{or options.examples.bodyTag "<body>"}}}
 
 		{{~#each example.blocks}}
 			{{~#if (compare language "==" "html")}}
-				{{~#if ../options.examples.template}}
-					{{{compile (replace ../options.examples.template "{html}" "{{{content}}}") content}}}
+				{{~#if ../options.examples.bodyHtml}}
+					{{{compile (replace ../options.examples.bodyHtml "{html}" "{{{content}}}") content}}}
 				{{else}}
 					{{{content}}}
 				{{/if~}}
@@ -75,8 +78,6 @@
 				<main class="stylemark-ember-root"></main>
 			{{/if~}}
 		{{/each~}}
-
-		{{{options.bodyHtml}}}
 
 		{{#each example.blocks}}
 			<script type="text/x-stylemark" data-language="{{language}}">{{{content}}}</script>

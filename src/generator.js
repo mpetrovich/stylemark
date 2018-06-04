@@ -22,6 +22,84 @@ class Generator {
 				return;
 			}
 
+			// Copies stylemark assets
+			fs.copySync(
+				path.resolve(__dirname, 'assets'),
+				path.resolve(destination, '_stylemark')
+			);
+
+			// Copies logo asset
+			let logo = options.logo || '';
+			if (logo && !logo.startsWith('http')) {
+				fs.copySync(
+					path.resolve(options.baseDir, logo),
+					path.resolve(options.output, logo)
+				);
+			}
+
+			// Copies favicon asset
+			let favicon = options.favicon || '';
+			if (favicon && !favicon.startsWith('http')) {
+				fs.copySync(
+					path.resolve(options.baseDir, favicon),
+					path.resolve(options.output, favicon)
+				);
+			}
+
+			// Copies user assets
+			if (options.assets) {
+				_.forEach(options.assets, (asset) => {
+					fs.copySync(
+						path.resolve(options.baseDir, asset),
+						path.resolve(options.output, asset)
+					);
+				});
+			}
+
+			// Copies theme assets
+			if (_.has(options, 'theme.assets')) {
+				_(options.theme.assets)
+					.reject(asset => asset.startsWith('http'))
+					.forEach(asset => {
+						fs.copySync(
+							path.resolve(options.baseDir, asset),
+							path.resolve(options.output, asset)
+						);
+					});
+
+				options.theme.stylesheets = _(options.theme.assets)
+					.filter(asset => _.endsWith(asset, '.css'))
+					.map(asset => `<link rel="stylesheet" href="${asset}">`)
+					.join('\n');
+
+				options.theme.scripts = _(options.theme.assets)
+					.filter(asset => _.endsWith(asset, '.js'))
+					.map(asset => `<script src="${asset}"></script>`)
+					.join('\n');
+			}
+
+			// Copies example assets
+			if (_.has(options, 'examples.assets')) {
+				_(options.examples.assets)
+					.reject(asset => asset.startsWith('http'))
+					.forEach(asset => {
+						fs.copySync(
+							path.resolve(options.baseDir, asset),
+							path.resolve(options.output, asset)
+						);
+					});
+
+				options.examples.stylesheets = _(options.examples.assets)
+					.filter(asset => _.endsWith(asset, '.css'))
+					.map(asset => `<link rel="stylesheet" href="${asset}">`)
+					.join('\n');
+
+				options.examples.scripts = _(options.examples.assets)
+					.filter(asset => _.endsWith(asset, '.js'))
+					.map(asset => `<script src="${asset}"></script>`)
+					.join('\n');
+			}
+
 			docs = _(docs)
 				.sortBy('name')
 				.map(doc => {
@@ -67,68 +145,9 @@ class Generator {
 				.sortBy(['rank', 'key'])
 				.value();
 
-			// Copies stylemark assets
-			fs.copy(
-				path.resolve(__dirname, 'assets'),
-				path.resolve(destination, '_stylemark'),
-				error => error ? console.log(error) : null
-			);
-
-			// Copies logo asset
-			let logo = options.logo || '';
-			if (logo && !logo.startsWith('http')) {
-				fs.copy(
-					path.resolve(options.baseDir, logo),
-					path.resolve(options.output, logo),
-					error => error ? console.log(error) : null
-				);
-			}
-
-			// Copies favicon asset
-			let favicon = options.favicon || '';
-			if (favicon && !favicon.startsWith('http')) {
-				fs.copy(
-					path.resolve(options.baseDir, favicon),
-					path.resolve(options.output, favicon),
-					error => error ? console.log(error) : null
-				);
-			}
-
-			// Copies user-defined assets
-			if (options.assets) {
-				_.forEach(options.assets, (asset) => {
-					fs.copy(
-						path.resolve(options.baseDir, asset),
-						path.resolve(options.output, asset),
-						error => error ? console.log(error) : null
-					);
-				});
-			}
-
-			// Copies theme assets
-			if (_.has(options, 'theme.assets')) {
-				_.forEach(options.theme.assets, (asset) => {
-					fs.copy(
-						path.resolve(options.baseDir, asset),
-						path.resolve(options.output, asset),
-						error => error ? console.log(error) : null
-					);
-				});
-
-				options.theme.stylesheets = _(options.theme.assets)
-					.filter(asset => _.endsWith(asset, '.css'))
-					.map(asset => `<link rel="stylesheet" href="${asset}">`)
-					.value();
-
-				options.theme.scripts = _(options.theme.assets)
-					.filter(asset => _.endsWith(asset, '.js'))
-					.map(asset => `<script src="${asset}"></script>`)
-					.value();
-			}
-
 			let html = Handlebars.compile(indexTemplate)({
 				name: options.name,
-				sidebar: options.sidebar,
+				sidebar: options.theme.sidebar,
 				logo,
 				favicon,
 				groups,
@@ -136,7 +155,7 @@ class Generator {
 			});
 
 			let filepath = path.resolve(destination, 'index.html');
-			fs.writeFile(filepath, html, 'utf8', error => error ? console.log(error) : null);
+			fs.writeFile(filepath, html, 'utf8', error => error ? console.error(error, error.stack) : null);
 		});
 	}
 
@@ -217,7 +236,7 @@ class Generator {
 		var output = Handlebars.compile(exampleTemplate)({ doc, example, options });
 		var filepath = path.resolve(destination, `${doc.slug}-${example.slug}.html`);
 
-		fs.writeFile(filepath, output, 'utf8', error => error ? console.log(error) : null);
+		fs.writeFile(filepath, output, 'utf8', error => error ? console.error(error, error.stack) : null);
 	}
 }
 

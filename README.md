@@ -142,26 +142,27 @@ excludeDir: (optional) Regex pattern (in double quotes) or list of directories t
 match: (optional) Regex pattern or list of files to process; by default, common source files are included
 
 theme:
-    assets: (optional) List of any CSS or JS files to include at the bottom of the styleguide's <head> or <body>, respectively; see Theming section
+    assets: (optional) List of any CSS and JS files to include in the generated styleguide; see Theming section
     sidebar:
         background: (optional) Background of the sidebar; any valid CSS background property allowed, but hex colors must be quoted
         textColor: (optional) Text color of the sidebar; any valid CSS color property allowed, but hex colors must be quoted
 
 examples:
-    template: (optional) HTML template of the example; the actual HTML content will be inserted in place of `{html}`
-
-doctypeTag: (optional) For example iframes, the HTML doctype to use; defaults to "<!doctype html>"
-headHtml: (optional) For example iframes, HTML to insert before the closing </head> tag
-bodyHtml: (optional) For example iframes, HTML to insert before the closing </body> tag
+    assets: (optional) List of any CSS and JS files to include in the <head> of each rendered example
+    doctypeTag: (optional) HTML doctype to use for each rendered example; defaults to "<!doctype html>"
+    htmlTag: (optional) <html> tag to use for each rendered example; defaults to "<html>"
+    bodyTag: (optional) <body> tag to use for each rendered example; defaults to "<body>"
+    headHtml: (optional) HTML to insert before the closing </head> tag for each rendered example
+    bodyHtml: (optional) HTML template of the example; the example's HTML content will be inserted in place of "{html}"
 
 webpackAppPath: For Webpack apps (esp. React, Angular, etc.), this is the `output.library` value in your webpack config
 emberAppName: For Ember apps, this is the name of the Ember app exported to the window object
 
-order: (optional) See below
+order: (optional) See Ordering section
 ```
 
 
-#### Category order
+#### Ordering
 The relative order of categories can be defined by prefixing a category name with `+`, `-`, or nothing:
 - Categories prefixed with `+` will be listed first
 - Categories prefixed with `-` will be listed last
@@ -222,10 +223,10 @@ Stylemark includes a number of CSS class hooks you can use to style specific ele
 
 
 #### Example configuration
-Here's an example for [Bootstrap](https://github.com/mpetrovich/bootstrap/):
+Here's a sample configuration with all options provided:
 ```yaml
-name: Bootstrap
-logo: docs/assets/brand/bootstrap-solid.svg
+name: Acme Design
+logo: assets/brand/logo.png
 
 excludeDir:
 - dist
@@ -241,22 +242,31 @@ sidebar:
 
 theme:
     assets:
-    - "theme/theme.css"
-    - "theme/theme.js"
+    - theme/theme.css
+    - theme/theme.js
 
 examples:
-    template: |
+    assets:
+    - https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js
+    - dist/js/app.min.js
+
+    doctypeTag: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+    htmlTag: <html id="acme">
+    bodyTag: <body class="acme-body">
+
+    headHtml: |
+        <meta name="google-site-verification" content="52cae…">
+        <script>
+            window.disableRouting = true;
+        </script>
+
+    bodyHtml: |
         <div style="padding: 20px">
             {html}
         </div>
 
-headHtml: |
-    <link rel="stylesheet" href="dist/css/bootstrap.min.css">
-
-bodyHtml: |
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="dist/js/bootstrap.min.js"></script>
-
 order:
-- +Getting Started
+- +Introduction
+- +Installation
+- -Credits
 ```
