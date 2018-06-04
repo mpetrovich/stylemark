@@ -29,7 +29,7 @@ class Generator {
 			);
 
 			// Copies logo asset
-			let logo = options.logo || '';
+			let logo = options.theme.logo || '';
 			if (logo && !logo.startsWith('http')) {
 				fs.copySync(
 					path.resolve(options.baseDir, logo),

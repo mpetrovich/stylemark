@@ -135,7 +135,6 @@ The Stylemark configuration file is a [YAML](https://en.wikipedia.org/wiki/YAML)
 **NOTE:** All paths are relative to root project directory of the configuration file (ie. the first ancestor directory that contains `package.json`).
 ```yaml
 name: Name of the style guide
-logo: (optional) Relative filepath or absolute URL of your logo
 assets: (optional) List of relative file/directory paths to copy and mirror in the generated style guide
 
 excludeDir: (optional) Regex pattern (in double quotes) or list of directories to exclude; .git and node_modules are always excluded
@@ -144,6 +143,7 @@ match: (optional) Regex pattern or list of files to process; by default, common 
 theme:
     assets: (optional) List of any CSS and JS files to include in the generated styleguide; see Theming section
     sidebar:
+        logo: (optional) Filepath or URL of your logo
         background: (optional) Background of the sidebar; any valid CSS background property allowed, but hex colors must be quoted
         textColor: (optional) Text color of the sidebar; any valid CSS color property allowed, but hex colors must be quoted
 
@@ -226,7 +226,6 @@ Stylemark includes a number of CSS class hooks you can use to style specific ele
 Here's a sample configuration with all options provided:
 ```yaml
 name: Acme Design
-logo: assets/brand/logo.png
 
 excludeDir:
 - dist
@@ -241,6 +240,7 @@ sidebar:
     textColor: "#fff"
 
 theme:
+    logo: assets/brand/logo.png
     assets:
     - theme/theme.css
     - theme/theme.js
