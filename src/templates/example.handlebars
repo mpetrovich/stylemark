@@ -54,8 +54,12 @@
 			}
 		</script>
 
-		{{{options.examples.stylesheets}}}
-		{{{options.examples.scripts}}}
+		{{#each options.examples.css}}
+			<link rel="stylesheet" href="{{this}}">
+		{{/each}}
+		{{#each options.examples.js}}
+			<script src="{{this}}"></script>
+		{{/each}}
 	</head>
 
 	{{{or options.examples.bodyTag "<body>"}}}

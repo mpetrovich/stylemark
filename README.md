@@ -141,14 +141,16 @@ excludeDir: (optional) Regex pattern (in double quotes) or list of directories t
 match: (optional) Regex pattern or list of files to process; by default, common source files are included
 
 theme:
-    assets: (optional) List of any CSS and JS files to include in the generated styleguide; see Theming section
+    css: (optional) List of any CSS files to include in the <head> of the generated styleguide; see Theming section
+    js: (optional) List of any JS files to include in the <body> of the generated styleguide; see Theming section
     sidebar:
         logo: (optional) Filepath or URL of your logo
         background: (optional) Background of the sidebar; any valid CSS background property allowed, but hex colors must be quoted
         textColor: (optional) Text color of the sidebar; any valid CSS color property allowed, but hex colors must be quoted
 
 examples:
-    assets: (optional) List of any CSS and JS files to include in the <head> of each rendered example
+    css: (optional) List of any CSS files to include in the <head> of each rendered example
+    js: (optional) List of any JS files to include in the <head> of each rendered example
     doctypeTag: (optional) HTML doctype to use for each rendered example; defaults to "<!doctype html>"
     htmlTag: (optional) <html> tag to use for each rendered example; defaults to "<html>"
     bodyTag: (optional) <body> tag to use for each rendered example; defaults to "<body>"
@@ -188,9 +190,11 @@ The look and feel of the generated styleguide can be customized in the `theme` s
 For example:
 ```
 theme:
-    assets:
-    - "theme/theme.css"
-    - "theme/theme.js"
+    css:
+    - theme/theme.css
+
+    js:
+    - theme/theme.js
 
     sidebar:
         background: rgb(200, 0, 0)
@@ -241,12 +245,18 @@ sidebar:
 
 theme:
     logo: assets/brand/logo.png
-    assets:
+
+    css:
     - theme/theme.css
+
+    js:
     - theme/theme.js
 
 examples:
-    assets:
+    css:
+    - dist/css/app.min.css
+
+    js:
     - https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js
     - dist/js/app.min.js
 

@@ -56,9 +56,9 @@ class Generator {
 				});
 			}
 
-			// Copies theme assets
-			if (_.has(options, 'theme.assets')) {
-				_(options.theme.assets)
+			// Copies theme css
+			if (_.has(options, 'theme.css')) {
+				_(options.theme.css)
 					.reject(asset => asset.startsWith('http'))
 					.forEach(asset => {
 						fs.copySync(
@@ -66,21 +66,11 @@ class Generator {
 							path.resolve(options.output, asset)
 						);
 					});
-
-				options.theme.stylesheets = _(options.theme.assets)
-					.filter(asset => _.endsWith(asset, '.css'))
-					.map(asset => `<link rel="stylesheet" href="${asset}">`)
-					.join('\n');
-
-				options.theme.scripts = _(options.theme.assets)
-					.filter(asset => _.endsWith(asset, '.js'))
-					.map(asset => `<script src="${asset}"></script>`)
-					.join('\n');
 			}
 
-			// Copies example assets
-			if (_.has(options, 'examples.assets')) {
-				_(options.examples.assets)
+			// Copies theme js
+			if (_.has(options, 'theme.js')) {
+				_(options.theme.js)
 					.reject(asset => asset.startsWith('http'))
 					.forEach(asset => {
 						fs.copySync(
@@ -88,16 +78,30 @@ class Generator {
 							path.resolve(options.output, asset)
 						);
 					});
+			}
 
-				options.examples.stylesheets = _(options.examples.assets)
-					.filter(asset => _.endsWith(asset, '.css'))
-					.map(asset => `<link rel="stylesheet" href="${asset}">`)
-					.join('\n');
+			// Copies example css
+			if (_.has(options, 'examples.css')) {
+				_(options.examples.css)
+					.reject(asset => asset.startsWith('http'))
+					.forEach(asset => {
+						fs.copySync(
+							path.resolve(options.baseDir, asset),
+							path.resolve(options.output, asset)
+						);
+					});
+			}
 
-				options.examples.scripts = _(options.examples.assets)
-					.filter(asset => _.endsWith(asset, '.js'))
-					.map(asset => `<script src="${asset}"></script>`)
-					.join('\n');
+			// Copies example js
+			if (_.has(options, 'examples.js')) {
+				_(options.examples.js)
+					.reject(asset => asset.startsWith('http'))
+					.forEach(asset => {
+						fs.copySync(
+							path.resolve(options.baseDir, asset),
+							path.resolve(options.output, asset)
+						);
+					});
 			}
 
 			docs = _(docs)
