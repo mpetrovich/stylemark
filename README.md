@@ -141,10 +141,10 @@ excludeDir: (optional) Regex pattern (in double quotes) or list of directories t
 match: (optional) Regex pattern or list of files to process; by default, common source files are included
 
 theme:
+    logo: (optional) Filepath or URL of your logo
     css: (optional) List of any CSS files to include in the <head> of the generated styleguide; see Theming section
     js: (optional) List of any JS files to include in the <body> of the generated styleguide; see Theming section
     sidebar:
-        logo: (optional) Filepath or URL of your logo
         background: (optional) Background of the sidebar; any valid CSS background property allowed, but hex colors must be quoted
         textColor: (optional) Text color of the sidebar; any valid CSS color property allowed, but hex colors must be quoted
 
@@ -239,10 +239,6 @@ assets:
 - dist
 - fonts
 
-sidebar:
-    background: "#3b2a55"
-    textColor: "#fff"
-
 theme:
     logo: assets/brand/logo.png
 
@@ -251,6 +247,10 @@ theme:
 
     js:
     - theme/theme.js
+
+    sidebar:
+        background: "#3b2a55"
+        textColor: "#fff"
 
 examples:
     css:
