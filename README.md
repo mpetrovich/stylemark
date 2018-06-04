@@ -135,10 +135,11 @@ The Stylemark configuration file is a [YAML](https://en.wikipedia.org/wiki/YAML)
 **NOTE:** All paths are relative to root project directory of the configuration file (ie. the first ancestor directory that contains `package.json`).
 ```yaml
 name: Name of the style guide
-assets: (optional) List of relative file/directory paths to copy and mirror in the generated style guide
 
 excludeDir: (optional) Regex pattern (in double quotes) or list of directories to exclude; .git and node_modules are always excluded
 match: (optional) Regex pattern or list of files to process; by default, common source files are included
+
+assets: (optional) List of relative file/directory paths to copy and mirror in the generated style guide
 
 theme:
     logo: (optional) Filepath or URL of your logo
