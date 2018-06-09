@@ -38,11 +38,21 @@ An example can reference multiple sources individually:
 ```multiple-sources.js
 var data = {};
 ```
+```multiple-sources.css
+p {
+	color: red;
+}
+```
 
 or with a wildcard:
 
 ```multiple-sources-wildcard.js
 var data = {};
+```
+```multiple-sources-wildcard.css
+p {
+	color: red;
+}
 ```
 <example name="multiple-sources-wildcard"></example>
 ```multiple-sources-wildcard.html
@@ -53,6 +63,11 @@ using a parent directory path:
 
 ```multiple-sources-parent-wildcard.js
 var data = {};
+```
+```multiple-sources-parent-wildcard.css
+p {
+	color: red;
+}
 ```
 <example name="multiple-sources-parent-wildcard"></example>
 ```multiple-sources-parent-wildcard.html

@@ -34,6 +34,8 @@ An example can reference multiple sources individually:
 ```
 ```multiple-sources:../test/external_examples/external-data.js
 ```
+```multiple-sources:../test/external_examples/external-style.css
+```
 
 or with a wildcard:
 
@@ -53,6 +55,8 @@ An external source can also be hidden:
 ```
 ```hidden-sources.html
 <div id="data-2">Inline Source Template</div>
+```
+```hidden-sources:external_examples/external-style.css hidden
 ```
 
 */

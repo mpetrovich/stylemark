@@ -340,6 +340,13 @@ describe('A processed source code file with external source examples', () => {
 					hidden: false,
 					content: `var data = {};\n`
 				},
+				{
+					language: 'css',
+					hidden: false,
+					content: `p {
+	color: red;
+}`
+				},
 			],
 			options: {},
 		}));
@@ -351,6 +358,13 @@ describe('A processed source code file with external source examples', () => {
 					language: 'js',
 					hidden: false,
 					content: `var data = {};\n`
+				},
+				{
+					language: 'css',
+					hidden: false,
+					content: `p {
+	color: red;
+}`
 				},
 				{
 					language: 'html',
@@ -373,6 +387,13 @@ describe('A processed source code file with external source examples', () => {
 					language: 'html',
 					hidden: false,
 					content: `<div id="data-2">Inline Source Template</div>`
+				},
+				{
+					language: 'css',
+					hidden: true,
+					content: `p {
+	color: red;
+}`
 				},
 			],
 			options: {},

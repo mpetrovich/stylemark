@@ -139,9 +139,8 @@ class Parser {
 		};
 
 		const createBlockFromExternalSource = (name, language, content, optionsString) => {
-			return '```' + name + '.' + language + optionsString + '\n' +
-				content +
-				'```';
+			content = content || '';
+			return `\`\`\`${name}.${language}${optionsString}\n${content.trimRight()}\n\`\`\``;
 		};
 
 		// Extracts examples from description blocks
