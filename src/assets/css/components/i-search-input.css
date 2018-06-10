@@ -8,7 +8,6 @@
 	color: inherit;
 	background: transparent;
 	border: none;
-	border-bottom: 1px solid;
 	border-radius: 0;
 	box-shadow: none;
 	transition-duration: 0s;
@@ -18,7 +17,6 @@
 .i-search-input input:focus {
 	color: inherit;
 	background: rgba(0, 0, 0, 0.1);
-	border-color: transparent;
 	box-shadow: none;
 	outline: none;
 	opacity: 1;
