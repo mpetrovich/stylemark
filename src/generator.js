@@ -29,7 +29,7 @@ class Generator {
 			);
 
 			// Copies logo asset
-			let logo = options.theme.logo || '';
+			let logo = _.get(options, 'theme.logo', '');
 			if (logo && !logo.startsWith('http')) {
 				fs.copySync(
 					path.resolve(options.baseDir, logo),
@@ -151,7 +151,7 @@ class Generator {
 
 			let html = Handlebars.compile(indexTemplate)({
 				name: options.name,
-				sidebar: options.theme.sidebar,
+				sidebar: _.get(options, 'theme.sidebar', {}),
 				logo,
 				favicon,
 				groups,
