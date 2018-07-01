@@ -34,6 +34,10 @@
 	background: #f0f0f0;
 }
 
+.i-nav-select select {
+	padding: 0;
+}
+
 @media (min-width: 992px) {
 	.i-page__content {
 		margin-left: 20%;
