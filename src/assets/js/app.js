@@ -60,8 +60,7 @@
 
 		// Lazy-loaded iframes
 		lazyframe('[lazyframe]', {
-			lazyload: true,
-			debounce: 50,
+			lazyload: false,
 			onAppend: function(iframe) {
 				// delay the iFrameResize call to allow the iframeResizer.contentWindow.min.js script
 				// to load in the iframe first
@@ -74,6 +73,11 @@
 						});
 				}, 100);
 			},
+		});
+
+		// Only loads iframes once they're visible
+		inView('[lazyframe]').on('enter', function(elem) {
+			$(elem).click();
 		});
 
 		// Prefixes all section links with the element name
