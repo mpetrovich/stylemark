@@ -31,7 +31,7 @@
 		})();
 
 		// Search filter
-		$('.i-sidebar-item-filter').keyup(function() {
+		$('.i-sidebar-item-filter').keyup(function(event) {
 			var $input = $(this);
 			var query = $input.val().trim();
 			var selector = query ? '[data-filter-value*="' + query + '" i]' : '[data-filter-value]';
