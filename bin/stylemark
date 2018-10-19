@@ -18,7 +18,7 @@ var delay = (watch === true) ? 2000 : watch;
 var browser = args.b;
 var port = _.isNumber(browser) ? browser : null;
 
-var generate = _.throttle(
+var generate = _.debounce(
 	function() {
 		console.log('Generating style guide...');
 		stylemark({
@@ -27,7 +27,8 @@ var generate = _.throttle(
 			configPath: configPath,
 		});
 	},
-	delay
+	delay,
+	{ leading: false, trailing: true }
 );
 
 generate();
