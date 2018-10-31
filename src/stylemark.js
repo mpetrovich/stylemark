@@ -33,7 +33,7 @@ function generate(params) {
 	options.output = output;
 	options.match = options.match || defaultMatchExtensions;
 	options.excludeDir = defaultExcludeDirectories.concat(options.excludeDir);
-	options.baseDir = options.baseDir ? findRoot(path.resolve(options.baseDir)) : findRoot(configPath);
+	options.baseDir = options.baseDir ? path.resolve(options.baseDir) : findRoot(configPath);
 
 	['match', 'excludeDir'].forEach(name => {
 		options[name] = _.isString(options[name]) ? new RegExp(options[name]) : options[name];
