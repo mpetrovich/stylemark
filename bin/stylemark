@@ -8,6 +8,10 @@ var chokidar = require('chokidar');
 var bs = require('browser-sync').create();
 var _ = require('lodash');
 var path = require('path');
+
+// Fixing path issues when using this module as dependency (npm installs rfr module in my root node_modules)
+var stylemarkRootPath = path.resolve(__dirname, '..');
+rfr.setRoot(stylemarkRootPath);
 var stylemark = rfr('src/stylemark');
 
 var input = args.i;
