@@ -9,6 +9,7 @@
 	color: #888;
 }
 .theme-content-element-source-label {
+	margin-right: 0.3em;
 	font-weight: 700;
 	text-transform: uppercase;
 }

@@ -1,5 +1,6 @@
 'use strict';
 
+var path = require('path');
 var _ = require('lodash');
 var mkdirp = require('mkdirp');
 var fs = require('fs-extra');
@@ -164,6 +165,7 @@ class Generator {
 
 	generateDoc(doc, destination, options = {}) {
 		doc.slug = _.kebabCase(doc.name);
+		doc.filepathRelativeToInput = path.relative(options.input, doc.filepath);
 
 		if (doc.description) {
 			// Replaces <example> tags with <iframe> tags
