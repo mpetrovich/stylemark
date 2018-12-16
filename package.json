@@ -1,6 +1,6 @@
 {
   "name": "stylemark",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "A living style guide generator for everything.",
   "keywords": [
     "styleguide generator",
@@ -41,9 +41,6 @@
   "engine": {
     "node": "6.x"
   },
-  "bundleDependencies": [
-    "rfr"
-  ],
   "dependencies": {
     "babel-core": "^6.25.0",
     "babel-preset-react": "^6.24.1",
@@ -62,8 +59,7 @@
     "marked": "^0.3.9",
     "mkdirp": "^0.5.1",
     "moment": "^2.20.1",
-    "node-dir": "^0.1.17",
-    "rfr": "^1.2.3"
+    "node-dir": "^0.1.17"
   },
   "devDependencies": {
     "chai": "^1.10.0",

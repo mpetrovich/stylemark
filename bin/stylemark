@@ -2,13 +2,12 @@
 
 'use strict';
 
-var rfr = require('rfr');
 var args = require('yargs').argv;
 var chokidar = require('chokidar');
 var bs = require('browser-sync').create();
 var _ = require('lodash');
 var path = require('path');
-var stylemark = rfr('src/stylemark');
+var stylemark = require('../src/stylemark');
 
 var input = args.i;
 var output = args.o;
