@@ -2,10 +2,13 @@ const path = require('path');
 const fs = require('fs');
 const globby = require('globby');
 const flatten = require('lodash/flatten');
-const matter = require('gray-matter');
+
 const unified = require('unified');
 const markdownParser = require('remark-parse');
 const codeBlockParser = require('remark-code-blocks');
+const frontmatterParser = require('remark-frontmatter');
+const frontmatterExtractor = require('remark-extract-frontmatter');
+const yaml = require('yaml').parse;
 const remark2rehype = require('remark-rehype');
 const htmlRenderer = require('rehype-stringify');
 
@@ -45,16 +48,19 @@ function getDocBlocks(fileContent) {
 }
 
 function docFactory(markdown, filepath) {
-	const meta = matter(markdown).data;
-	const id = meta.category + '-' + meta.name;
 	const rendered = unified()
 		.use(markdownParser)
-		.use(codeBlockParser)
+		.use(frontmatterParser)
+		.use(codeBlockParser, { name: 'blocks' })
+		.use(frontmatterExtractor, { name: 'meta', yaml })
 		.use(remark2rehype)
 		.use(htmlRenderer)
 		.processSync(markdown);
-	const blocks = rendered.data.codeblocks;
+
 	const html = rendered.toString();
+	const { meta, blocks } = rendered.data;
+	const id = meta.category + '-' + meta.name;
+
 	return { id, filepath, meta, markdown, html, blocks };
 }
 
