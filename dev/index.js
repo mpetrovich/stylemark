@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const globby = require('globby');
-const flatten = require('lodash/flatten');
+const flatMap = require('lodash/flatMap');
 
 const unified = require('unified');
 const markdownParser = require('remark-parse');
@@ -14,14 +14,15 @@ const htmlRenderer = require('rehype-stringify');
 
 (async function() {
 	try {
-		const globs = process.argv[2];
-		const filepaths = await getFilepaths(globs);
-		const docs = flatten(filepaths.map(filepath => {
+		const inputGlobs = process.argv[2];
+		const outputDir = process.argv[3];
+		const filepaths = await getFilepaths(inputGlobs);
+		const docs = flatMap(filepaths, filepath => {
 			const contents = extractDocContents(filepath);
 			const docs = contents.map(content => docFactory(content, filepath));
 			return docs;
-		}));
-		docs.forEach(writeDoc);
+		});
+		docs.forEach(doc => writeDoc(outputDir, doc));
 	}
 	catch (error) {
 		console.log(error);
@@ -64,6 +65,6 @@ function docFactory(markdown, filepath) {
 	return { id, filepath, meta, markdown, html, blocks };
 }
 
-function writeDoc(doc) {
-	console.log(doc);
+function writeDoc(outputDir, doc) {
+	fs.writeFileSync(path.resolve(outputDir, `${doc.id}.html`), doc.html, 'utf8');
 }

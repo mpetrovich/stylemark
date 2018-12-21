@@ -1,6 +1,7 @@
 /*
 ---
 name: Alpha
+category: Primary
 tags:
   - one
   - two
@@ -28,6 +29,7 @@ alpha.num = 1
 /*
 ---
 name: Beta
+category: Primary
 ---
 This is the second component, beta.
 
