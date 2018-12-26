@@ -1,15 +1,11 @@
 const visit = require('unist-util-visit');
 
-module.exports = plugin;
+module.exports = (options = {}) => (tree, file) => {
+	const { name = 'codeblocks' } = options;
+	file.data[name] = getCodeBlocks(tree, options);
+};
 
-function plugin(options = {}) {
-	return (tree, file) => {
-		const { name = 'codeblocks' } = options;
-		file.data[name] = getCodeBlocks(tree, options);
-	};
-}
-
-function getCodeBlocks(tree, { lang = 'all', formatter = (v => v) }) {
+function getCodeBlocks(tree, { lang = 'all', formatter = (v => v) } = {}) {
 	const blocks = [];
 
 	visit(tree, 'code', node => {

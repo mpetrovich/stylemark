@@ -6,6 +6,7 @@ const flatMap = require('lodash/flatMap');
 const unified = require('unified');
 const markdownParser = require('remark-parse');
 const codeBlockParser = require('./codeblocks');
+const iframer = require('./iframer');
 const frontmatterParser = require('remark-frontmatter');
 const frontmatterExtractor = require('remark-extract-frontmatter');
 const yaml = require('yaml').parse;
@@ -54,6 +55,7 @@ function docFactory(markdown, filepath) {
 		.use(frontmatterParser)
 		.use(codeBlockParser, { name: 'blocks' })
 		.use(frontmatterExtractor, { name: 'meta', yaml })
+		.use(iframer, filename => `examples/${filename}`)
 		.use(remark2rehype)
 		.use(htmlRenderer)
 		.processSync(markdown);
@@ -66,5 +68,6 @@ function docFactory(markdown, filepath) {
 }
 
 function writeDoc(outputDir, doc) {
+	console.log(doc.blocks)
 	fs.writeFileSync(path.resolve(outputDir, `${doc.id}.html`), doc.html, 'utf8');
 }
