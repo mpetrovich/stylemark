@@ -1,3 +1,5 @@
+const visit = require('unist-util-visit');
+
 module.exports = plugin;
 
 function plugin(options = {}) {
@@ -10,17 +12,15 @@ function plugin(options = {}) {
 function getCodeBlocks(tree, { lang = 'all', formatter = (v => v) }) {
 	const blocks = [];
 
-	for (let i = 0; i < tree.children.length; i++) {
-		const child = tree.children[i];
-
-		if (child.type === 'code' && (lang === 'all' || child.lang === lang)) {
+	visit(tree, 'code', node => {
+		if (lang === 'all' || node.lang === lang) {
 			blocks.push({
-				lang: child.lang,
-				meta: child.meta,
-				value: formatter(child.value)
+				lang: node.lang,
+				meta: node.meta,
+				value: formatter(node.value)
 			});
 		}
-	}
+	});
 
 	return blocks;
 }
