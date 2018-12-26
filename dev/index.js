@@ -5,7 +5,7 @@ const flatMap = require('lodash/flatMap');
 
 const unified = require('unified');
 const markdownParser = require('remark-parse');
-const codeBlockParser = require('remark-code-blocks');
+const codeBlockParser = require('./codeblocks');
 const frontmatterParser = require('remark-frontmatter');
 const frontmatterExtractor = require('remark-extract-frontmatter');
 const yaml = require('yaml').parse;

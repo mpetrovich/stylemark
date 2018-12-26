@@ -9,10 +9,10 @@ tags:
 ---
 This is the first component, alpha.
 
-```alpha-1.html
+```alpha-1.html hidden key:"multi word value" another-key:value2
 <b>alpha 1 example html</b>
 ```
-```alpha-1.css
+```alpha-1.css collapsed
 b { color: blue }
 em { color: red }
 ```
