@@ -55,7 +55,7 @@ function docFactory(markdown, filepath) {
 		.use(frontmatterParser)
 		.use(codeBlockParser, { name: 'blocks' })
 		.use(frontmatterExtractor, { name: 'meta', yaml })
-		.use(iframer, filename => `examples/${filename}`)
+		.use(iframer, filename => `examples/${path.basename(filepath)}/${filename}`)
 		.use(remark2rehype)
 		.use(htmlRenderer)
 		.processSync(markdown);
