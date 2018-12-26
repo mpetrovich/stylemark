@@ -14,13 +14,10 @@ module.exports = (getSrc = (v => v)) => {
 
 			const src = getSrc(node.lang);
 			const iframe = {
-				type: 'iframe',
-				src,
+				type: 'element',
 				data: {
 					hName: 'iframe',
-					hProperties: {
-						src
-					}
+					hProperties: { src }
 				}
 			};
 
