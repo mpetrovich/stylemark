@@ -2,7 +2,6 @@ const path = require('path');
 const fs = require('fs');
 const globby = require('globby');
 const flatMap = require('lodash/flatMap');
-
 const unified = require('unified');
 const markdownParser = require('remark-parse');
 const codeBlockParser = require('./codeblocks');
