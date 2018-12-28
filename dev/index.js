@@ -20,7 +20,7 @@ const htmlRenderer = require('rehype-stringify');
 		const filepaths = await getFilepaths(inputGlobs);
 		const docs = flatMap(filepaths, filepath => {
 			const contents = extractDocContents(filepath);
-			const docs = contents.map(content => docFactory(content, filepath));
+			const docs = contents.map(content => createDoc(content, filepath));
 			return docs;
 		});
 		docs.forEach(doc => writeDoc(outputDir, doc));
@@ -49,7 +49,7 @@ function getDocBlocks(fileContent) {
 	);
 }
 
-function docFactory(markdown, filepath) {
+function createDoc(markdown, filepath) {
 	const rendered = unified()
 		.use(markdownParser)
 		.use(frontmatterParser)
