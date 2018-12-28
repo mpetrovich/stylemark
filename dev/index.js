@@ -1,5 +1,5 @@
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs-extra');
 const globby = require('globby');
 const flatMap = require('lodash/flatMap');
 const unified = require('unified');
@@ -67,7 +67,7 @@ function createDoc(markdown, filepath) {
 	return { id, filepath, meta, blocks, markdown };
 }
 
-function htmlDocWriter(doc, outputDir) {
+async function htmlDocWriter(doc, outputDir) {
 	const rendered = unified()
 		.use(markdownParser)
 		.use(iframer, (lang, index) => `examples/${doc.id}/${index}-${lang}`)
@@ -78,6 +78,8 @@ function htmlDocWriter(doc, outputDir) {
 	const { iframes } = rendered.data;
 	const html = rendered.toString();
 
-	fs.writeFileSync(path.resolve(outputDir, `${doc.id}.html`), html, 'utf8');
-	console.log(iframes);
+	await fs.outputFile(path.resolve(outputDir, `${doc.id}.html`), html, 'utf8');
+	iframes.forEach(async src => {
+		await fs.outputFile(path.resolve(outputDir, src), `iframe content for ${src}`, 'utf8');
+	});
 }
