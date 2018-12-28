@@ -68,14 +68,16 @@ function createDoc(markdown, filepath) {
 }
 
 function htmlDocWriter(doc, outputDir) {
-	const html = unified()
+	const rendered = unified()
 		.use(markdownParser)
-		.use(iframer, filename => `examples/${doc.id}/${filename}`)
+		.use(iframer, (lang, index) => `examples/${doc.id}/${index}-${lang}`)
 		.use(remark2rehype)
 		.use(htmlRenderer)
-		.processSync(doc.markdown)
-		.toString();
+		.processSync(doc.markdown);
+
+	const { iframes } = rendered.data;
+	const html = rendered.toString();
 
 	fs.writeFileSync(path.resolve(outputDir, `${doc.id}.html`), html, 'utf8');
-	console.log(html);
+	console.log(iframes);
 }

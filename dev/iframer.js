@@ -5,6 +5,9 @@ const renderableExtensions = ['html', 'jsx'];
 
 module.exports = (getSrc = (v => v)) => {
 	return (tree, file) => {
+		let iframeCount = 0;
+		file.data.iframes = file.data.iframes || [];
+
 		visit(tree, 'code', (node, index, parent) => {
 			const isRenderable = renderableExtensions.some(ext => node.lang.endsWith(ext));
 
@@ -12,7 +15,7 @@ module.exports = (getSrc = (v => v)) => {
 				return;
 			}
 
-			const src = getSrc(node.lang);
+			const src = getSrc(node.lang, iframeCount++);
 			const iframe = {
 				type: 'element',
 				data: {
@@ -20,6 +23,8 @@ module.exports = (getSrc = (v => v)) => {
 					hProperties: { src }
 				}
 			};
+
+			file.data.iframes.push(src);
 
 			parent.children = [].concat(
 				parent.children.slice(0, index),
