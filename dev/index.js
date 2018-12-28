@@ -16,18 +16,22 @@ const htmlRenderer = require('rehype-stringify');
 	try {
 		const inputGlobs = process.argv[2];
 		const outputDir = process.argv[3];
-		const filepaths = await getFilepaths(inputGlobs);
-		const docs = flatMap(filepaths, filepath => {
-			const contents = extractDocContents(filepath);
-			const docs = contents.map(content => createDoc(content, filepath));
-			return docs;
-		});
-		docs.forEach(doc => htmlDocWriter(doc, outputDir));
+		generate(inputGlobs, outputDir);
 	}
 	catch (error) {
 		console.log(error);
 	}
 })();
+
+async function generate(inputGlobs, outputDir) {
+	const filepaths = await getFilepaths(inputGlobs);
+	const docs = flatMap(filepaths, filepath => {
+		const contents = extractDocContents(filepath);
+		const docs = contents.map(content => createDoc(content, filepath));
+		return docs;
+	});
+	docs.forEach(doc => htmlDocWriter(doc, outputDir));
+}
 
 async function getFilepaths(globs) {
 	const filepaths = await globby(globs);
