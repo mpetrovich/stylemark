@@ -23,7 +23,7 @@ const htmlRenderer = require('rehype-stringify');
 			const docs = contents.map(content => createDoc(content, filepath));
 			return docs;
 		});
-		docs.forEach(doc => writeDoc(outputDir, doc));
+		docs.forEach(doc => htmlDocWriter(doc, outputDir));
 	}
 	catch (error) {
 		console.log(error);
@@ -50,24 +50,29 @@ function getDocBlocks(fileContent) {
 }
 
 function createDoc(markdown, filepath) {
-	const rendered = unified()
+	const { meta, blocks } = unified()
 		.use(markdownParser)
 		.use(frontmatterParser)
-		.use(codeBlockParser, { name: 'blocks' })
 		.use(frontmatterExtractor, { name: 'meta', yaml })
-		.use(iframer, filename => `examples/${path.basename(filepath)}/${filename}`)
+		.use(codeBlockParser, { name: 'blocks' })
 		.use(remark2rehype)
 		.use(htmlRenderer)
-		.processSync(markdown);
+		.processSync(markdown)
+		.data;
+	const id = meta.category + '.' + meta.name;
 
-	const html = rendered.toString();
-	const { meta, blocks } = rendered.data;
-	const id = meta.category + '-' + meta.name;
-
-	return { id, filepath, meta, markdown, html, blocks };
+	return { id, filepath, meta, blocks, markdown };
 }
 
-function writeDoc(outputDir, doc) {
-	console.log(doc.blocks)
-	fs.writeFileSync(path.resolve(outputDir, `${doc.id}.html`), doc.html, 'utf8');
+function htmlDocWriter(doc, outputDir) {
+	const html = unified()
+		.use(markdownParser)
+		.use(iframer, filename => `examples/${doc.id}/${filename}`)
+		.use(remark2rehype)
+		.use(htmlRenderer)
+		.processSync(doc.markdown)
+		.toString();
+
+	fs.writeFileSync(path.resolve(outputDir, `${doc.id}.html`), html, 'utf8');
+	console.log(html);
 }
