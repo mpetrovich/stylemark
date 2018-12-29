@@ -209,6 +209,9 @@ Stylemark includes a number of CSS class hooks you can use to style specific ele
 - `theme-content-element`: An element, including its title and documentation
 - `theme-content-element-description`: An element's documentation, not including its title
 - `theme-content-element-title`: An element's title
+- `theme-content-element-source`: An element's source filepath container
+- `theme-content-element-source-label`: The text label of an element's source filepath
+- `theme-content-element-source-path`: The filepath string of an element's source filepath
 - `theme-mobile-nav`: The navigation view visible on smaller viewports
 - `theme-mobile-nav-select`: The `<select>` tag for the navigation dropdown visible on smaller viewports
 - `theme-page`: The entire page, including the content and sidebar

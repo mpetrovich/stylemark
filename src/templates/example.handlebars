@@ -2,8 +2,6 @@
 {{{or options.examples.htmlTag "<html>"}}}
 
 	<head>
-		{{{options.examples.headHtml}}}
-
 		<style>
 			{{#each example.blocks}}
 				{{#if (compare language "==" "css")}}
@@ -60,6 +58,8 @@
 		{{#each options.examples.js}}
 			<script src="{{this}}"></script>
 		{{/each}}
+
+		{{{options.examples.headHtml}}}
 	</head>
 
 	{{{or options.examples.bodyTag "<body>"}}}

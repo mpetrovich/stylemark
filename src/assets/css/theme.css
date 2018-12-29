@@ -2,3 +2,17 @@
 	font-size: 14px;
 	opacity: 0.3;
 }
+
+.theme-content-element-source {
+	display: block;
+	font-size: 14px;
+	color: #888;
+}
+.theme-content-element-source-label {
+	margin-right: 0.3em;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+.theme-content-element-source-path {
+	font-family: "Source Code Pro", "Courier New", Courier, monospace;
+}

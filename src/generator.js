@@ -1,12 +1,12 @@
 'use strict';
 
-var rfr = require('rfr');
+var path = require('path');
 var _ = require('lodash');
 var mkdirp = require('mkdirp');
 var fs = require('fs-extra');
 var path = require('path');
-var Handlebars = rfr('src/handlebars');
-var marked = rfr('src/marked');
+var Handlebars = require('./handlebars');
+var marked = require('./marked');
 var babel = require('babel-core');
 
 var docTemplate = fs.readFileSync(path.resolve(__dirname, 'templates/doc.handlebars'), 'utf8');
@@ -165,6 +165,7 @@ class Generator {
 
 	generateDoc(doc, destination, options = {}) {
 		doc.slug = _.kebabCase(doc.name);
+		doc.filepathRelativeToInput = path.relative(options.input, doc.filepath);
 
 		if (doc.description) {
 			// Replaces <example> tags with <iframe> tags
