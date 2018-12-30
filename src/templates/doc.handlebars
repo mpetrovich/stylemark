@@ -1,4 +1,8 @@
 <div id="{{doc.slug}}" class="i-library theme-content-element">
 	<h1 class="display-4 theme-content-element-title">{{doc.name}}</h1>
+	<span class="theme-content-element-source">
+		<span class="theme-content-element-source-label">Source:</span>
+		<span class="theme-content-element-source-path">{{doc.filepathRelativeToInput}}</span>
+	</span>
 	<div class="theme-content-element-description">{{markdown doc.description}}</div>
 </div>
