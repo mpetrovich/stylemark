@@ -18,22 +18,16 @@
 		{{/each}}
 	</head>
 	<body class="overflow-x-off i-page theme-page">
-		<div class="i-page__content theme-content">
-
-			<div class="i-nav-select theme-mobile-nav">
-				<form class="form">
-					<select class="form-control form-control-lg theme-mobile-nav-select">
-						<option disabled selected>Go to…</option>
-						{{#each groups}}
-							<optgroup label="{{key}}">
-								{{#each docs}}
-									<option value="{{slug}}">{{{name}}}</option>
-								{{/each}}
-							</optgroup>
-						{{/each}}
-					</select>
-				</form>
+		<div class="i-page__mobile-toggle">
+			<div class="icon">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
 			</div>
+		</div>
+
+		<div class="i-page__content theme-content">
 
 			{{#each groups}}
 				<div id="category-{{slug}}" class="theme-content-category">

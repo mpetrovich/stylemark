@@ -101,17 +101,52 @@
 			});
 		});
 
-		// Mobile nav select
-		$('.i-nav-select').change(function() {
-			var slug = $(this).find('option:selected').val();
-			window.location.hash = slug;
-		});
-
 		// Code block toggle
 		$('.i-code-block__lang.-collapsible').click(function() {
 			var $lang = $(this);
 			$lang.find('i').toggleClass('fa-caret-right').toggleClass('fa-caret-down');
 			$lang.siblings('.i-code-block__content').toggleClass('hidden');
+		});
+
+		// Mobile menu toggle
+		var menuOpen = false;
+
+		function calculateMobileMenuHeight() {
+			var $categories = $('.i-page__sidebar > .theme-sidebar-categories');
+			if ($(window).width() < 992 && menuOpen) {
+				var $rect = $categories[0].getBoundingClientRect();
+				var $height = $(window).height() - Math.ceil($rect.top) - 50;
+				$categories[0].style.height = $height + 'px';
+			} else {
+				$categories[0].style.height = '';
+			}
+		}
+
+		function toggleMobileMenu() {
+			if (menuOpen) {
+				$('.i-page__sidebar').toggleClass('visible');
+				$('.i-page__mobile-toggle > .icon').toggleClass('open');
+			} else {
+				$('.i-page__sidebar').removeClass('visible');
+				$('.i-page__mobile-toggle > .icon').removeClass('open');
+				var $categories = $('.i-page__sidebar > .theme-sidebar-categories');
+			}
+			calculateMobileMenuHeight();
+		}
+
+		$(window).resize(function() {
+			calculateMobileMenuHeight();
+		})
+
+		$('.i-page__mobile-toggle').click(function() {
+			menuOpen = !menuOpen;
+			toggleMobileMenu();
+		});
+
+		// Hide mobile menu when clicking sidebar items
+		$('.i-sidebar-list-item').click(function() {
+			menuOpen = false;
+			toggleMobileMenu();
 		});
 
 	});
