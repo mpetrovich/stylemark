@@ -70,12 +70,11 @@ function createDoc(markdown, filepath) {
 
 async function htmlDocWriter(doc, outputDir) {
 	const renderableExtensions = ['html', 'jsx'];
-	const rendered = unified()
+	const iframes = [];
+
+	const html = unified()
 		.use(markdownParser)
 		.use(() => (tree, file) => {
-			let iframeCount = 0;
-			file.data.iframes = file.data.iframes || [];
-
 			visit(tree, 'code', (node, index, parent) => {
 				const isRenderable = renderableExtensions.some(ext => node.lang.endsWith(ext));
 
@@ -83,7 +82,7 @@ async function htmlDocWriter(doc, outputDir) {
 					return;
 				}
 
-				const src = `examples/${doc.id}/${iframeCount++}-${node.lang}`;
+				const src = `examples/${doc.id}/${iframes.length+1}-${node.lang}`;
 				const iframe = {
 					type: 'element',
 					data: {
@@ -92,7 +91,7 @@ async function htmlDocWriter(doc, outputDir) {
 					}
 				};
 
-				file.data.iframes.push(src);
+				iframes.push(src);
 
 				parent.children = [].concat(
 					parent.children.slice(0, index),
@@ -103,10 +102,8 @@ async function htmlDocWriter(doc, outputDir) {
 		})
 		.use(remark2rehype)
 		.use(htmlRenderer)
-		.processSync(doc.markdown);
-
-	const { iframes = [] } = rendered.data;
-	const html = rendered.toString();
+		.processSync(doc.markdown)
+		.toString();
 
 	await fs.outputFile(path.resolve(outputDir, `${doc.id}.html`), html, 'utf8');
 	iframes.forEach(async src => {
