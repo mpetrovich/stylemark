@@ -70,19 +70,27 @@ function createDoc(markdown, filepath) {
 
 async function htmlDocWriter(doc, outputDir) {
 	const renderableExtensions = ['html', 'jsx'];
+	const filenameRegex = /.+\.[^.]+$/;
 	const iframes = [];
 
 	const html = unified()
 		.use(markdownParser)
 		.use(() => (tree, file) => {
 			visit(tree, 'code', (node, index, parent) => {
-				const isRenderable = renderableExtensions.some(ext => node.lang.endsWith(ext));
+				const filename = node.lang;
+				const isFileblock = filename && filenameRegex.test(filename);
+
+				if (!isFileblock) {
+					return;
+				}
+
+				const isRenderable = renderableExtensions.some(ext => filename.endsWith(ext));
 
 				if (!isRenderable) {
 					return;
 				}
 
-				const src = `examples/${doc.id}/${iframes.length+1}-${node.lang}`;
+				const src = `examples/${doc.id}/${iframes.length+1}-${filename}`;
 				const iframe = {
 					type: 'element',
 					data: {
