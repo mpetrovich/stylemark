@@ -191,8 +191,7 @@ class Generator {
 							lazyframe
 							data-src="${doc.slug}-$1.html"
 							data-initinview="true"
-							data-title="Loading…"
-							$2
+							data-title="Loading..." $2
 						></div>
 					</div>
 				</div>\n`
