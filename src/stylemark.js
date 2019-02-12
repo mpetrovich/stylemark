@@ -58,4 +58,7 @@ function getConfig(filepath) {
 	return config;
 }
 
-module.exports = generate;
+module.exports = {
+	generate,
+	getConfig
+}
