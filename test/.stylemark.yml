@@ -1,0 +1,64 @@
+name: Acme Design
+
+# Define specific folders to watch for changes instead of the whole "input" directory
+fileWatchPaths:
+    - input/A
+    - input/B
+
+# Further options for chokidar.watch
+# fileWatchOptions:
+
+# Browsersync Options
+browserSyncOptions:
+    files:
+        - ./output/**/*.*
+
+# Stylemark parser will exclude the following directories
+excludeDir:
+- excludedDirectory
+
+# Allows assets to improve path for copied files, otherwise copies related to package.json location.
+baseDir: input
+
+assets:
+# - dist
+# - fonts
+ - img
+
+theme:
+    # logo: assets/brand/logo.png
+
+    css:
+    # - theme/theme.css
+
+    js:
+    # - theme/theme.js
+
+    sidebar:
+        background: "#3b2a55"
+        textColor: "#fff"
+
+examples:
+    css:
+    # - dist/css/app.min.css
+
+    js:
+    # - https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js
+    # - dist/js/app.min.js
+
+    doctypeTag: <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+    htmlTag: <html id="acme">
+    bodyTag: <body class="acme-body">
+
+    headHtml: |
+        <meta name="google-site-verification" content="52cae…">
+        <script>
+            window.disableRouting = true;
+        </script>
+
+    bodyHtml: |
+        <div style="padding: 20px">
+            {html}
+        </div>
+
+order:
