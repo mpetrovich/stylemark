@@ -12,19 +12,14 @@ var getConfig = require('../src/stylemark').getConfig;
 
 var input = args.i;
 var output = args.o;
-var configPath = args.c;
+var configPath = args.c ? path.resolve(args.c) : path.resolve(input, '.stylemark.yml');
+var configOptions = getConfig(configPath);
 var watch = args.w;
 var delay = (watch === true) ? 2000 : watch;
 var browser = args.b;
 var port = _.isNumber(browser) ? browser : null;
-
-var fs = require('fs');
-var yaml = require('js-yaml');
-var configPath = configPath ? path.resolve(configPath) : path.resolve(input, '.stylemark.yml');
-var configOptions = getConfig(configPath);
-
-const fileWatchOptions = configOptions.fileWatchOptions || {};
-const browserSyncOptions = configOptions.browserSyncOptions || {};
+var fileWatchOptions = configOptions.fileWatchOptions || {};
+var browserSyncOptions = configOptions.browserSyncOptions || {};
 
 var generate = _.debounce(
 	function() {
