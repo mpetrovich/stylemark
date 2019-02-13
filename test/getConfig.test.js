@@ -36,8 +36,10 @@ var expectedConfig = {
 	}
 }
 
-describe('getConfig loads the configuration', () => {
-	it('No input will not get config', () => expect(getConfig()).to.deep.equal({}));
+describe('The config file', () => {
 	var configPath = path.resolve('test', '.stylemark.yml');
-	it('Loads config from defined config file path', () => expect(getConfig(configPath)).to.deep.equal(expectedConfig));
+	var config = getConfig(configPath);
+	it('should not be loaded if no config path is given', () => expect(getConfig()).to.be.empty);
+	it('should load the config behind the given config file path', () => expect(config).to.not.be.empty);
+	it('should match with the test config example', () => expect(config).to.deep.equal(expectedConfig));
 });
