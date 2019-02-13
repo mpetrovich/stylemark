@@ -25,7 +25,7 @@ class Generator {
 			// Copies stylemark assets
 			fs.copySync(
 				path.resolve(__dirname, 'assets'),
-				path.resolve(destination, '_stylemark')
+				path.resolve(destination, 'stylemark')
 			);
 
 			// Copies logo asset
