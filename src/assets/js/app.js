@@ -89,7 +89,7 @@
 				return librarySlug + '-' + id;
 			});
 
-			$library.find('a[href^="#"]').attr('href', function(index, href) {
+			$library.find('.i-section__link').attr('href', function(index, href) {
 				if (href.startsWith('#category-')) {
 					// Preserve hash
 					return href;
