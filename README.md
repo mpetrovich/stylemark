@@ -89,11 +89,11 @@ Generating the HTML style guide
 stylemark({ input, output, configPath });
 ```
 
-Name | Type | Description
---- | --- | ---
-`input` | string | Directory where to read from
-`output` | string | Directory where to save the generated HTML
-`configPath` | string | (optional) Filepath of the stylemark YAML configuration file, defaults to `.stylemark.yml` within the input directory. See [Configuration](#configuration-file)
+| Name         | Type   | Description                                                                                                                                                     |
+|--------------|--------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `input`      | string | Directory where to read from                                                                                                                                    |
+| `output`     | string | Directory where to save the generated HTML                                                                                                                      |
+| `configPath` | string | (optional) Filepath of the stylemark YAML configuration file, defaults to `.stylemark.yml` within the input directory. See [Configuration](#configuration-file) |
 
 Example:
 ```js
@@ -110,13 +110,13 @@ stylemark({
 stylemark -i <input> -o <output> -c <configPath> -w [<delay>] -b [<port>]
 ```
 
-Name | Description
----  | ---
-`-i` | Directory where to read from
-`-o` | Directory where to save the generated HTML
-`-c` | (optional) Filepath of the stylemark YAML configuration file, defaults to `.stylemark.yml` within the input directory. See [Configuration](#configuration-file)
-`-w` | (optional) Will watch for file changes in `<input>` and rebuild the style guide, waiting at least `<delay>` milliseconds between successive changes (defaults to `2000`)
-`-b` | (optional) Will open the style guide in your default browser at `http://localhost:<port>` and will automatically reload it when the style guide is updated. The port will be chosen automatically if not provided.
+| Name | Description                                                                                                                                                                                                        |
+|------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `-i` | Directory where to read from                                                                                                                                                                                       |
+| `-o` | Directory where to save the generated HTML                                                                                                                                                                         |
+| `-c` | (optional) Filepath of the stylemark YAML configuration file, defaults to `.stylemark.yml` within the input directory. See [Configuration](#configuration-file)                                                    |
+| `-w` | (optional) Will watch for file changes in `<input>` and rebuild the style guide, waiting at least `<delay>` milliseconds between successive changes (defaults to `2000`)                                           |
+| `-b` | (optional) Will open the style guide in your default browser at `http://localhost:<port>` and will automatically reload it when the style guide is updated. The port will be chosen automatically if not provided. |
 
 **Example:** Build a style guide from `path/to/source/code` with a custom config file location, and save the generated HTML to `path/to/style/guide`
 ```sh
@@ -157,6 +157,10 @@ examples:
     bodyTag: (optional) <body> tag to use for each rendered example; defaults to "<body>"
     headHtml: (optional) HTML to insert before the closing </head> tag for each rendered example
     bodyHtml: (optional) HTML template of the example; the example's HTML content will be inserted in place of "{html}"
+
+angularjs: (optional) boolean. Support is added by default, if you do not use angular set to false to omit the script.
+react: (optional) boolean. Support is added by default, if you do not use react set to false to omit the script.
+ember: (optional) boolean. Support is added by default, if you do not use ember set to false to omit the script.
 
 webpackAppPath: For Webpack apps (esp. React, Angular, etc.), this is the `output.library` value in your webpack config
 emberAppName: For Ember apps, this is the name of the Ember app exported to the window object

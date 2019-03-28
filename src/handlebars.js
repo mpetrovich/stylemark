@@ -88,7 +88,10 @@ var helpers = {
 	replace: function(string, find, replace) {
 		string = string || '';
 		return string.replace(find, replace);
-	},
+    },
+    json: function(context) {
+        return JSON.stringify(context);
+    }
 };
 
 var partials = {
