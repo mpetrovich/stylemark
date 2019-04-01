@@ -16,6 +16,8 @@
 		{{#each options.theme.css}}
 			<link rel="stylesheet" href="{{this}}">
 		{{/each}}
+
+		{{{options.theme.headHtml}}}
 	</head>
 	<body class="overflow-x-off i-page theme-page">
 		<div class="i-page__content theme-content">
@@ -71,5 +73,7 @@
 		{{#each options.theme.js}}
 			<script src="{{this}}"></script>
 		{{/each}}
+
+		{{{options.theme.bodyHtml}}}
 	</body>
 </html>

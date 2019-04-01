@@ -148,6 +148,8 @@ theme:
     sidebar:
         background: (optional) Background of the sidebar; any valid CSS background property allowed, but hex colors must be quoted
         textColor: (optional) Text color of the sidebar; any valid CSS color property allowed, but hex colors must be quoted
+    headHtml: (optional) HTML to insert before the closing </head> tag in the index page
+    bodyHtml: (optional) HTML to insert before the closing </body> tag in the index page
 
 examples:
     css: (optional) List of any CSS files to include in the <head> of each rendered example
@@ -255,6 +257,17 @@ theme:
     sidebar:
         background: "#3b2a55"
         textColor: "#fff"
+
+    headHtml: |
+        <meta name="google-site-verification" content="52cae…">
+        <script>
+            window.disableRouting = true;
+        </script>
+
+    bodyHtml: |
+        <footer>
+            @ Copyright 2000 Example Company
+        </footer>
 
 examples:
     css:
