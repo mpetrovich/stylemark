@@ -14,9 +14,9 @@ Document your style guide components in code comments or Markdown files, and Sty
 
 Installation
 ---
-Requires Node 6.x+
+Requires Node ≥ 8.x
 ```sh
-npm install -g stylemark
+npm install stylemark
 ```
 
 For a native app with built-in auto-updating/hot-reloading, see [Stylemark App](https://github.com/nextbigsoundinc/stylemark-app).
@@ -24,7 +24,7 @@ For a native app with built-in auto-updating/hot-reloading, see [Stylemark App](
 
 Documenting style guide components
 ---
-Documenting style guide components is as easy as writing Markdown. Components can be documented in dedicated Markdown files or as comment blocks within any source code. [**See the full Stylemark spec**](README-SPEC.md).
+Documenting style guide components is as easy as writing Markdown. Components can be documented in dedicated Markdown files or as comment blocks within any source code. [**See the full Stylemark spec**](docs/writing.md).
 
 ### As a dedicated Markdown file
 ~~~markdown

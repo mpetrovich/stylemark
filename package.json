@@ -24,12 +24,10 @@
     "component library",
     "design pattern"
   ],
-  "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/gulp test"
-  },
-  "bin": {
-    "stylemark": "bin/stylemark"
+    "test": "ava",
+    "test:watch": "ava --watch",
+    "format": "prettier --write src/**/*.js"
   },
   "homepage": "https://github.com/nextbigsoundinc/stylemark",
   "repository": "https://github.com/nextbigsoundinc/stylemark.git",
@@ -39,31 +37,21 @@
   "author": "Mike Petrovich <michael.c.petrovich@gmail.com>",
   "license": "MIT",
   "engine": {
-    "node": "6.x"
+    "node": "8.x"
   },
   "dependencies": {
-    "babel-core": "^6.26.3",
-    "babel-preset-react": "^6.24.1",
-    "bluebird": "^3.5.3",
-    "browser-sync": "^2.26.3",
-    "chokidar": "^2.0.4",
-    "common-js-file-extensions": "^1.0.2",
-    "find-root": "^1.1.0",
-    "fs-extra": "^4.0.3",
-    "gray-matter": "^2.1.1",
-    "handlebars": "^4.0.12",
-    "iframe-resizer": "^3.6.3",
-    "js-yaml": "^3.12.0",
-    "lodash": "^4.17.11",
-    "markdown-extensions": "^1.1.1",
-    "marked": "^0.3.19",
-    "mkdirp": "^0.5.1",
-    "moment": "^2.23.0",
-    "node-dir": "^0.1.17"
+    "gray-matter": "^4.0.2",
+    "lodash": "^4.17.15",
+    "rehype-stringify": "^5.0.0",
+    "remark-extract-frontmatter": "^2.0.0",
+    "remark-frontmatter": "^1.3.1",
+    "remark-parse": "^6.0.3",
+    "remark-rehype": "^4.0.0",
+    "unified": "^7.1.0",
+    "yaml": "^1.1.0"
   },
   "devDependencies": {
-    "chai": "^1.10.0",
-    "gulp": "^4.0.0",
-    "gulp-mocha": "^6.0.0"
+    "ava": "^2.2.0",
+    "prettier": "^1.18.2"
   }
 }

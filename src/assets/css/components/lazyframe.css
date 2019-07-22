@@ -1,7 +1,0 @@
-[lazyframe] {
-	position: relative;
-	min-height: 30px;
-}
-.lazyframe--loaded .lazyframe__title {
-	display: none;
-}

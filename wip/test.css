@@ -1,0 +1,66 @@
+/*
+---
+name: Alpha
+category: Primary
+tags:
+  - one
+  - two
+  - three
+---
+This is the first component, alpha.
+
+```alpha-1.html hidden key:"multi word value" another-key:value2
+import './alpha-1.js'
+<b>alpha 1 example html</b>
+```
+```alpha-1.css collapsed
+import './alpha-1.css'
+b { color: blue }
+em { color: red }
+```
+
+import './this/import/should/be/ignored.js'
+
+```
+Lang-less code block
+```
+
+
+```js
+import './alpha-1.js'
+alpha = 1
+```
+*/
+
+.foo {
+	color: red;
+}
+
+/*
+---
+name: Beta
+category: Primary
+---
+This is the second component, beta.
+
+```beta-1.html
+<b>beta 1 example html</b>
+```
+```beta-1.css
+b { color: blue }
+```
+```beta-1.html
+Additional HTML
+```
+
+```beta-2.html
+<em>beta 2 example html</b>
+```
+```beta-2.js
+beta = 2
+```
+*/
+
+.bar {
+	color: green;
+}
