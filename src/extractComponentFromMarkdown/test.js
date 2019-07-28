@@ -1,5 +1,5 @@
 import test from 'ava'
-import { readFileSync } from 'fs'
+import readFileSync from 'fs'
 import extractComponent from './src'
 
 test('No component is extracted from markdown that does not have frontmatter', t => {

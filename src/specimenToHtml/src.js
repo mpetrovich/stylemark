@@ -16,7 +16,7 @@ module.exports = specimen => {
 
 	return `<!doctype html>
 <html>
-<head><title>${specimen.name}</title></head>
+	<head><title>${specimen.name}</title></head>
 <body>
 ${stylesHtml}
 ${renderableHtml}

@@ -1,5 +1,5 @@
 import test from 'ava'
-import { readFileSync } from 'fs'
+import readFileSync from 'fs'
 import toHtml from './src'
 
 test('Nothing is rendered for a specimen without blocks', t => {
