@@ -1,5 +1,5 @@
 import test from 'ava'
-import readFileSync from 'fs'
+import { readFileSync } from 'fs'
 import toHtml from './src'
 
 test('Nothing is rendered for a specimen without blocks', t => {
@@ -20,9 +20,10 @@ test('Specimen blocks for every language are rendered', t => {
 			{ lang: 'css', props: {}, content: 'b { color: red }' },
 			{ lang: 'css', props: {}, content: 'b { color: green }' },
 			{ lang: 'js', props: {}, content: `var foo = 'foo'` },
+			{ lang: 'js', props: {}, content: `var bar = 'bar'` },
 		],
 	}
-	const expectedHtml = readFileSync(`${__dirname}/test-cases/specimen-languages.html`, { encoding: 'utf8' })
+	const expectedHtml = readFileSync(`${__dirname}/test-cases/with-blocks.html`, { encoding: 'utf8' })
 
 	t.is(toHtml(specimen), expectedHtml)
 })
