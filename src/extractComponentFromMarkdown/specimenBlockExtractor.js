@@ -31,9 +31,10 @@ module.exports = ({ importLoader }) => (tree, file) => {
 
 		const parsed = extractFrontmatter(node.value)
 		const props = parsed.data
+		const flags = {}
 
 		if (hasHiddenFlag(node.meta)) {
-			props.hidden = true
+			flags.hidden = true
 		}
 
 		const contentWithoutFrontmatterOrImports = removeImports(parsed.content)
@@ -43,17 +44,21 @@ module.exports = ({ importLoader }) => (tree, file) => {
 		const importContents = loadImports(importFilepaths, importLoader)
 		const importBlocks = importContents.map(imported => {
 			const [, extension] = extractNameAndExtension(imported.filepath)
-			const hidden = extension !== 'html'
-			return {
+			const block = {
 				specimenName,
 				lang: extension,
-				props: { hidden },
+				flags: {},
+				props: {},
 				content: imported.content,
 			}
+			if (extension !== 'html') {
+				block.flags.hidden = true
+			}
+			return block
 		})
 		specimenBlocks = specimenBlocks.concat(importBlocks)
 
-		specimenBlocks.push({ specimenName, lang: extension, props, content: contentWithoutFrontmatterOrImports })
+		specimenBlocks.push({ specimenName, lang: extension, flags, props, content: contentWithoutFrontmatterOrImports })
 	})
 
 	file.data.specimenBlocks = specimenBlocks
