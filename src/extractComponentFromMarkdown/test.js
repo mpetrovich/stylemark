@@ -21,7 +21,7 @@ test('A component is extracted from markdown that has frontmatter with a name pr
 	const component = extractComponent(markdown)
 
 	t.deepEqual(component, {
-		contentHtml: readFileSync(`${__dirname}/test-cases/with-frontmatter-name.html`, { encoding: 'utf8' }),
+		contentHtml: readFileSync(`${__dirname}/test-cases/with-frontmatter-name.expected.html`, { encoding: 'utf8' }),
 		meta: {
 			name: 'Component Name',
 			category: 'Component Category',
@@ -35,7 +35,7 @@ test('Specimens are extracted from named code blocks', t => {
 	const component = extractComponent(markdown)
 
 	t.deepEqual(component, {
-		contentHtml: readFileSync(`${__dirname}/test-cases/with-specimens.html`, { encoding: 'utf8' }),
+		contentHtml: readFileSync(`${__dirname}/test-cases/with-specimens.expected.html`, { encoding: 'utf8' }),
 		meta: {
 			name: 'Component Name',
 			category: 'Component Category',
@@ -64,7 +64,7 @@ test('Specimen blocks can have an inline `hidden` prop and frontmatter props', t
 	const component = extractComponent(markdown)
 
 	t.deepEqual(component, {
-		contentHtml: readFileSync(`${__dirname}/test-cases/with-specimen-props.html`, { encoding: 'utf8' }),
+		contentHtml: readFileSync(`${__dirname}/test-cases/with-specimen-props.expected.html`, { encoding: 'utf8' }),
 		meta: {
 			name: 'Component Name',
 			category: 'Component Category',
@@ -99,7 +99,7 @@ test.failing('External files referenced within named code blocks are added as hi
 	const component = extractComponent(markdown)
 
 	t.deepEqual(component, {
-		contentHtml: readFileSync(`${__dirname}/test-cases/with-external-imports.html`, { encoding: 'utf8' }),
+		contentHtml: readFileSync(`${__dirname}/test-cases/with-external-imports.expected.html`, { encoding: 'utf8' }),
 		meta: {
 			name: 'Component Name',
 			category: 'Component Category',
@@ -134,7 +134,9 @@ test.failing(
 		const component = extractComponent(markdown)
 
 		t.deepEqual(component, {
-			contentHtml: readFileSync(`${__dirname}/test-cases/with-nested-external-imports.html`, { encoding: 'utf8' }),
+			contentHtml: readFileSync(`${__dirname}/test-cases/with-nested-external-imports.expected.html`, {
+				encoding: 'utf8',
+			}),
 			meta: {
 				name: 'Component Name',
 				category: 'Component Category',
