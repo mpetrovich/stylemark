@@ -1,10 +1,17 @@
 const visit = require('unist-util-visit')
 const frontmatterFromString = require('gray-matter')
-const replaceImportsWithContent = require('./replaceImportsWithContent')
 const fs = require('fs')
 const path = require('path')
+const removeImports = require('./removeImports')
+const extractImportFilepaths = require('./extractImportFilepaths')
 
-module.exports = ({ importFn }) => (tree, file) => {
+const loadImports = (importFilepaths, importLoader) =>
+	importFilepaths.map(filepath => ({
+		filepath,
+		content: importLoader(filepath),
+	}))
+
+module.exports = ({ importLoader }) => (tree, file) => {
 	const specimenBlocks = []
 
 	visit(tree, 'code', node => {
@@ -16,15 +23,18 @@ module.exports = ({ importFn }) => (tree, file) => {
 
 		const parsed = frontmatterFromString(node.value)
 		const props = parsed.data
-		const content = replaceImportsWithContent(parsed.content, importFn)
-
-		node.value = content // without frontmatter
 
 		if (/\bhidden\b/.test(node.meta)) {
 			props.hidden = true
 		}
 
-		specimenBlocks.push({ specimenName, lang, props, content })
+		const contentWithoutFrontmatterOrImports = removeImports(parsed.content)
+		node.value = contentWithoutFrontmatterOrImports
+
+		const importFilepaths = extractImportFilepaths(parsed.content)
+		const importContents = loadImports(importFilepaths, importLoader)
+
+		specimenBlocks.push({ specimenName, lang, props, content: contentWithoutFrontmatterOrImports })
 	})
 
 	file.data.specimenBlocks = specimenBlocks
