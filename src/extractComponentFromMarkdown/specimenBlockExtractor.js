@@ -43,10 +43,11 @@ module.exports = ({ importLoader }) => (tree, file) => {
 		const importContents = loadImports(importFilepaths, importLoader)
 		const importBlocks = importContents.map(imported => {
 			const [, extension] = extractNameAndExtension(imported.filepath)
+			const hidden = extension !== 'html'
 			return {
 				specimenName,
 				lang: extension,
-				props: { hidden: true },
+				props: { hidden },
 				content: imported.content,
 			}
 		})

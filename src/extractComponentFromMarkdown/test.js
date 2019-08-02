@@ -156,7 +156,7 @@ test.skip('Import statements within nested external files are replaced with thei
 				name: 'specimen-2',
 				blocks: [
 					{ lang: 'css', props: { hidden: true }, content: 'span { color: blue }' },
-					{ lang: 'html', props: { hidden: true }, content: '<span>Specimen 2 external import</span>' },
+					{ lang: 'html', props: { hidden: false }, content: '<span>Specimen 2 external import</span>' },
 					{ lang: 'html', props: {}, content: '<b>Specimen 2</b>' },
 					{ lang: 'js', props: { hidden: true }, content: `var externalImport1 = 'one'` },
 					{
