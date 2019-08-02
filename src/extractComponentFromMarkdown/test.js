@@ -146,7 +146,7 @@ test('Import statements in code blocks are replaced with their content', t => {
 	})
 })
 
-test.skip('Import statements in imported files are replaced with their content', t => {
+test.failing('Import statements in imported files are replaced with their content', t => {
 	const markdown = readFileSync(`${__dirname}/test-cases/with-nested-external-imports.md`, { encoding: 'utf8' })
 	const importLoader = filepath =>
 		readFileSync(path.resolve(`${__dirname}/test-cases/`, filepath), { encoding: 'utf8' })
