@@ -16,11 +16,11 @@ test('Specimen blocks for every language are rendered', t => {
 	const specimen = {
 		name: 'specimen-name',
 		blocks: [
-			{ lang: 'html', props: {}, content: '<b>html content</b>' },
-			{ lang: 'css', props: {}, content: 'b { color: red }' },
-			{ lang: 'css', props: {}, content: 'b { color: green }' },
-			{ lang: 'js', props: {}, content: `var foo = 'foo'` },
-			{ lang: 'js', props: {}, content: `var bar = 'bar'` },
+			{ lang: 'html', content: '<b>html content</b>' },
+			{ lang: 'css', content: 'b { color: red }' },
+			{ lang: 'css', content: 'b { color: green }' },
+			{ lang: 'js', content: `var foo = 'foo'` },
+			{ lang: 'js', content: `var bar = 'bar'` },
 		],
 	}
 	const expectedHtml = readFileSync(`${__dirname}/test-cases/with-blocks.html`, { encoding: 'utf8' })
