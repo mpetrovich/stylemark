@@ -1,5 +1,5 @@
 const visit = require('unist-util-visit')
-const frontmatterFromString = require('gray-matter')
+const extractFrontmatter = require('gray-matter')
 const fs = require('fs')
 const path = require('path')
 const removeImports = require('./removeImports')
@@ -11,20 +11,28 @@ const loadImports = (importFilepaths, importLoader) =>
 		content: importLoader(filepath),
 	}))
 
+const extractNameAndExtension = string => {
+	// Matches `(specimenName).(extension)`
+	const matches = /(.+)\.([^.]+)$/.exec(string || '') || []
+	return matches.slice(1)
+}
+
+const hasHiddenFlag = string => /\bhidden\b/.test(string)
+
 module.exports = ({ importLoader }) => (tree, file) => {
 	const specimenBlocks = []
 
 	visit(tree, 'code', node => {
-		const [, specimenName, lang] = /(.+)\.([^.]+)$/.exec(node.lang || '') || [] // Matches `(specimenName).(lang)`
+		const [specimenName, extension] = extractNameAndExtension(node.lang)
 
 		if (!specimenName) {
 			return
 		}
 
-		const parsed = frontmatterFromString(node.value)
+		const parsed = extractFrontmatter(node.value)
 		const props = parsed.data
 
-		if (/\bhidden\b/.test(node.meta)) {
+		if (hasHiddenFlag(node.meta)) {
 			props.hidden = true
 		}
 
@@ -34,7 +42,7 @@ module.exports = ({ importLoader }) => (tree, file) => {
 		const importFilepaths = extractImportFilepaths(parsed.content)
 		const importContents = loadImports(importFilepaths, importLoader)
 
-		specimenBlocks.push({ specimenName, lang, props, content: contentWithoutFrontmatterOrImports })
+		specimenBlocks.push({ specimenName, lang: extension, props, content: contentWithoutFrontmatterOrImports })
 	})
 
 	file.data.specimenBlocks = specimenBlocks
