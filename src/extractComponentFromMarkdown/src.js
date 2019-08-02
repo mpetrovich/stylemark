@@ -8,12 +8,12 @@ const specimenBlockExtractor = require('./specimenBlockExtractor')
 const htmlRenderer = require('rehype-stringify')
 const _ = require('lodash')
 
-module.exports = markdown => {
+module.exports = (markdown, { importFn }) => {
 	const result = unified()
 		.use(markdownParser)
 		.use(frontmatterParser)
 		.use(frontmatterExtractor, { name: 'frontmatter', yaml: yamlParser })
-		.use(specimenBlockExtractor)
+		.use(specimenBlockExtractor, { importFn })
 		.use(markdownExtractor)
 		.use(htmlRenderer)
 		.processSync(markdown)

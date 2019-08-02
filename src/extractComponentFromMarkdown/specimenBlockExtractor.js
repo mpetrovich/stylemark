@@ -1,7 +1,10 @@
 const visit = require('unist-util-visit')
 const frontmatterFromString = require('gray-matter')
+const replaceImportsWithContent = require('./replaceImportsWithContent')
+const fs = require('fs')
+const path = require('path')
 
-module.exports = () => (tree, file) => {
+module.exports = ({ importFn }) => (tree, file) => {
 	const specimenBlocks = []
 
 	visit(tree, 'code', node => {
@@ -13,7 +16,7 @@ module.exports = () => (tree, file) => {
 
 		const parsed = frontmatterFromString(node.value)
 		const props = parsed.data
-		const content = parsed.content
+		const content = replaceImportsWithContent(parsed.content, importFn)
 
 		node.value = content // without frontmatter
 
