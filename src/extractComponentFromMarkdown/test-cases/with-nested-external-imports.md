@@ -23,7 +23,7 @@ import './with-nested-external-imports.external-import.html'
 ```specimen-2.js
 import './with-nested-external-imports.external-import.js'
 import './with-nested-external-imports.external-import-2.js'
-var specimen = 2;
+var specimen = 2
 ```
 
 ```specimen-2.css

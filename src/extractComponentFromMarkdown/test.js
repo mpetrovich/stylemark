@@ -120,9 +120,9 @@ test('External files referenced within named code blocks are added as hidden spe
 				blocks: [
 					{ lang: 'html', props: { hidden: true }, content: '<span>Specimen 2 external import</span>' },
 					{ lang: 'html', props: {}, content: '<b>Specimen 2</b>' },
-					{ lang: 'js', props: { hidden: true }, content: `var externalImport1 = 'one';` },
-					{ lang: 'js', props: { hidden: true }, content: `var externalImport2 = 'two';` },
-					{ lang: 'js', props: {}, content: `var specimen = 2;` },
+					{ lang: 'js', props: { hidden: true }, content: `var externalImport1 = 'one'` },
+					{ lang: 'js', props: { hidden: true }, content: `var externalImport2 = 'two'` },
+					{ lang: 'js', props: {}, content: `var specimen = 2` },
 					{ lang: 'css', props: {}, content: 'b { color: green }' },
 				],
 			},
@@ -130,47 +130,44 @@ test('External files referenced within named code blocks are added as hidden spe
 	})
 })
 
-test.failing(
-	'Import statements within named code blocks or nested external files are replaced with their content',
-	t => {
-		const markdown = readFileSync(`${__dirname}/test-cases/with-nested-external-imports.md`, { encoding: 'utf8' })
-		const importLoader = filepath =>
-			readFileSync(path.resolve(`${__dirname}/test-cases/`, filepath), { encoding: 'utf8' })
-		const component = extractComponent(markdown, { importLoader })
+test.skip('Import statements within nested external files are replaced with their content', t => {
+	const markdown = readFileSync(`${__dirname}/test-cases/with-nested-external-imports.md`, { encoding: 'utf8' })
+	const importLoader = filepath =>
+		readFileSync(path.resolve(`${__dirname}/test-cases/`, filepath), { encoding: 'utf8' })
+	const component = extractComponent(markdown, { importLoader })
 
-		t.deepEqual(component, {
-			contentHtml: readFileSync(`${__dirname}/test-cases/with-nested-external-imports.expected.html`, {
-				encoding: 'utf8',
-			}),
-			meta: {
-				name: 'Component Name',
-				category: 'Component Category',
+	t.deepEqual(component, {
+		contentHtml: readFileSync(`${__dirname}/test-cases/with-nested-external-imports.expected.html`, {
+			encoding: 'utf8',
+		}),
+		meta: {
+			name: 'Component Name',
+			category: 'Component Category',
+		},
+		specimens: [
+			{
+				name: 'specimen-1',
+				blocks: [
+					{ lang: 'html', props: {}, content: '<b>Specimen 1</b>' },
+					{ lang: 'css', props: {}, content: 'b { color: red }' },
+				],
 			},
-			specimens: [
-				{
-					name: 'specimen-1',
-					blocks: [
-						{ lang: 'html', props: {}, content: '<b>Specimen 1</b>' },
-						{ lang: 'css', props: {}, content: 'b { color: red }' },
-					],
-				},
-				{
-					name: 'specimen-2',
-					blocks: [
-						{ lang: 'css', props: { hidden: true }, content: 'span { color: blue }' },
-						{ lang: 'html', props: { hidden: true }, content: '<span>Specimen 2 external import</span>' },
-						{ lang: 'html', props: {}, content: '<b>Specimen 2</b>' },
-						{ lang: 'js', props: { hidden: true }, content: `var externalImport1 = 'one'` },
-						{
-							lang: 'js',
-							props: { hidden: true },
-							content: `var externalImport3 = 'three'\nvar externalImport4 = 'four'\nvar externalImport2 = 'two'`,
-						},
-						{ lang: 'js', props: {}, content: `var specimen = 2;` },
-						{ lang: 'css', props: {}, content: 'b { color: green }' },
-					],
-				},
-			],
-		})
-	}
-)
+			{
+				name: 'specimen-2',
+				blocks: [
+					{ lang: 'css', props: { hidden: true }, content: 'span { color: blue }' },
+					{ lang: 'html', props: { hidden: true }, content: '<span>Specimen 2 external import</span>' },
+					{ lang: 'html', props: {}, content: '<b>Specimen 2</b>' },
+					{ lang: 'js', props: { hidden: true }, content: `var externalImport1 = 'one'` },
+					{
+						lang: 'js',
+						props: { hidden: true },
+						content: `var externalImport3 = 'three'\nvar externalImport4 = 'four'\nvar externalImport2 = 'two'`,
+					},
+					{ lang: 'js', props: {}, content: `var specimen = 2` },
+					{ lang: 'css', props: {}, content: 'b { color: green }' },
+				],
+			},
+		],
+	})
+})

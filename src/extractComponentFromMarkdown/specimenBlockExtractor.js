@@ -20,7 +20,7 @@ const extractNameAndExtension = string => {
 const hasHiddenFlag = string => /\bhidden\b/.test(string)
 
 module.exports = ({ importLoader }) => (tree, file) => {
-	const specimenBlocks = []
+	var specimenBlocks = []
 
 	visit(tree, 'code', node => {
 		const [specimenName, extension] = extractNameAndExtension(node.lang)
@@ -41,6 +41,16 @@ module.exports = ({ importLoader }) => (tree, file) => {
 
 		const importFilepaths = extractImportFilepaths(parsed.content)
 		const importContents = loadImports(importFilepaths, importLoader)
+		const importBlocks = importContents.map(imported => {
+			const [, extension] = extractNameAndExtension(imported.filepath)
+			return {
+				specimenName,
+				lang: extension,
+				props: { hidden: true },
+				content: imported.content,
+			}
+		})
+		specimenBlocks = specimenBlocks.concat(importBlocks)
 
 		specimenBlocks.push({ specimenName, lang: extension, props, content: contentWithoutFrontmatterOrImports })
 	})
