@@ -4,7 +4,7 @@ const markdownExtractor = require('remark-rehype')
 const frontmatterParser = require('remark-frontmatter')
 const frontmatterExtractor = require('remark-extract-frontmatter')
 const yamlParser = require('yaml').parse
-const specimenBlockExtractor = require('../specimenBlockExtractor')
+const specimenBlockExtractor = require('./specimenBlockExtractor')
 const htmlRenderer = require('rehype-stringify')
 const _ = require('lodash')
 
