@@ -17,8 +17,6 @@ const extractNameAndExtension = string => {
 	return matches.slice(1)
 }
 
-const hasHiddenFlag = string => /\bhidden\b/.test(string)
-
 module.exports = ({ importLoader }) => (tree, file) => {
 	var specimenBlocks = []
 
@@ -33,7 +31,7 @@ module.exports = ({ importLoader }) => (tree, file) => {
 		const props = parsed.data
 		const flags = {}
 
-		if (hasHiddenFlag(node.meta)) {
+		if (/\bhidden\b/.test(node.meta)) {
 			flags.hidden = true
 		}
 
