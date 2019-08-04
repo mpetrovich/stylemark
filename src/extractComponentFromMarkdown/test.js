@@ -111,7 +111,7 @@ test('Specimen blocks can have frontmatter props', t => {
 	})
 })
 
-test('Import statements in code blocks are replaced with their content', t => {
+test('Import statements in code blocks are added as hidden specimen blocks', t => {
 	const markdown = readFileSync(`${__dirname}/test-cases/with-external-imports.md`, { encoding: 'utf8' })
 	const importLoader = filepath =>
 		readFileSync(path.resolve(`${__dirname}/test-cases/`, filepath), { encoding: 'utf8' })
@@ -138,49 +138,6 @@ test('Import statements in code blocks are replaced with their content', t => {
 					{ lang: 'html', flags: {}, props: {}, content: '<b>Specimen 2</b>' },
 					{ lang: 'js', flags: { hidden: true }, props: {}, content: `var externalImport1 = 'one'` },
 					{ lang: 'js', flags: { hidden: true }, props: {}, content: `var externalImport2 = 'two'` },
-					{ lang: 'js', flags: {}, props: {}, content: `var specimen = 2` },
-					{ lang: 'css', flags: {}, props: {}, content: 'b { color: green }' },
-				],
-			},
-		],
-	})
-})
-
-test.failing('Import statements in imported files are replaced with their content', t => {
-	const markdown = readFileSync(`${__dirname}/test-cases/with-nested-external-imports.md`, { encoding: 'utf8' })
-	const importLoader = filepath =>
-		readFileSync(path.resolve(`${__dirname}/test-cases/`, filepath), { encoding: 'utf8' })
-	const component = extractComponent(markdown, { importLoader })
-
-	t.deepEqual(component, {
-		contentHtml: readFileSync(`${__dirname}/test-cases/with-nested-external-imports.expected.html`, {
-			encoding: 'utf8',
-		}),
-		meta: {
-			name: 'Component Name',
-			category: 'Component Category',
-		},
-		specimens: [
-			{
-				name: 'specimen-1',
-				blocks: [
-					{ lang: 'html', flags: {}, props: {}, content: '<b>Specimen 1</b>' },
-					{ lang: 'css', flags: {}, props: {}, content: 'b { color: red }' },
-				],
-			},
-			{
-				name: 'specimen-2',
-				blocks: [
-					{ lang: 'css', flags: { hidden: true }, props: {}, content: 'span { color: blue }' },
-					{ lang: 'html', flags: {}, props: {}, content: '<span>Specimen 2 external import</span>' },
-					{ lang: 'html', flags: {}, props: {}, content: '<b>Specimen 2</b>' },
-					{ lang: 'js', flags: {}, props: { hidden: true }, content: `var externalImport1 = 'one'` },
-					{
-						lang: 'js',
-						flags: { hidden: true },
-						props: {},
-						content: `var externalImport3 = 'three'\nvar externalImport4 = 'four'\nvar externalImport2 = 'two'`,
-					},
 					{ lang: 'js', flags: {}, props: {}, content: `var specimen = 2` },
 					{ lang: 'css', flags: {}, props: {}, content: 'b { color: green }' },
 				],
