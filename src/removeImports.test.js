@@ -24,10 +24,34 @@ jumped over the lazy import dog.`
 	)
 })
 
-test('Import statements with leading whitespace are not removed', t => {
-	t.is(removeImports("import 'path/to/file.js'\nThe quick brown fox"), 'The quick brown fox')
+test('Import statements with leading whitespace are removed', t => {
+	t.is(
+		removeImports(
+			` import 'path/to/file-1.js'
+import 'path/to/file-2.js'
+The quick brown fox
+ import 'path/to/file-3.css'
+jumped over the lazy import dog.
+import 'path/to/file-4.html'`
+		),
+		`The quick brown fox
+
+jumped over the lazy import dog.`
+	)
 })
 
 test('Import statements with trailing whitespace are removed', t => {
-	t.is(removeImports("import 'path/to/file.js'  \nThe quick brown fox"), `The quick brown fox`)
+	t.is(
+		removeImports(
+			"import 'path/to/file-1.js' \n" +
+				`import 'path/to/file-2.js'
+The quick brown fox
+import 'path/to/file-3.css'
+jumped over the lazy import dog.
+import 'path/to/file-4.html' `
+		),
+		`The quick brown fox
+
+jumped over the lazy import dog.`
+	)
 })

@@ -12,7 +12,7 @@ test('Nothing is rendered for a specimen without blocks', t => {
 	t.is(toHtml(specimen), expectedHtml)
 })
 
-test('Specimen blocks for every language are rendered', t => {
+test('Specimen blocks for HTML, CSS, and JS are rendered', t => {
 	const specimen = {
 		name: 'specimen-name',
 		blocks: [

@@ -1,1 +1,5 @@
-module.exports = content => content.replace(/^import ['"][^'"]+['"][ \t]*?/gm, '').trim()
+module.exports = content =>
+	content
+		.trim()
+		.replace(/^\s*import ['"][^'"]+['"]\s*?/gm, '')
+		.trim()
