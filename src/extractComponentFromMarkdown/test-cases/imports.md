@@ -16,13 +16,13 @@ b { color: red }
 This is a specimen with external imports:
 
 ```specimen-2.html
-import './with-external-imports.external-import.html'
+import './imports.import-1.html'
 <b>Specimen 2</b>
 ```
 
 ```specimen-2.js
-import './with-external-imports.external-import.js'
-import './with-external-imports.external-import-2.js'
+import './imports.import-2.js'
+import './imports.import-3.js'
 var specimen = 2
 ```
 

@@ -4,25 +4,25 @@ import path from 'path'
 import extractComponent from './src'
 
 test('No component is extracted from markdown that does not have frontmatter', t => {
-	const markdown = readFileSync(`${__dirname}/test-cases/without-frontmatter.md`, { encoding: 'utf8' })
+	const markdown = readFileSync(`${__dirname}/test-cases/no-frontmatter.md`, { encoding: 'utf8' })
 	const component = extractComponent(markdown, { importLoader: v => v })
 
 	t.is(component, null)
 })
 
 test('No component is extracted from markdown that has frontmatter but no name property', t => {
-	const markdown = readFileSync(`${__dirname}/test-cases/without-frontmatter-name.md`, { encoding: 'utf8' })
+	const markdown = readFileSync(`${__dirname}/test-cases/no-frontmatter-name.md`, { encoding: 'utf8' })
 	const component = extractComponent(markdown, { importLoader: v => v })
 
 	t.is(component, null)
 })
 
 test('A component is extracted from markdown that has frontmatter with a name property', t => {
-	const markdown = readFileSync(`${__dirname}/test-cases/with-frontmatter-name.md`, { encoding: 'utf8' })
+	const markdown = readFileSync(`${__dirname}/test-cases/frontmatter.md`, { encoding: 'utf8' })
 	const component = extractComponent(markdown, { importLoader: v => v })
 
 	t.deepEqual(component, {
-		contentHtml: readFileSync(`${__dirname}/test-cases/with-frontmatter-name.expected.html`, { encoding: 'utf8' }),
+		contentHtml: readFileSync(`${__dirname}/test-cases/frontmatter.expected.html`, { encoding: 'utf8' }),
 		meta: {
 			name: 'Component Name',
 			category: 'Component Category',
@@ -32,11 +32,11 @@ test('A component is extracted from markdown that has frontmatter with a name pr
 })
 
 test('Specimens are extracted from named code blocks', t => {
-	const markdown = readFileSync(`${__dirname}/test-cases/with-specimens.md`, { encoding: 'utf8' })
+	const markdown = readFileSync(`${__dirname}/test-cases/specimens.md`, { encoding: 'utf8' })
 	const component = extractComponent(markdown, { importLoader: v => v })
 
 	t.deepEqual(component, {
-		contentHtml: readFileSync(`${__dirname}/test-cases/with-specimens.expected.html`, { encoding: 'utf8' }),
+		contentHtml: readFileSync(`${__dirname}/test-cases/specimens.expected.html`, { encoding: 'utf8' }),
 		meta: {
 			name: 'Component Name',
 			category: 'Component Category',
@@ -61,11 +61,13 @@ test('Specimens are extracted from named code blocks', t => {
 })
 
 test('Specimen blocks can have inline flags', t => {
-	const markdown = readFileSync(`${__dirname}/test-cases/with-specimen-flags.md`, { encoding: 'utf8' })
+	const markdown = readFileSync(`${__dirname}/test-cases/specimen-flags.md`, { encoding: 'utf8' })
 	const component = extractComponent(markdown, { importLoader: v => v })
 
 	t.deepEqual(component, {
-		contentHtml: readFileSync(`${__dirname}/test-cases/with-specimen-flags.expected.html`, { encoding: 'utf8' }),
+		contentHtml: readFileSync(`${__dirname}/test-cases/specimen-flags.expected.html`, {
+			encoding: 'utf8',
+		}),
 		meta: {
 			name: 'Component Name',
 			category: 'Component Category',
@@ -85,11 +87,13 @@ test('Specimen blocks can have inline flags', t => {
 })
 
 test('Specimen blocks can have frontmatter props', t => {
-	const markdown = readFileSync(`${__dirname}/test-cases/with-specimen-props.md`, { encoding: 'utf8' })
+	const markdown = readFileSync(`${__dirname}/test-cases/specimen-props.md`, { encoding: 'utf8' })
 	const component = extractComponent(markdown, { importLoader: v => v })
 
 	t.deepEqual(component, {
-		contentHtml: readFileSync(`${__dirname}/test-cases/with-specimen-props.expected.html`, { encoding: 'utf8' }),
+		contentHtml: readFileSync(`${__dirname}/test-cases/specimen-props.expected.html`, {
+			encoding: 'utf8',
+		}),
 		meta: {
 			name: 'Component Name',
 			category: 'Component Category',
@@ -112,13 +116,13 @@ test('Specimen blocks can have frontmatter props', t => {
 })
 
 test('Import statements in code blocks are added as hidden specimen blocks', t => {
-	const markdown = readFileSync(`${__dirname}/test-cases/with-external-imports.md`, { encoding: 'utf8' })
+	const markdown = readFileSync(`${__dirname}/test-cases/imports.md`, { encoding: 'utf8' })
 	const importLoader = filepath =>
 		readFileSync(path.resolve(`${__dirname}/test-cases/`, filepath), { encoding: 'utf8' })
 	const component = extractComponent(markdown, { importLoader })
 
 	t.deepEqual(component, {
-		contentHtml: readFileSync(`${__dirname}/test-cases/with-external-imports.expected.html`, { encoding: 'utf8' }),
+		contentHtml: readFileSync(`${__dirname}/test-cases/imports.expected.html`, { encoding: 'utf8' }),
 		meta: {
 			name: 'Component Name',
 			category: 'Component Category',
