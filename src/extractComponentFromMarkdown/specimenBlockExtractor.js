@@ -11,7 +11,7 @@ const loadImports = (importFilepaths, importLoader) =>
 		content: importLoader(filepath),
 	}))
 
-const extractNameAndExtension = string => {
+const extractBlockNameAndExtension = string => {
 	// Matches `(specimenName).(extension)`
 	const matches = /(.+)\.([^.]+)$/.exec(string || '') || []
 	return matches.slice(1)
@@ -21,7 +21,7 @@ module.exports = ({ importLoader }) => (tree, file) => {
 	var specimenBlocks = []
 
 	visit(tree, 'code', node => {
-		const [specimenName, extension] = extractNameAndExtension(node.lang)
+		const [specimenName, extension] = extractBlockNameAndExtension(node.lang)
 
 		if (!specimenName) {
 			return
@@ -41,7 +41,7 @@ module.exports = ({ importLoader }) => (tree, file) => {
 		const importFilepaths = extractImportFilepaths(parsed.content)
 		const importContents = loadImports(importFilepaths, importLoader)
 		const importBlocks = importContents.map(imported => {
-			const [, extension] = extractNameAndExtension(imported.filepath)
+			const [, extension] = extractBlockNameAndExtension(imported.filepath)
 			const block = {
 				specimenName,
 				lang: extension,
