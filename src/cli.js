@@ -5,6 +5,7 @@
 const fs = require('fs')
 const path = require('path')
 const extractComponent = require('./extractComponent')
+const componentRenderer = require('./componentRenderer')
 const specimenRenderer = require('./specimenRenderer')
 const blockRenderer = require('./blockRenderer')
 
@@ -13,6 +14,8 @@ const outputPath = path.resolve(__dirname, '../dist/index.html')
 
 const markdown = fs.readFileSync(sourcePath)
 const component = extractComponent(markdown, { importLoader: f => '' })
-const html = specimenRenderer(component.specimens[0], { blockRenderer })
+const html = componentRenderer(component, {
+	specimenRenderer: specimen => specimenRenderer(specimen, { blockRenderer }),
+})
 
 fs.writeFileSync(outputPath, html)
