@@ -10,7 +10,7 @@ const extractSpecimenBlocks = require('./extractSpecimenBlocks')
 const insertSpecimenEmbeds = require('./insertSpecimenEmbeds')
 const removeHiddenCodeBlocks = require('./removeHiddenCodeBlocks')
 
-module.exports = (markdown, { importLoader, iframePathFn }) => {
+module.exports = (markdown, { importLoader = null, iframePathFn = null } = {}) => {
 	const result = unified()
 		.use(parseMarkdown)
 		.use(parseFrontmatter)
