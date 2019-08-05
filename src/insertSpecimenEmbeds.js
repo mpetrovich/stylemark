@@ -9,8 +9,9 @@ const extractNameAndLanguage = string => {
 }
 
 module.exports = () => (tree, file) => {
-	const isSpecimenAlreadyRendered = {}
+	// NOTE: This relies on the side effects of the frontmatter extractor
 	const componentName = file.data.frontmatter ? file.data.frontmatter.name : null
+	const isSpecimenAlreadyRendered = {}
 
 	visit(tree, 'code', (node, index, parent) => {
 		const [specimenName, language] = extractNameAndLanguage(node.lang)
