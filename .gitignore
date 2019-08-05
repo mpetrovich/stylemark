@@ -1,4 +1,13 @@
+# NPM
 node_modules
 npm-debug.log
+
+# macOS
 .DS_STORE
+
+# Code coverage
+.nyc_output
+coverage
+
+# Debug
 dist/

@@ -25,7 +25,7 @@
     "design pattern"
   ],
   "scripts": {
-    "test": "ava",
+    "test": "nyc ava",
     "test:watch": "ava --watch",
     "format": "prettier --write src/**/*.js"
   },
@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "ava": "^2.2.0",
+    "nyc": "^14.1.1",
     "prettier": "^1.18.2"
   }
 }
