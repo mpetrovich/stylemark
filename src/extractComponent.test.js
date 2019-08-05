@@ -7,7 +7,9 @@ test('No component is extracted from markdown that does not have frontmatter', t
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/no-frontmatter.md`, {
 		encoding: 'utf8',
 	})
-	const component = extractComponent(markdown, { importLoader: v => v })
+	const importLoader = f => ''
+	const iframePathFn = ({ specimenName, language }) => `${specimenName}.${language}`
+	const component = extractComponent(markdown, { importLoader, iframePathFn })
 
 	t.is(component, null)
 })
@@ -16,7 +18,9 @@ test('No component is extracted from markdown that has frontmatter but no name p
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/no-frontmatter-name.md`, {
 		encoding: 'utf8',
 	})
-	const component = extractComponent(markdown, { importLoader: v => v })
+	const importLoader = f => ''
+	const iframePathFn = ({ specimenName, language }) => `${specimenName}.${language}`
+	const component = extractComponent(markdown, { importLoader, iframePathFn })
 
 	t.is(component, null)
 })
@@ -25,7 +29,9 @@ test('A component is extracted from markdown that has frontmatter with a name pr
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/frontmatter.md`, {
 		encoding: 'utf8',
 	})
-	const component = extractComponent(markdown, { importLoader: v => v })
+	const importLoader = f => ''
+	const iframePathFn = ({ specimenName, language }) => `${specimenName}.${language}`
+	const component = extractComponent(markdown, { importLoader, iframePathFn })
 
 	t.deepEqual(component, {
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/frontmatter.expected.html`, {
@@ -43,7 +49,9 @@ test('Specimens are extracted from named code blocks', t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/specimens.md`, {
 		encoding: 'utf8',
 	})
-	const component = extractComponent(markdown, { importLoader: v => v })
+	const importLoader = f => ''
+	const iframePathFn = ({ specimenName, language }) => `${specimenName}.${language}`
+	const component = extractComponent(markdown, { importLoader, iframePathFn })
 
 	t.deepEqual(component, {
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/specimens.expected.html`, {
@@ -76,7 +84,9 @@ test('Specimen blocks can have inline flags', t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/specimen-flags.md`, {
 		encoding: 'utf8',
 	})
-	const component = extractComponent(markdown, { importLoader: v => v })
+	const importLoader = f => ''
+	const iframePathFn = ({ specimenName, language }) => `${specimenName}.${language}`
+	const component = extractComponent(markdown, { importLoader, iframePathFn })
 
 	t.deepEqual(component, {
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/specimen-flags.expected.html`, {
@@ -104,7 +114,9 @@ test('Specimen blocks can have frontmatter props', t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/specimen-props.md`, {
 		encoding: 'utf8',
 	})
-	const component = extractComponent(markdown, { importLoader: v => v })
+	const importLoader = f => ''
+	const iframePathFn = ({ specimenName, language }) => `${specimenName}.${language}`
+	const component = extractComponent(markdown, { importLoader, iframePathFn })
 
 	t.deepEqual(component, {
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/specimen-props.expected.html`, {
@@ -135,7 +147,8 @@ test('Import statements in code blocks are added as hidden specimen blocks', t =
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/imports.md`, { encoding: 'utf8' })
 	const importLoader = filepath =>
 		readFileSync(path.resolve(`${__dirname}/extractComponent-test-cases/`, filepath), { encoding: 'utf8' })
-	const component = extractComponent(markdown, { importLoader })
+	const iframePathFn = ({ specimenName, language }) => `${specimenName}.${language}`
+	const component = extractComponent(markdown, { importLoader, iframePathFn })
 
 	t.deepEqual(component, {
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/imports.expected.html`, {

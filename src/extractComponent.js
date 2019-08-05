@@ -1,22 +1,37 @@
 const unified = require('unified')
 const parseMarkdown = require('remark-parse')
-const toHtmlTree = require('remark-rehype')
-const parseFrontmatter = require('remark-frontmatter')
 const extractFrontmatter = require('remark-extract-frontmatter')
+const parseFrontmatter = require('remark-frontmatter')
 const yamlParser = require('yaml').parse
-const extractSpecimenBlocks = require('./extractSpecimenBlocks')
-const removeHiddenCodeBlocks = require('./removeHiddenCodeBlocks')
+const toHtmlTree = require('remark-rehype')
 const toHtmlString = require('rehype-stringify')
 const _ = require('lodash')
+const extractSpecimenBlocks = require('./extractSpecimenBlocks')
+const insertSpecimenEmbeds = require('./insertSpecimenEmbeds')
+const removeHiddenCodeBlocks = require('./removeHiddenCodeBlocks')
 
-module.exports = (markdown, { importLoader }) => {
+module.exports = (markdown, { importLoader, iframePathFn }) => {
 	const result = unified()
 		.use(parseMarkdown)
 		.use(parseFrontmatter)
 		.use(extractFrontmatter, { name: 'frontmatter', yaml: yamlParser })
 		.use(extractSpecimenBlocks, { importLoader })
+		.use(insertSpecimenEmbeds)
 		.use(removeHiddenCodeBlocks)
-		.use(toHtmlTree)
+		.use(toHtmlTree, {
+			handlers: {
+				'specimen-embed': (h, node) =>
+					iframePathFn
+						? h(node, 'iframe', {
+								src: iframePathFn({
+									componentName: node.componentName,
+									specimenName: node.specimenName,
+									language: node.language,
+								}),
+						  })
+						: null,
+			},
+		})
 		.use(toHtmlString)
 		.processSync(markdown)
 

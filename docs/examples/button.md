@@ -7,18 +7,18 @@ This is a button component.
 
 ## Basic button
 
-```button.html
+```basic.html
 <button>Click me</button>
 ```
 
-```button.css
+```basic.css
 button {
 	color: white;
 	background-color: green;
 }
 ```
 
-```button.js
+```basic.js
 document
 	.querySelector('button')
 	.addEventListener('click', function() {
@@ -28,18 +28,18 @@ document
 
 ## Fancy button
 
-```button.html
-<button>Click me</button>
+```fancy.html
+<button>Fancy button</button>
 ```
 
-```button.css
+```fancy.css
 button {
 	color: white;
 	background-color: red;
 }
 ```
 
-```button.js
+```fancy.js
 document
 	.querySelector('button')
 	.addEventListener('click', function() {

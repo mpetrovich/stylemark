@@ -40,6 +40,7 @@
     "node": "8.x"
   },
   "dependencies": {
+    "fs-extra": "^8.1.0",
     "gray-matter": "^4.0.2",
     "lodash": "^4.17.15",
     "rehype-stringify": "^5.0.0",
@@ -49,6 +50,7 @@
     "remark-rehype": "^4.0.0",
     "string.prototype.matchall": "^3.0.1",
     "unified": "^7.1.0",
+    "unist-builder": "^1.0.4",
     "unist-util-remove": "^1.0.3",
     "yaml": "^1.1.0"
   },

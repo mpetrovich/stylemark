@@ -12,8 +12,7 @@ const loadImports = (importFilepaths, importLoader) =>
 	}))
 
 const extractNameAndLanguage = string => {
-	string = string || ''
-	const matches = /(.+)\.([^.]+)$/.exec(string) // Matches `(specimenName).(language)`
+	const matches = /(.+)\.([^.]+)$/.exec(string || '') // Matches `(specimenName).(language)`
 	return matches ? matches.slice(1) : []
 }
 
