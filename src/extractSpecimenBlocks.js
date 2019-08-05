@@ -58,7 +58,7 @@ module.exports = ({ importLoader }) => (tree, file) => {
 
 		specimenBlocks.push({
 			specimenName,
-			language: language,
+			language,
 			flags,
 			props,
 			content: contentWithoutFrontmatterOrImports,
