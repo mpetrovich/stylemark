@@ -16,11 +16,13 @@ module.exports = (specimen, { blockRenderer }) => {
 
 	return `<!doctype html>
 <html>
-	<head><title>${specimen.name}</title></head>
-<body>
-${css}
-${html}
-${js}
-</body>
+	<head>
+		<title>${specimen.name}</title>
+	</head>
+	<body>
+		${css}
+		${html}
+		${js}
+	</body>
 </html>`
 }
