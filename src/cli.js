@@ -10,13 +10,14 @@ const componentRenderer = require('./componentRenderer')
 const specimenRenderer = require('./specimenRenderer')
 const blockRenderer = require('./blockRenderer')
 
-const sourcePath = path.resolve(__dirname, '../docs/example.md')
-const outputPath = path.resolve(__dirname, '../dist/index.html')
-
-const markdown = fs.readFileSync(sourcePath)
-const component = extractComponent(markdown, { importLoader: f => '' })
-const library = { name: 'Example Library', components: [component] }
-
+const sourcePaths = [
+	path.resolve(__dirname, '../docs/examples/button.md'),
+	path.resolve(__dirname, '../docs/examples/dropdown.md'),
+]
+const components = sourcePaths.map(sourcePath =>
+	extractComponent(fs.readFileSync(sourcePath), { importLoader: f => '' })
+)
+const library = { name: 'Example Library', components }
 const html = libraryRenderer(library, {
 	componentRenderer: component =>
 		componentRenderer(component, {
@@ -24,4 +25,5 @@ const html = libraryRenderer(library, {
 		}),
 })
 
+const outputPath = path.resolve(__dirname, '../dist/index.html')
 fs.writeFileSync(outputPath, html)
