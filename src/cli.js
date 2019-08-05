@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* istanbul ignore file */
+
 const fs = require('fs')
 const path = require('path')
 const extractComponent = require('./extractComponent')
