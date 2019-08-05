@@ -1,10 +1,10 @@
 import test from 'ava'
 import { readFileSync } from 'fs'
 import path from 'path'
-import extractComponent from './extractComponentFromMarkdown'
+import extractComponent from './extractComponent'
 
 test('No component is extracted from markdown that does not have frontmatter', t => {
-	const markdown = readFileSync(`${__dirname}/extractComponentFromMarkdown-test-cases/no-frontmatter.md`, {
+	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/no-frontmatter.md`, {
 		encoding: 'utf8',
 	})
 	const component = extractComponent(markdown, { importLoader: v => v })
@@ -13,7 +13,7 @@ test('No component is extracted from markdown that does not have frontmatter', t
 })
 
 test('No component is extracted from markdown that has frontmatter but no name property', t => {
-	const markdown = readFileSync(`${__dirname}/extractComponentFromMarkdown-test-cases/no-frontmatter-name.md`, {
+	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/no-frontmatter-name.md`, {
 		encoding: 'utf8',
 	})
 	const component = extractComponent(markdown, { importLoader: v => v })
@@ -22,13 +22,13 @@ test('No component is extracted from markdown that has frontmatter but no name p
 })
 
 test('A component is extracted from markdown that has frontmatter with a name property', t => {
-	const markdown = readFileSync(`${__dirname}/extractComponentFromMarkdown-test-cases/frontmatter.md`, {
+	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/frontmatter.md`, {
 		encoding: 'utf8',
 	})
 	const component = extractComponent(markdown, { importLoader: v => v })
 
 	t.deepEqual(component, {
-		contentHtml: readFileSync(`${__dirname}/extractComponentFromMarkdown-test-cases/frontmatter.expected.html`, {
+		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/frontmatter.expected.html`, {
 			encoding: 'utf8',
 		}),
 		meta: {
@@ -40,13 +40,13 @@ test('A component is extracted from markdown that has frontmatter with a name pr
 })
 
 test('Specimens are extracted from named code blocks', t => {
-	const markdown = readFileSync(`${__dirname}/extractComponentFromMarkdown-test-cases/specimens.md`, {
+	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/specimens.md`, {
 		encoding: 'utf8',
 	})
 	const component = extractComponent(markdown, { importLoader: v => v })
 
 	t.deepEqual(component, {
-		contentHtml: readFileSync(`${__dirname}/extractComponentFromMarkdown-test-cases/specimens.expected.html`, {
+		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/specimens.expected.html`, {
 			encoding: 'utf8',
 		}),
 		meta: {
@@ -73,13 +73,13 @@ test('Specimens are extracted from named code blocks', t => {
 })
 
 test('Specimen blocks can have inline flags', t => {
-	const markdown = readFileSync(`${__dirname}/extractComponentFromMarkdown-test-cases/specimen-flags.md`, {
+	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/specimen-flags.md`, {
 		encoding: 'utf8',
 	})
 	const component = extractComponent(markdown, { importLoader: v => v })
 
 	t.deepEqual(component, {
-		contentHtml: readFileSync(`${__dirname}/extractComponentFromMarkdown-test-cases/specimen-flags.expected.html`, {
+		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/specimen-flags.expected.html`, {
 			encoding: 'utf8',
 		}),
 		meta: {
@@ -101,13 +101,13 @@ test('Specimen blocks can have inline flags', t => {
 })
 
 test('Specimen blocks can have frontmatter props', t => {
-	const markdown = readFileSync(`${__dirname}/extractComponentFromMarkdown-test-cases/specimen-props.md`, {
+	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/specimen-props.md`, {
 		encoding: 'utf8',
 	})
 	const component = extractComponent(markdown, { importLoader: v => v })
 
 	t.deepEqual(component, {
-		contentHtml: readFileSync(`${__dirname}/extractComponentFromMarkdown-test-cases/specimen-props.expected.html`, {
+		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/specimen-props.expected.html`, {
 			encoding: 'utf8',
 		}),
 		meta: {
@@ -132,13 +132,13 @@ test('Specimen blocks can have frontmatter props', t => {
 })
 
 test('Import statements in code blocks are added as hidden specimen blocks', t => {
-	const markdown = readFileSync(`${__dirname}/extractComponentFromMarkdown-test-cases/imports.md`, { encoding: 'utf8' })
+	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/imports.md`, { encoding: 'utf8' })
 	const importLoader = filepath =>
-		readFileSync(path.resolve(`${__dirname}/extractComponentFromMarkdown-test-cases/`, filepath), { encoding: 'utf8' })
+		readFileSync(path.resolve(`${__dirname}/extractComponent-test-cases/`, filepath), { encoding: 'utf8' })
 	const component = extractComponent(markdown, { importLoader })
 
 	t.deepEqual(component, {
-		contentHtml: readFileSync(`${__dirname}/extractComponentFromMarkdown-test-cases/imports.expected.html`, {
+		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/imports.expected.html`, {
 			encoding: 'utf8',
 		}),
 		meta: {
