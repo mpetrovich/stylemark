@@ -8,7 +8,7 @@ test('No component is extracted from markdown that does not have frontmatter', t
 		encoding: 'utf8',
 	})
 	const importLoader = f => ''
-	const iframePathFn = ({ specimenName, language }) => `${specimenName}.${language}`
+	const iframePathFn = ({ componentName, specimenName, language }) => `${componentName}/${specimenName}.${language}`
 	const component = extractComponent(markdown, { importLoader, iframePathFn })
 
 	t.is(component, null)
@@ -19,7 +19,7 @@ test('No component is extracted from markdown that has frontmatter but no name p
 		encoding: 'utf8',
 	})
 	const importLoader = f => ''
-	const iframePathFn = ({ specimenName, language }) => `${specimenName}.${language}`
+	const iframePathFn = ({ componentName, specimenName, language }) => `${componentName}/${specimenName}.${language}`
 	const component = extractComponent(markdown, { importLoader, iframePathFn })
 
 	t.is(component, null)
@@ -30,7 +30,7 @@ test('A component is extracted from markdown that has frontmatter with a name pr
 		encoding: 'utf8',
 	})
 	const importLoader = f => ''
-	const iframePathFn = ({ specimenName, language }) => `${specimenName}.${language}`
+	const iframePathFn = ({ componentName, specimenName, language }) => `${componentName}/${specimenName}.${language}`
 	const component = extractComponent(markdown, { importLoader, iframePathFn })
 
 	t.deepEqual(component, {
@@ -50,7 +50,7 @@ test('Specimens are extracted from named code blocks', t => {
 		encoding: 'utf8',
 	})
 	const importLoader = f => ''
-	const iframePathFn = ({ specimenName, language }) => `${specimenName}.${language}`
+	const iframePathFn = ({ componentName, specimenName, language }) => `${componentName}/${specimenName}.${language}`
 	const component = extractComponent(markdown, { importLoader, iframePathFn })
 
 	t.deepEqual(component, {
@@ -85,7 +85,7 @@ test('Specimen blocks can have inline flags', t => {
 		encoding: 'utf8',
 	})
 	const importLoader = f => ''
-	const iframePathFn = ({ specimenName, language }) => `${specimenName}.${language}`
+	const iframePathFn = ({ componentName, specimenName, language }) => `${componentName}/${specimenName}.${language}`
 	const component = extractComponent(markdown, { importLoader, iframePathFn })
 
 	t.deepEqual(component, {
@@ -115,7 +115,7 @@ test('Specimen blocks can have frontmatter props', t => {
 		encoding: 'utf8',
 	})
 	const importLoader = f => ''
-	const iframePathFn = ({ specimenName, language }) => `${specimenName}.${language}`
+	const iframePathFn = ({ componentName, specimenName, language }) => `${componentName}/${specimenName}.${language}`
 	const component = extractComponent(markdown, { importLoader, iframePathFn })
 
 	t.deepEqual(component, {
@@ -147,7 +147,7 @@ test('Import statements in code blocks are added as hidden specimen blocks', t =
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/imports.md`, { encoding: 'utf8' })
 	const importLoader = filepath =>
 		readFileSync(path.resolve(`${__dirname}/extractComponent-test-cases/`, filepath), { encoding: 'utf8' })
-	const iframePathFn = ({ specimenName, language }) => `${specimenName}.${language}`
+	const iframePathFn = ({ componentName, specimenName, language }) => `${componentName}/${specimenName}.${language}`
 	const component = extractComponent(markdown, { importLoader, iframePathFn })
 
 	t.deepEqual(component, {
