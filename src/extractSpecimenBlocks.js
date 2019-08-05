@@ -44,7 +44,7 @@ module.exports = ({ importLoader }) => (tree, file) => {
 			const [, extension] = extractBlockNameAndExtension(imported.filepath)
 			const block = {
 				specimenName,
-				lang: extension,
+				language: extension,
 				flags: {},
 				props: {},
 				content: imported.content,
@@ -56,7 +56,13 @@ module.exports = ({ importLoader }) => (tree, file) => {
 		})
 		specimenBlocks = specimenBlocks.concat(importBlocks)
 
-		specimenBlocks.push({ specimenName, lang: extension, flags, props, content: contentWithoutFrontmatterOrImports })
+		specimenBlocks.push({
+			specimenName,
+			language: extension,
+			flags,
+			props,
+			content: contentWithoutFrontmatterOrImports,
+		})
 	})
 
 	file.data.specimenBlocks = specimenBlocks

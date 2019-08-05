@@ -57,15 +57,15 @@ test('Specimens are extracted from named code blocks', t => {
 			{
 				name: 'specimen-1',
 				blocks: [
-					{ lang: 'html', flags: {}, props: {}, content: '<b>Specimen 1</b>' },
-					{ lang: 'css', flags: {}, props: {}, content: 'b { color: red }' },
+					{ language: 'html', flags: {}, props: {}, content: '<b>Specimen 1</b>' },
+					{ language: 'css', flags: {}, props: {}, content: 'b { color: red }' },
 				],
 			},
 			{
 				name: 'specimen-2',
 				blocks: [
-					{ lang: 'html', flags: {}, props: {}, content: '<b>Specimen 2</b>' },
-					{ lang: 'css', flags: {}, props: {}, content: 'b { color: green }' },
+					{ language: 'html', flags: {}, props: {}, content: '<b>Specimen 2</b>' },
+					{ language: 'css', flags: {}, props: {}, content: 'b { color: green }' },
 				],
 			},
 		],
@@ -90,10 +90,10 @@ test('Specimen blocks can have inline flags', t => {
 			{
 				name: 'specimen',
 				blocks: [
-					{ lang: 'html', flags: {}, props: {}, content: '<b>Specimen</b>' },
-					{ lang: 'css', flags: { hidden: true }, props: {}, content: 'b { color: red }' },
-					{ lang: 'js', flags: {}, props: {}, content: `var foo = 'not hidden'` },
-					{ lang: 'js', flags: { hidden: true }, props: {}, content: `var bar = 'hidden'` },
+					{ language: 'html', flags: {}, props: {}, content: '<b>Specimen</b>' },
+					{ language: 'css', flags: { hidden: true }, props: {}, content: 'b { color: red }' },
+					{ language: 'js', flags: {}, props: {}, content: `var foo = 'not hidden'` },
+					{ language: 'js', flags: { hidden: true }, props: {}, content: `var bar = 'hidden'` },
 				],
 			},
 		],
@@ -118,9 +118,9 @@ test('Specimen blocks can have frontmatter props', t => {
 			{
 				name: 'specimen',
 				blocks: [
-					{ lang: 'html', flags: {}, props: { key: 'value' }, content: '<b>Specimen</b>' },
+					{ language: 'html', flags: {}, props: { key: 'value' }, content: '<b>Specimen</b>' },
 					{
-						lang: 'css',
+						language: 'css',
 						flags: { hidden: true },
 						props: { key: 'value', list: ['one', 'two', 'three'] },
 						content: 'b { color: green }',
@@ -149,19 +149,19 @@ test('Import statements in code blocks are added as hidden specimen blocks', t =
 			{
 				name: 'specimen-1',
 				blocks: [
-					{ lang: 'html', flags: {}, props: {}, content: '<b>Specimen 1</b>' },
-					{ lang: 'css', flags: {}, props: {}, content: 'b { color: red }' },
+					{ language: 'html', flags: {}, props: {}, content: '<b>Specimen 1</b>' },
+					{ language: 'css', flags: {}, props: {}, content: 'b { color: red }' },
 				],
 			},
 			{
 				name: 'specimen-2',
 				blocks: [
-					{ lang: 'html', flags: {}, props: {}, content: '<span>Specimen 2 external import</span>' },
-					{ lang: 'html', flags: {}, props: {}, content: '<b>Specimen 2</b>' },
-					{ lang: 'js', flags: { hidden: true }, props: {}, content: `var externalImport1 = 'one'` },
-					{ lang: 'js', flags: { hidden: true }, props: {}, content: `var externalImport2 = 'two'` },
-					{ lang: 'js', flags: {}, props: {}, content: `var specimen = 2` },
-					{ lang: 'css', flags: {}, props: {}, content: 'b { color: green }' },
+					{ language: 'html', flags: {}, props: {}, content: '<span>Specimen 2 external import</span>' },
+					{ language: 'html', flags: {}, props: {}, content: '<b>Specimen 2</b>' },
+					{ language: 'js', flags: { hidden: true }, props: {}, content: `var externalImport1 = 'one'` },
+					{ language: 'js', flags: { hidden: true }, props: {}, content: `var externalImport2 = 'two'` },
+					{ language: 'js', flags: {}, props: {}, content: `var specimen = 2` },
+					{ language: 'css', flags: {}, props: {}, content: 'b { color: green }' },
 				],
 			},
 		],

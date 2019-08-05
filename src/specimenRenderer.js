@@ -1,16 +1,16 @@
 module.exports = specimen => {
 	const stylesHtml = specimen.blocks
-		.filter(block => block.lang === 'css')
+		.filter(block => block.language === 'css')
 		.map(block => `<style>${block.content}</style>`)
 		.join('\n')
 
 	const scriptsHtml = specimen.blocks
-		.filter(block => block.lang === 'js')
+		.filter(block => block.language === 'js')
 		.map(block => `<script>${block.content}</script>`)
 		.join('\n')
 
 	const renderableHtml = specimen.blocks
-		.filter(block => block.lang === 'html')
+		.filter(block => block.language === 'html')
 		.map(block => block.content)
 		.join('\n')
 

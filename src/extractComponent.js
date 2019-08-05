@@ -29,7 +29,7 @@ module.exports = (markdown, { importLoader }) => {
 		.map((blocks, specimenName) => ({
 			name: specimenName,
 			blocks: blocks.map(block => ({
-				lang: block.lang,
+				language: block.language,
 				flags: block.flags,
 				props: block.props,
 				content: block.content,
