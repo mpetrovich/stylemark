@@ -31,8 +31,8 @@ test('A component is extracted from markdown that has frontmatter with a name pr
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/frontmatter.expected.html`, {
 			encoding: 'utf8',
 		}),
+		name: 'Component Name',
 		meta: {
-			name: 'Component Name',
 			category: 'Component Category',
 		},
 		specimens: [],
@@ -49,8 +49,8 @@ test('Specimens are extracted from named code blocks', t => {
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/specimens.expected.html`, {
 			encoding: 'utf8',
 		}),
+		name: 'Component Name',
 		meta: {
-			name: 'Component Name',
 			category: 'Component Category',
 		},
 		specimens: [
@@ -82,8 +82,8 @@ test('Specimen blocks can have inline flags', t => {
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/specimen-flags.expected.html`, {
 			encoding: 'utf8',
 		}),
+		name: 'Component Name',
 		meta: {
-			name: 'Component Name',
 			category: 'Component Category',
 		},
 		specimens: [
@@ -110,8 +110,8 @@ test('Specimen blocks can have frontmatter props', t => {
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/specimen-props.expected.html`, {
 			encoding: 'utf8',
 		}),
+		name: 'Component Name',
 		meta: {
-			name: 'Component Name',
 			category: 'Component Category',
 		},
 		specimens: [
@@ -141,8 +141,8 @@ test('Import statements in code blocks are added as hidden specimen blocks', t =
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/imports.expected.html`, {
 			encoding: 'utf8',
 		}),
+		name: 'Component Name',
 		meta: {
-			name: 'Component Name',
 			category: 'Component Category',
 		},
 		specimens: [

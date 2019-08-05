@@ -38,8 +38,9 @@ module.exports = (markdown, { importLoader }) => {
 		.value()
 
 	return {
-		contentHtml: result.contents,
-		meta: result.data.frontmatter,
+		name: result.data.frontmatter.name,
+		meta: _.omit(result.data.frontmatter, 'name'),
 		specimens,
+		contentHtml: result.contents,
 	}
 }
