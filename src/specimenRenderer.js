@@ -1,26 +1,26 @@
-module.exports = specimen => {
-	const stylesHtml = specimen.blocks
+module.exports = (specimen, { blockRenderer }) => {
+	const css = specimen.blocks
 		.filter(block => block.language === 'css')
-		.map(block => `<style>${block.content}</style>`)
+		.map(blockRenderer)
 		.join('\n')
 
-	const scriptsHtml = specimen.blocks
+	const js = specimen.blocks
 		.filter(block => block.language === 'js')
-		.map(block => `<script>${block.content}</script>`)
+		.map(blockRenderer)
 		.join('\n')
 
-	const renderableHtml = specimen.blocks
+	const html = specimen.blocks
 		.filter(block => block.language === 'html')
-		.map(block => block.content)
+		.map(blockRenderer)
 		.join('\n')
 
 	return `<!doctype html>
 <html>
 	<head><title>${specimen.name}</title></head>
 <body>
-${stylesHtml}
-${renderableHtml}
-${scriptsHtml}
+${css}
+${html}
+${js}
 </body>
 </html>`
 }

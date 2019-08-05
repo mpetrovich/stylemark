@@ -1,6 +1,7 @@
 import test from 'ava'
 import { readFileSync } from 'fs'
-import toHtml from './specimenRenderer'
+import blockRenderer from './blockRenderer'
+import specimenRenderer from './specimenRenderer'
 
 test('Nothing is rendered for a specimen without blocks', t => {
 	const specimen = {
@@ -9,7 +10,7 @@ test('Nothing is rendered for a specimen without blocks', t => {
 	}
 	const expectedHtml = readFileSync(`${__dirname}/specimenRenderer-test-cases/no-blocks.html`, { encoding: 'utf8' })
 
-	t.is(toHtml(specimen), expectedHtml)
+	t.is(specimenRenderer(specimen, { blockRenderer }), expectedHtml)
 })
 
 test('Specimen blocks for HTML, CSS, and JS are rendered', t => {
@@ -25,5 +26,5 @@ test('Specimen blocks for HTML, CSS, and JS are rendered', t => {
 	}
 	const expectedHtml = readFileSync(`${__dirname}/specimenRenderer-test-cases/blocks.html`, { encoding: 'utf8' })
 
-	t.is(toHtml(specimen), expectedHtml)
+	t.is(specimenRenderer(specimen, { blockRenderer }), expectedHtml)
 })
