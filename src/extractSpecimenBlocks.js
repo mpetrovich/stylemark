@@ -11,17 +11,17 @@ const loadImports = (importFilepaths, importLoader) =>
 		content: importLoader(filepath),
 	}))
 
-const extractBlockNameAndExtension = string => {
-	// Matches `(specimenName).(extension)`
-	const matches = /(.+)\.([^.]+)$/.exec(string || '') || []
-	return matches.slice(1)
+const extractNameAndLanguage = string => {
+	string = string || ''
+	const matches = /(.+)\.([^.]+)$/.exec(string) // Matches `(specimenName).(language)`
+	return matches ? matches.slice(1) : []
 }
 
 module.exports = ({ importLoader }) => (tree, file) => {
 	var specimenBlocks = []
 
 	visit(tree, 'code', node => {
-		const [specimenName, extension] = extractBlockNameAndExtension(node.lang)
+		const [specimenName, language] = extractNameAndLanguage(node.lang)
 
 		if (!specimenName) {
 			return
@@ -41,15 +41,15 @@ module.exports = ({ importLoader }) => (tree, file) => {
 		const importFilepaths = extractImportFilepaths(parsed.content)
 		const importContents = loadImports(importFilepaths, importLoader)
 		const importBlocks = importContents.map(imported => {
-			const [, extension] = extractBlockNameAndExtension(imported.filepath)
+			const [, language] = extractNameAndLanguage(imported.filepath)
 			const block = {
 				specimenName,
-				language: extension,
+				language,
 				flags: {},
 				props: {},
 				content: imported.content,
 			}
-			if (extension !== 'html') {
+			if (language !== 'html') {
 				block.flags.hidden = true
 			}
 			return block
@@ -58,7 +58,7 @@ module.exports = ({ importLoader }) => (tree, file) => {
 
 		specimenBlocks.push({
 			specimenName,
-			language: extension,
+			language: language,
 			flags,
 			props,
 			content: contentWithoutFrontmatterOrImports,
