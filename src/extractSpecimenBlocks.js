@@ -2,21 +2,14 @@ const visit = require('unist-util-visit')
 const extractFrontmatter = require('gray-matter')
 const fs = require('fs')
 const path = require('path')
-const removeImports = require('./removeImports')
-const extractImportFilepaths = require('./extractImportFilepaths')
-
-const loadImports = (importFilepaths, importLoader) =>
-	importFilepaths.map(filepath => ({
-		filepath,
-		content: importLoader(filepath),
-	}))
+const inlineImports = require('./inlineImports')
 
 const extractNameAndLanguage = string => {
 	const matches = /(.+)\.([^.]+)$/.exec(string || '') // Matches `(specimenName).(language)`
 	return matches ? matches.slice(1) : []
 }
 
-module.exports = ({ importLoader }) => (tree, file) => {
+module.exports = ({ dirpath }) => (tree, file) => {
 	var specimenBlocks = []
 
 	visit(tree, 'code', node => {
@@ -27,6 +20,11 @@ module.exports = ({ importLoader }) => (tree, file) => {
 		}
 
 		const parsed = extractFrontmatter(node.value)
+
+		const displayContent = parsed.content
+		const executeContent = dirpath ? inlineImports(displayContent, { dirpath }) : displayContent
+		node.value = displayContent
+
 		const props = parsed.data
 		const flags = {}
 
@@ -34,33 +32,13 @@ module.exports = ({ importLoader }) => (tree, file) => {
 			flags.hidden = true
 		}
 
-		const contentWithoutFrontmatterOrImports = removeImports(parsed.content)
-		node.value = contentWithoutFrontmatterOrImports
-
-		const importFilepaths = extractImportFilepaths(parsed.content)
-		const importContents = loadImports(importFilepaths, importLoader)
-		const importBlocks = importContents.map(imported => {
-			const [, language] = extractNameAndLanguage(imported.filepath)
-			const block = {
-				specimenName,
-				language,
-				flags: {},
-				props: {},
-				content: imported.content,
-			}
-			if (language !== 'html') {
-				block.flags.hidden = true
-			}
-			return block
-		})
-		specimenBlocks = specimenBlocks.concat(importBlocks)
-
 		specimenBlocks.push({
 			specimenName,
 			language,
 			flags,
 			props,
-			content: contentWithoutFrontmatterOrImports,
+			executeContent,
+			displayContent,
 		})
 	})
 

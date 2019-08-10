@@ -10,12 +10,12 @@ const extractSpecimenBlocks = require('./extractSpecimenBlocks')
 const insertSpecimenEmbeds = require('./insertSpecimenEmbeds')
 const removeHiddenCodeBlocks = require('./removeHiddenCodeBlocks')
 
-module.exports = (markdown, { importLoader = filepath => '', iframePathFn = null } = {}) => {
+module.exports = (markdown, { dirpath = null, iframePathFn = null } = {}) => {
 	const result = unified()
 		.use(parseMarkdown)
 		.use(parseFrontmatter)
 		.use(extractFrontmatter, { name: 'frontmatter', yaml: yamlParser })
-		.use(extractSpecimenBlocks, { importLoader })
+		.use(extractSpecimenBlocks, { dirpath })
 		.use(insertSpecimenEmbeds)
 		.use(removeHiddenCodeBlocks)
 		.use(toHtmlTree, {
@@ -47,7 +47,8 @@ module.exports = (markdown, { importLoader = filepath => '', iframePathFn = null
 				language: block.language,
 				flags: block.flags,
 				props: block.props,
-				content: block.content,
+				executeContent: block.executeContent,
+				displayContent: block.displayContent,
 			})),
 		}))
 		.value()

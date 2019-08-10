@@ -57,15 +57,39 @@ test('Specimens are extracted from named code blocks', t => {
 			{
 				name: 'specimen-1',
 				blocks: [
-					{ language: 'html', flags: {}, props: {}, content: '<b>Specimen 1</b>' },
-					{ language: 'css', flags: {}, props: {}, content: 'b { color: red }' },
+					{
+						language: 'html',
+						flags: {},
+						props: {},
+						executeContent: '<b>Specimen 1</b>',
+						displayContent: '<b>Specimen 1</b>',
+					},
+					{
+						language: 'css',
+						flags: {},
+						props: {},
+						executeContent: 'b { color: red }',
+						displayContent: 'b { color: red }',
+					},
 				],
 			},
 			{
 				name: 'specimen-2',
 				blocks: [
-					{ language: 'html', flags: {}, props: {}, content: '<b>Specimen 2</b>' },
-					{ language: 'css', flags: {}, props: {}, content: 'b { color: green }' },
+					{
+						language: 'html',
+						flags: {},
+						props: {},
+						executeContent: '<b>Specimen 2</b>',
+						displayContent: '<b>Specimen 2</b>',
+					},
+					{
+						language: 'css',
+						flags: {},
+						props: {},
+						executeContent: 'b { color: green }',
+						displayContent: 'b { color: green }',
+					},
 				],
 			},
 		],
@@ -90,10 +114,34 @@ test('Specimen blocks can have inline flags', t => {
 			{
 				name: 'specimen',
 				blocks: [
-					{ language: 'html', flags: {}, props: {}, content: '<b>Specimen</b>' },
-					{ language: 'css', flags: { hidden: true }, props: {}, content: 'b { color: red }' },
-					{ language: 'js', flags: {}, props: {}, content: `var foo = 'not hidden'` },
-					{ language: 'js', flags: { hidden: true }, props: {}, content: `var bar = 'hidden'` },
+					{
+						language: 'html',
+						flags: {},
+						props: {},
+						executeContent: '<b>Specimen</b>',
+						displayContent: '<b>Specimen</b>',
+					},
+					{
+						language: 'css',
+						flags: { hidden: true },
+						props: {},
+						executeContent: 'b { color: red }',
+						displayContent: 'b { color: red }',
+					},
+					{
+						language: 'js',
+						flags: {},
+						props: {},
+						executeContent: `var foo = 'not hidden'`,
+						displayContent: `var foo = 'not hidden'`,
+					},
+					{
+						language: 'js',
+						flags: { hidden: true },
+						props: {},
+						executeContent: `var bar = 'hidden'`,
+						displayContent: `var bar = 'hidden'`,
+					},
 				],
 			},
 		],
@@ -118,12 +166,19 @@ test('Specimen blocks can have frontmatter props', t => {
 			{
 				name: 'specimen',
 				blocks: [
-					{ language: 'html', flags: {}, props: { key: 'value' }, content: '<b>Specimen</b>' },
+					{
+						language: 'html',
+						flags: {},
+						props: { key: 'value' },
+						executeContent: '<b>Specimen</b>',
+						displayContent: '<b>Specimen</b>',
+					},
 					{
 						language: 'css',
 						flags: { hidden: true },
 						props: { key: 'value', list: ['one', 'two', 'three'] },
-						content: 'b { color: green }',
+						executeContent: 'b { color: green }',
+						displayContent: 'b { color: green }',
 					},
 				],
 			},
@@ -133,9 +188,8 @@ test('Specimen blocks can have frontmatter props', t => {
 
 test('Import statements in code blocks are added as hidden specimen blocks', t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/imports.md`, { encoding: 'utf8' })
-	const importLoader = filepath =>
-		readFileSync(path.resolve(`${__dirname}/extractComponent-test-cases/`, filepath), { encoding: 'utf8' })
-	const component = extractComponent(markdown, { importLoader })
+	const dirpath = path.resolve(__dirname, '/extractComponent-test-cases/')
+	const component = extractComponent(markdown, { dirpath })
 
 	t.deepEqual(component, {
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/imports.expected.html`, {
@@ -149,19 +203,67 @@ test('Import statements in code blocks are added as hidden specimen blocks', t =
 			{
 				name: 'specimen-1',
 				blocks: [
-					{ language: 'html', flags: {}, props: {}, content: '<b>Specimen 1</b>' },
-					{ language: 'css', flags: {}, props: {}, content: 'b { color: red }' },
+					{
+						language: 'html',
+						flags: {},
+						props: {},
+						executeContent: '<b>Specimen 1</b>',
+						displayContent: '<b>Specimen 1</b>',
+					},
+					{
+						language: 'css',
+						flags: {},
+						props: {},
+						executeContent: 'b { color: red }',
+						displayContent: 'b { color: red }',
+					},
 				],
 			},
 			{
 				name: 'specimen-2',
 				blocks: [
-					{ language: 'html', flags: {}, props: {}, content: '<span>Specimen 2 external import</span>' },
-					{ language: 'html', flags: {}, props: {}, content: '<b>Specimen 2</b>' },
-					{ language: 'js', flags: { hidden: true }, props: {}, content: `var externalImport1 = 'one'` },
-					{ language: 'js', flags: { hidden: true }, props: {}, content: `var externalImport2 = 'two'` },
-					{ language: 'js', flags: {}, props: {}, content: `var specimen = 2` },
-					{ language: 'css', flags: {}, props: {}, content: 'b { color: green }' },
+					{
+						language: 'html',
+						flags: {},
+						props: {},
+						executeContent: '<span>Specimen 2 external import</span>',
+						displayContent: '<span>Specimen 2 external import</span>',
+					},
+					{
+						language: 'html',
+						flags: {},
+						props: {},
+						executeContent: '<b>Specimen 2</b>',
+						displayContent: '<b>Specimen 2</b>',
+					},
+					{
+						language: 'js',
+						flags: { hidden: true },
+						props: {},
+						executeContent: `var externalImport1 = 'one'`,
+						displayContent: `var externalImport1 = 'one'`,
+					},
+					{
+						language: 'js',
+						flags: { hidden: true },
+						props: {},
+						executeContent: `var externalImport2 = 'two'`,
+						displayContent: `var externalImport2 = 'two'`,
+					},
+					{
+						language: 'js',
+						flags: {},
+						props: {},
+						executeContent: `var specimen = 2`,
+						displayContent: `var specimen = 2`,
+					},
+					{
+						language: 'css',
+						flags: {},
+						props: {},
+						executeContent: 'b { color: green }',
+						displayContent: 'b { color: green }',
+					},
 				],
 			},
 		],

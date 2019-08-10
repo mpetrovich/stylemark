@@ -3,18 +3,18 @@ const path = require('path')
 const webpack = require('webpack')
 const MemoryFs = require('memory-fs')
 const memfs = new MemoryFs()
+const { CachedInputFileSystem, ResolverFactory } = require('enhanced-resolve')
 
 memfs.mkdirpSync('/src')
 memfs.writeFileSync(
 	'/src/entry.js',
-	`import exported from './exported'
-import './sideeffect'
+	`import exported from './support/exported.js'
+import './support/sideeffect.js'
 console.log('memfs entry')
 exported()
 `
 )
-memfs.writeFileSync('/src/exported.js', `export default () => console.log('memfs exported')`)
-memfs.writeFileSync('/src/sideeffect.js', `console.log('memfs side effect')`)
+
 memfs.mkdirpSync('/dist')
 memfs.writeFileSync(
 	'/dist/index.html',
@@ -27,6 +27,42 @@ memfs.writeFileSync(
 </html>`
 )
 
+class ResolverPlugin {
+	constructor({ dirpath, fileSystem, virtualFileSystem }) {
+		this.dirpath = dirpath
+		this.fileSystem = fileSystem
+		this.virtualFileSystem = virtualFileSystem
+	}
+
+	apply(resolver) {
+		resolver.hooks.resolve.tapAsync('ResolverPlugin', (request, resolveContext, callback) => {
+			const isRelativeImport = request.request.startsWith('.')
+			console.log(`Resolving '${request.request}'`)
+
+			if (!isRelativeImport) {
+				const target = resolver.ensureHook('parsedResolve')
+				resolver.doResolve(target, request, null, resolveContext, callback)
+				return
+			}
+
+			const requestFilepath = path.resolve(this.dirpath, request.request)
+
+			if (!this.virtualFileSystem.existsSync(requestFilepath)) {
+				console.log(`Loading ${requestFilepath} into virtual file system`)
+				const requestFileContent = this.fileSystem.readFileSync(requestFilepath, { encoding: 'utf8' })
+				memfs.mkdirpSync(path.dirname(requestFilepath))
+				memfs.writeFileSync(requestFilepath, requestFileContent)
+			} else {
+				console.log(`Already loaded ${requestFilepath}`)
+			}
+
+			const target = resolver.ensureHook('parsedResolve')
+			request = Object.assign({}, request, { request: requestFilepath })
+			resolver.doResolve(target, request, null, resolveContext, callback)
+		})
+	}
+}
+
 const compiler = webpack({
 	mode: 'development',
 	entry: '/src/entry.js',
@@ -34,11 +70,20 @@ const compiler = webpack({
 		path: '/dist',
 		filename: 'main.js',
 	},
+	resolve: {
+		plugins: [
+			new ResolverPlugin({
+				dirpath: path.resolve(__dirname, 'src'),
+				fileSystem: fs,
+				virtualFileSystem: memfs,
+			}),
+		],
+	},
 })
 
 compiler.inputFileSystem = memfs
-compiler.resolvers.normal.fileSystem = compiler.inputFileSystem
-compiler.resolvers.context.fileSystem = compiler.inputFileSystem
+compiler.resolvers.normal.fileSystem = memfs
+compiler.resolvers.context.fileSystem = memfs
 compiler.outputFileSystem = memfs
 
 compiler.run((error, stats) => {
@@ -60,6 +105,7 @@ compiler.run((error, stats) => {
 		console.warn(info.warnings)
 	}
 
-	fs.writeFileSync(path.resolve(__dirname, 'index.html'), memfs.readFileSync('/dist/index.html'))
-	fs.writeFileSync(path.resolve(__dirname, 'main.js'), memfs.readFileSync('/dist/main.js'))
+	fs.mkdirSync(path.resolve(__dirname, 'dist'))
+	fs.writeFileSync(path.resolve(__dirname, 'dist/index.html'), memfs.readFileSync('/dist/index.html'))
+	fs.writeFileSync(path.resolve(__dirname, 'dist/main.js'), memfs.readFileSync('/dist/main.js'))
 })
