@@ -36,35 +36,24 @@ class ResolverPlugin {
 
 	apply(resolver) {
 		resolver.hooks.resolve.tapAsync('ResolverPlugin', (request, resolveContext, callback) => {
-			const isRelativeImport = request.request.startsWith('.')
-			console.log(`Resolving '${request.request}'`)
+			const isRelativeFilepath = request.request.startsWith('.')
+			const absoluteFilepath = isRelativeFilepath ? path.resolve(this.dirpath, request.request) : request.request
 
-			if (!isRelativeImport) {
-				const target = resolver.ensureHook('parsedResolve')
-				resolver.doResolve(target, request, null, resolveContext, callback)
-				return
-			}
-
-			const requestFilepath = path.resolve(this.dirpath, request.request)
-
-			if (!this.virtualFileSystem.existsSync(requestFilepath)) {
-				console.log(`Loading ${requestFilepath} into virtual file system`)
-				const requestFileContent = this.fileSystem.readFileSync(requestFilepath, { encoding: 'utf8' })
-				memfs.mkdirpSync(path.dirname(requestFilepath))
-				memfs.writeFileSync(requestFilepath, requestFileContent)
-			} else {
-				console.log(`Already loaded ${requestFilepath}`)
+			if (isRelativeFilepath && !this.virtualFileSystem.existsSync(absoluteFilepath)) {
+				const requestFileContent = this.fileSystem.readFileSync(absoluteFilepath, { encoding: 'utf8' })
+				memfs.mkdirpSync(path.dirname(absoluteFilepath))
+				memfs.writeFileSync(absoluteFilepath, requestFileContent)
 			}
 
 			const target = resolver.ensureHook('parsedResolve')
-			request = Object.assign({}, request, { request: requestFilepath })
+			request = Object.assign({}, request, { request: absoluteFilepath })
 			resolver.doResolve(target, request, null, resolveContext, callback)
 		})
 	}
 }
 
 const compiler = webpack({
-	mode: 'development',
+	mode: 'production',
 	entry: '/src/entry.js',
 	output: {
 		path: '/dist',
