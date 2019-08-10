@@ -3,7 +3,6 @@ const path = require('path')
 const webpack = require('webpack')
 const MemoryFs = require('memory-fs')
 const memfs = new MemoryFs()
-const { CachedInputFileSystem, ResolverFactory } = require('enhanced-resolve')
 
 memfs.mkdirpSync('/src')
 memfs.writeFileSync(

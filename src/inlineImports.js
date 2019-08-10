@@ -2,60 +2,92 @@ const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
 const MemoryFs = require('memory-fs')
+const memfs = new MemoryFs()
 
-module.exports = (content, { dirpath }) => {
-	const memfs = new MemoryFs()
-	memfs.mkdirpSync(dirpath)
-	memfs.writeFileSync(path.join(dirpath, 'entry.js'), content)
+class ResolverPlugin {
+	constructor({ dirpath, fileSystem, virtualFileSystem }) {
+		this.dirpath = dirpath
+		this.fileSystem = fileSystem
+		this.virtualFileSystem = virtualFileSystem
+	}
 
-	const compiler = webpack({
-		mode: 'development', // @todo Make context-aware
-		entry: path.join(dirpath, 'entry.js'),
-		output: {
-			path: dirpath,
-			filename: 'dist.js',
-		},
-	})
+	apply(resolver) {
+		resolver.hooks.resolve.tapAsync('ResolverPlugin', (request, resolveContext, callback) => {
+			const isRelativeFilepath = request.request.startsWith('.')
+			const absoluteFilepath = isRelativeFilepath ? path.resolve(this.dirpath, request.request) : request.request
 
-	compiler.inputFileSystem = memfs
-	compiler.resolvers.normal.fileSystem = fs
-	compiler.resolvers.context.fileSystem = fs
-	compiler.outputFileSystem = memfs
+			if (isRelativeFilepath && !this.virtualFileSystem.existsSync(absoluteFilepath)) {
+				const requestFileContent = this.fileSystem.readFileSync(absoluteFilepath, { encoding: 'utf8' })
+				memfs.mkdirpSync(path.dirname(absoluteFilepath))
+				memfs.writeFileSync(absoluteFilepath, requestFileContent)
+			}
+
+			const target = resolver.ensureHook('parsedResolve')
+			request = Object.assign({}, request, { request: absoluteFilepath })
+			resolver.doResolve(target, request, null, resolveContext, callback)
+		})
+	}
 }
 
-memfs.writeFileSync('/src/exported.js', `export default () => console.log('memfs exported')`)
-memfs.writeFileSync('/src/sideeffect.js', `console.log('memfs side effect')`)
-memfs.mkdirpSync('/dist')
-memfs.writeFileSync(
-	'/dist/index.html',
-	`<!DOCTYPE html>
-<html>
-	<head>
-		<script src="main.js"></script>
-	</head>
-	<body></body>
-</html>`
-)
+const inlinerAsync = (content, { dirpath }) => {
+	return new Promise((resolve, reject) => {
+		const entryFilepath = path.join(dirpath, 'entry.js')
 
-compiler.run((error, stats) => {
-	if (error) {
-		console.error(error.stack || error)
-		if (error.details) {
-			console.error(error.details)
-		}
-		return
-	}
+		memfs.mkdirpSync(dirpath)
+		memfs.writeFileSync(entryFilepath, content)
 
-	const info = stats.toJson()
+		const compiler = webpack({
+			mode: 'production',
+			entry: entryFilepath,
+			output: {
+				path: '/dist',
+				filename: 'main.js',
+			},
+			resolve: {
+				plugins: [
+					new ResolverPlugin({
+						dirpath: path.resolve(__dirname, 'src'),
+						fileSystem: fs,
+						virtualFileSystem: memfs,
+					}),
+				],
+			},
+		})
 
-	if (stats.hasErrors()) {
-		console.error(info.errors)
-	}
+		compiler.inputFileSystem = memfs
+		compiler.resolvers.normal.fileSystem = memfs
+		compiler.resolvers.context.fileSystem = memfs
+		compiler.outputFileSystem = memfs
 
-	if (stats.hasWarnings()) {
-		console.warn(info.warnings)
-	}
+		compiler.run((error, stats) => {
+			if (error) {
+				console.error(error.stack || error)
+				if (error.details) {
+					console.error(error.details)
+				}
+				reject(error)
+				return
+			}
 
-	fs.writeFileSync(path.resolve(__dirname, 'index.html'), memfs.readFileSync('/dist/index.html'))
-	fs.writeFileSync(path.resolve(__dirname, 'main.js'), memfs.readFileSync('/dist/main.js'))
-})
+			const info = stats.toJson()
+
+			if (stats.hasWarnings()) {
+				console.warn(info.warnings)
+			}
+
+			if (stats.hasErrors()) {
+				console.error(info.errors)
+				reject(info.errors)
+			} else {
+				const content = memfs.readFileSync('/dist/main.js')
+				resolve(content)
+			}
+		})
+	})
+}
+
+async function inlinerSync(content, options) {
+	return await inlinerAsync(content, options)
+}
+
+module.exports = (content, options) => inlinerSync(content, options)

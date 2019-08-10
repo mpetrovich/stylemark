@@ -40,7 +40,6 @@
     "node": "8.x"
   },
   "dependencies": {
-    "enhanced-resolve": "^4.1.0",
     "fs-extra": "^8.1.0",
     "gray-matter": "^4.0.2",
     "lodash": "^4.17.15",
