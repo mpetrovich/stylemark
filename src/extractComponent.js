@@ -15,7 +15,7 @@ module.exports = (markdown, { dirpath = null, iframePathFn = null } = {}) => {
 		.use(parseMarkdown)
 		.use(parseFrontmatter)
 		.use(extractFrontmatter, { name: 'frontmatter', yaml: yamlParser })
-		.use(extractSpecimenBlocks, { dirpath })
+		.use(extractSpecimenBlocks)
 		.use(insertSpecimenEmbeds)
 		.use(removeHiddenCodeBlocks)
 		.use(toHtmlTree, {

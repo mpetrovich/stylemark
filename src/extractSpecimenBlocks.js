@@ -2,14 +2,13 @@ const visit = require('unist-util-visit')
 const extractFrontmatter = require('gray-matter')
 const fs = require('fs')
 const path = require('path')
-const inlineImports = require('./inlineImports')
 
 const extractNameAndLanguage = string => {
 	const matches = /(.+)\.([^.]+)$/.exec(string || '') // Matches `(specimenName).(language)`
 	return matches ? matches.slice(1) : []
 }
 
-module.exports = ({ dirpath }) => (tree, file) => {
+module.exports = () => (tree, file) => {
 	var specimenBlocks = []
 
 	visit(tree, 'code', node => {
@@ -39,9 +38,6 @@ module.exports = ({ dirpath }) => (tree, file) => {
 			displayContent,
 		})
 	})
-
-	// const executeContent = dirpath ? inlineImports(displayContent, { dirpath }) : displayContent
-	// specimenBlocks = specimenBlocks.map(block => ({ ...block, executeContent: block.displayContent }))
 
 	file.data.specimenBlocks = specimenBlocks
 }
