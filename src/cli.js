@@ -5,10 +5,10 @@
 const fs = require('fs-extra')
 const path = require('path')
 const parseComponent = require('./parse/component')
-const libraryRenderer = require('./render/libraryRenderer')
-const componentRenderer = require('./render/componentRenderer')
-const specimenRenderer = require('./render/specimenRenderer')
-const blockRenderer = require('./render/blockRenderer')
+const libraryRenderer = require('./render/library')
+const componentRenderer = require('./render/component')
+const specimenRenderer = require('./render/specimen')
+const blockRenderer = require('./render/block')
 const iframePathFn = ({ componentName, specimenName, language }) => `${componentName}/${specimenName}.${language}`
 
 ;(async () => {

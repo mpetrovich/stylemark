@@ -1,5 +1,5 @@
 import test from 'ava'
-import blockRenderer from './blockRenderer'
+import blockRenderer from './block'
 
 test('The content of an HTML block is returned unchanged', t => {
 	t.is(
