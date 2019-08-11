@@ -189,7 +189,7 @@ test('Specimen blocks can have frontmatter props', async t => {
 test('Imported files in JS specimen blocks are inlined', async t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/imports.md`, { encoding: 'utf8' })
 	const dirpath = path.resolve(__dirname, 'extractComponent-test-cases/')
-	const component = await extractComponent(markdown, { dirpath, webpackMode: 'development' })
+	const component = await extractComponent(markdown, { dirpath, webpackMode: 'development' }) // Development mode prevents minification of imports
 
 	const executableContent = component.specimens[0].blocks[0].executableContent
 	delete component.specimens[0].blocks[0].executableContent
