@@ -207,7 +207,7 @@ var specimen = 1`,
 	})
 })
 
-test('An iframe is added before the first HTML block (hidden or non-hidden) of each specimen', async t => {
+test('An iframe is added before the first HTML block of each specimen', async t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/iframes.md`, { encoding: 'utf8' })
 	const iframePathFn = ({ componentName, specimenName, language }) => `${componentName}/${specimenName}.${language}`
 	const component = await extractComponent(markdown, { iframePathFn })
