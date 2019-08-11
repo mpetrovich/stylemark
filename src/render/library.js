@@ -1,4 +1,4 @@
-module.exports = (library, { componentRenderer }) => `<!doctype html>
+module.exports = library => `<!doctype html>
 <html>
 	<head>
 		<title>${library.name}</title>
@@ -19,16 +19,18 @@ module.exports = (library, { componentRenderer }) => `<!doctype html>
 	<body>
 		<aside>
 			<nav>
-				${library.components.map(component => `<a href="#${component.name}" class="nav-link">${component.name}</a>`).join('')}
+				${library.components
+					.map(component => `<a href="#${component.metadata.name}" class="nav-link">${component.metadata.name}</a>`)
+					.join('')}
 			</nav>
 		</aside>
 		<main>
 			${library.components
 				.map(
 					component => `
-						<article id="${component.name}">
-						<h1>${component.name}</h1>
-						${componentRenderer(component)}
+						<article id="${component.metadata.name}">
+						<h1>${component.metadata.name}</h1>
+						${component.html}
 						</article>
 					`
 				)

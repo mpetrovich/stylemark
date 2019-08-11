@@ -5,42 +5,39 @@
 const fs = require('fs-extra')
 const path = require('path')
 const parseComponent = require('./parse/component')
-const libraryRenderer = require('./render/library')
-const componentRenderer = require('./render/component')
-const specimenRenderer = require('./render/specimen')
-const blockRenderer = require('./render/block')
-const iframePathFn = ({ componentName, specimenName, language }) => `${componentName}/${specimenName}.${language}`
+const compileComponent = require('./transform/compileComponent')
+const renderComponent = require('./render/component')
+const renderLibrary = require('./render/library')
+const renderSpecimen = require('./render/specimen')
+const renderBlock = require('./render/block')
+const iframePathFn = ({ component, specimen }) => `${component.metadata.name}/${specimen.name}.html`
 
 ;(async () => {
 	const sourcePaths = [
 		path.resolve(__dirname, '../docs/examples/button.md'),
 		path.resolve(__dirname, '../docs/examples/dropdown.md'),
 	]
+
 	const components = await Promise.all(
-		sourcePaths.map(sourcePath => {
+		sourcePaths.map(async sourcePath => {
 			const dirpath = path.dirname(sourcePath)
-			return parseComponent(fs.readFileSync(sourcePath), { dirpath, iframePathFn, webpackMode: 'development' })
+			var component = parseComponent(fs.readFileSync(sourcePath))
+			component = await compileComponent(component, { dirpath, webpackMode: 'development' })
+			component = renderComponent(component, { iframePathFn })
+			return component
 		})
 	)
+
 	const library = { name: 'Example Library', components }
-	const html = libraryRenderer(library, {
-		componentRenderer: component =>
-			componentRenderer(component, {
-				specimenRenderer: specimen => '',
-			}),
-	})
 
 	library.components.forEach(component => {
 		component.specimens.forEach(specimen => {
-			const specimenFilepath = path.resolve(
-				__dirname,
-				'../dist',
-				iframePathFn({ componentName: component.name, specimenName: specimen.name, language: 'html' })
-			)
-			const specimenHtml = specimenRenderer(specimen, { blockRenderer })
+			const specimenFilepath = path.resolve(__dirname, '../dist', iframePathFn({ component, specimen }))
+			const specimenHtml = renderSpecimen(specimen, { renderBlock })
 			fs.outputFileSync(specimenFilepath, specimenHtml)
 		})
 	})
+	const html = renderLibrary(library)
 
 	const outputPath = path.resolve(__dirname, '../dist/index.html')
 	fs.writeFileSync(outputPath, html)

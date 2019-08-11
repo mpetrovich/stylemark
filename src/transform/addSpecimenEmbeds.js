@@ -1,5 +1,6 @@
 const visit = require('unist-util-visit')
 const u = require('unist-builder')
+const _ = require('lodash')
 
 const isRenderableLanguage = { html: true }
 
@@ -8,9 +9,7 @@ const extractNameAndLanguage = string => {
 	return matches ? matches.slice(1) : []
 }
 
-module.exports = () => (tree, file) => {
-	// NOTE: This relies on the side effects of the frontmatter extractor
-	const componentName = file.data.frontmatter ? file.data.frontmatter.name : null
+module.exports = ({ component }) => (tree, file) => {
 	const isSpecimenAlreadyRendered = {}
 
 	visit(tree, 'code', (node, index, parent) => {
@@ -18,8 +17,11 @@ module.exports = () => (tree, file) => {
 
 		if (specimenName && isRenderableLanguage[language] && !isSpecimenAlreadyRendered[specimenName]) {
 			isSpecimenAlreadyRendered[specimenName] = true
-			const renderNode = u('specimen-embed', { componentName, specimenName, language }, '')
-			parent.children.splice(index, 0, renderNode)
+
+			const specimen = _.find(component.specimens, { name: specimenName })
+			const node = u('specimen-embed', { component, specimen }, '')
+			parent.children.splice(index, 0, node)
+
 			return index + 2
 		}
 	})

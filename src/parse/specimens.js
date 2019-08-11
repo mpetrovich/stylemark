@@ -3,6 +3,8 @@ const extractFrontmatter = require('gray-matter')
 const fs = require('fs')
 const path = require('path')
 const _ = require('lodash')
+const Block = require('../model/block')
+const Specimen = require('../model/specimen')
 
 const extractNameAndLanguage = string => {
 	const matches = /(.+)\.([^.]+)$/.exec(string || '') // Matches `(specimenName).(language)`
@@ -31,13 +33,13 @@ module.exports = () => (tree, file) => {
 			.mapValues(flag => true)
 			.value()
 
-		const block = {
+		const block = new Block({
 			specimenName,
 			language,
 			flags,
 			props,
 			displayContent,
-		}
+		})
 
 		specimenBlocks.push(block)
 
@@ -47,9 +49,6 @@ module.exports = () => (tree, file) => {
 
 	file.data.specimens = _(specimenBlocks)
 		.groupBy('specimenName')
-		.map((blocks, specimenName) => ({
-			name: specimenName,
-			blocks,
-		}))
+		.map((blocks, specimenName) => new Specimen({ name: specimenName, blocks }))
 		.value()
 }

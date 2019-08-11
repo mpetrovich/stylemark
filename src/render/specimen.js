@@ -1,17 +1,17 @@
-module.exports = (specimen, { blockRenderer }) => {
+module.exports = (specimen, { renderBlock }) => {
 	const css = specimen.blocks
 		.filter(block => block.language === 'css')
-		.map(blockRenderer)
+		.map(renderBlock)
 		.join('\n')
 
 	const js = specimen.blocks
 		.filter(block => block.language === 'js')
-		.map(blockRenderer)
+		.map(renderBlock)
 		.join('\n')
 
 	const html = specimen.blocks
 		.filter(block => block.language === 'html')
-		.map(blockRenderer)
+		.map(renderBlock)
 		.join('\n')
 
 	return `<!doctype html>
