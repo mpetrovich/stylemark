@@ -148,7 +148,7 @@ test('Specimen blocks can have arbitrary inline flags', async t => {
 	})
 })
 
-test('Specimen blocks can have frontmatter props', async t => {
+test('Specimen blocks can have arbitrary frontmatter props', async t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/specimen-props.md`, {
 		encoding: 'utf8',
 	})
