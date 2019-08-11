@@ -193,6 +193,7 @@ test('Imported files in JS specimen blocks are inlined', async t => {
 
 	const executableContent = component.specimens[0].blocks[0].executableContent
 	delete component.specimens[0].blocks[0].executableContent
+
 	t.assert(executableContent.indexOf(`var externalImport1 = 'one'`) !== -1)
 	t.assert(executableContent.indexOf(`var externalImport2 = 'two'`) !== -1)
 	t.assert(executableContent.indexOf(`var specimen = 1`) !== -1)
