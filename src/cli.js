@@ -4,7 +4,7 @@
 
 const fs = require('fs-extra')
 const path = require('path')
-const extractComponent = require('./parse/extractComponent')
+const parseComponent = require('./parse/component')
 const libraryRenderer = require('./render/libraryRenderer')
 const componentRenderer = require('./render/componentRenderer')
 const specimenRenderer = require('./render/specimenRenderer')
@@ -19,7 +19,7 @@ const iframePathFn = ({ componentName, specimenName, language }) => `${component
 	const components = await Promise.all(
 		sourcePaths.map(sourcePath => {
 			const dirpath = path.dirname(sourcePath)
-			return extractComponent(fs.readFileSync(sourcePath), { dirpath, iframePathFn, webpackMode: 'development' })
+			return parseComponent(fs.readFileSync(sourcePath), { dirpath, iframePathFn, webpackMode: 'development' })
 		})
 	)
 	const library = { name: 'Example Library', components }
