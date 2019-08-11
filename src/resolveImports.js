@@ -16,7 +16,12 @@ class ResolverPlugin {
 			const absoluteFilepath = isRelativeFilepath ? path.resolve(this.dirpath, request.request) : request.request
 
 			if (isRelativeFilepath && !this.virtualFileSystem.existsSync(absoluteFilepath)) {
-				const requestFileContent = this.fileSystem.readFileSync(absoluteFilepath, { encoding: 'utf8' })
+				var requestFileContent
+				try {
+					requestFileContent = this.fileSystem.readFileSync(absoluteFilepath, { encoding: 'utf8' })
+				} catch (error) {
+					requestFileContent = this.fileSystem.readFileSync(`${absoluteFilepath}.js`, { encoding: 'utf8' })
+				}
 				this.virtualFileSystem.mkdirpSync(path.dirname(absoluteFilepath))
 				this.virtualFileSystem.writeFileSync(absoluteFilepath, requestFileContent)
 			}
@@ -53,7 +58,6 @@ module.exports = (content, extension, { dirpath = null, webpackMode = null } = {
 			},
 			resolve: {
 				descriptionFiles: ['package.json'],
-				aliasFields: [],
 				plugins: [
 					new ResolverPlugin({
 						dirpath,

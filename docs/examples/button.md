@@ -19,11 +19,8 @@ button {
 ```
 
 ```basic-button.js
-document
-	.querySelector('button')
-	.addEventListener('click', function() {
-		alert('Clicked!');
-	});
+import { onClick } from './utils'
+onClick('button', 'Clicked!')
 ```
 
 ## Fancy button
@@ -40,9 +37,6 @@ button {
 ```
 
 ```fancy-button.js
-document
-	.querySelector('button')
-	.addEventListener('click', function() {
-		alert('Fancy click!');
-	});
+import { onClick } from './utils'
+onClick('button', 'Fancy click!')
 ```

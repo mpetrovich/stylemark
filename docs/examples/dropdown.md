@@ -23,11 +23,8 @@ select {
 ```
 
 ```basic-dropdown.js
-document
-	.querySelector('[name="dropdown"]')
-	.addEventListener('change', function(event) {
-		alert('You selected: ' + event.target.value);
-	});
+import { onChange } from './utils'
+onChange('select', value => `You selected: ${value}`)
 ```
 
 ## Fancy dropdown
@@ -49,9 +46,6 @@ select {
 ```
 
 ```fancy-dropdown.js
-document
-	.querySelector('[name="dropdown"]')
-	.addEventListener('change', function(event) {
-		alert('You fancy: ' + event.target.value);
-	});
+import { onChange } from './utils'
+onChange('select', value => `You fancy: ${value}`)
 ```
