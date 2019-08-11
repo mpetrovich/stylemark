@@ -10,7 +10,7 @@ const extractNameAndLanguage = string => {
 }
 
 module.exports = () => (tree, file) => {
-	var specimenBlocks = []
+	const specimenBlocks = []
 
 	visit(tree, 'code', node => {
 		const [specimenName, language] = extractNameAndLanguage(node.lang)
@@ -43,5 +43,11 @@ module.exports = () => (tree, file) => {
 		node.flags = flags
 	})
 
-	file.data.specimenBlocks = specimenBlocks
+	file.data.specimens = _(specimenBlocks)
+		.groupBy('specimenName')
+		.map((blocks, specimenName) => ({
+			name: specimenName,
+			blocks,
+		}))
+		.value()
 }

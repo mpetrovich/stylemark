@@ -45,18 +45,10 @@ module.exports = (markdown, { dirpath = null, webpackMode = null, iframePathFn =
 					return resolve(null)
 				}
 
-				const specimens = _(file.data.specimenBlocks)
-					.groupBy('specimenName')
-					.map((blocks, specimenName) => ({
-						name: specimenName,
-						blocks,
-					}))
-					.value()
-
 				resolve({
 					name: file.data.frontmatter.name,
 					meta: _.omit(file.data.frontmatter, 'name'),
-					specimens,
+					specimens: file.data.specimens,
 					contentHtml: file.contents,
 				})
 			})
