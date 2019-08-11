@@ -191,12 +191,44 @@ test('Imported files in JS specimen blocks are inlined', async t => {
 	const dirpath = path.resolve(__dirname, 'extractComponent-test-cases/')
 	const component = await extractComponent(markdown, { dirpath, webpackMode: 'development' }) // Development mode prevents minification of imports
 
-	const executableContent = component.specimens[0].blocks[0].executableContent
+	const executableContent1 = component.specimens[0].blocks[0].executableContent
 	delete component.specimens[0].blocks[0].executableContent
 
-	t.assert(executableContent.indexOf(`var externalImport1 = 'one'`) !== -1)
-	t.assert(executableContent.indexOf(`var externalImport2 = 'two'`) !== -1)
-	t.assert(executableContent.indexOf(`var specimen = 1`) !== -1)
+	// Positive tests
+	t.assert(
+		executableContent1.indexOf(`var externalImport1 = 'one'`) !== -1,
+		'Executable content contains inlined import'
+	)
+	t.assert(executableContent1.indexOf(`var specimen = 1`) !== -1, 'Executable content contains block content')
+
+	// Negative tests
+	t.assert(
+		executableContent1.indexOf(`var externalImport2 = 'two'`) === -1,
+		'Executable content does NOT contain inlined import from a different specimen'
+	)
+	t.assert(
+		executableContent1.indexOf(`var specimen = 2`) === -1,
+		'Executable content does NOT contain block content from a different specimen'
+	)
+
+	const executableContent2 = component.specimens[1].blocks[0].executableContent
+	delete component.specimens[1].blocks[0].executableContent
+
+	// Positive tests
+	t.assert(
+		executableContent2.indexOf(`var externalImport2 = 'two'`, 'Executable content contains inlined import') !== -1
+	)
+	t.assert(executableContent2.indexOf(`var specimen = 2`) !== -1, 'Executable content contains block content')
+
+	// Negative tests
+	t.assert(
+		executableContent2.indexOf(`var externalImport1 = 'one'`) === -1,
+		'Executable content does NOT contain inlined import from a different specimen'
+	)
+	t.assert(
+		executableContent2.indexOf(`var specimen = 1`) === -1,
+		'Executable content does NOT contain block content from a different specimen'
+	)
 
 	t.deepEqual(component, {
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/imports.expected.html`, {
@@ -208,15 +240,26 @@ test('Imported files in JS specimen blocks are inlined', async t => {
 		},
 		specimens: [
 			{
-				name: 'specimen',
+				name: 'specimen-1',
 				blocks: [
 					{
 						language: 'js',
 						flags: {},
 						props: {},
 						displayContent: `import './imports.import-1.js'
-import './imports.import-2.js'
 var specimen = 1`,
+					},
+				],
+			},
+			{
+				name: 'specimen-2',
+				blocks: [
+					{
+						language: 'js',
+						flags: {},
+						props: {},
+						displayContent: `import './imports.import-2.js'
+var specimen = 2`,
 					},
 				],
 			},

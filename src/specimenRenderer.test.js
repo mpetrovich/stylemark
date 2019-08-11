@@ -17,11 +17,11 @@ test('Specimen blocks for HTML, CSS, and JS are rendered', t => {
 	const specimen = {
 		name: 'specimen-name',
 		blocks: [
-			{ language: 'html', content: '<b>html content</b>' },
-			{ language: 'css', content: 'b { color: red }' },
-			{ language: 'css', content: 'b { color: green }' },
-			{ language: 'js', content: `var foo = 'foo'` },
-			{ language: 'js', content: `var bar = 'bar'` },
+			{ language: 'html', executableContent: '<b>html content</b>' },
+			{ language: 'css', executableContent: 'b { color: red }' },
+			{ language: 'css', executableContent: 'b { color: green }' },
+			{ language: 'js', executableContent: `var foo = 'foo'` },
+			{ language: 'js', executableContent: `var bar = 'bar'` },
 		],
 	}
 	const expectedHtml = readFileSync(`${__dirname}/specimenRenderer-test-cases/blocks.html`, { encoding: 'utf8' })

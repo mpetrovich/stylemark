@@ -7,7 +7,7 @@ This is a dropdown component.
 
 ## Basic dropdown
 
-```basic.html
+```basic-dropdown.html
 <select name="dropdown">
 	<option>Select</option>
 	<option>Option A</option>
@@ -16,13 +16,13 @@ This is a dropdown component.
 </select>
 ```
 
-```basic.css
+```basic-dropdown.css
 select {
 	font-size: 1.5em;
 }
 ```
 
-```basic.js
+```basic-dropdown.js
 document
 	.querySelector('[name="dropdown"]')
 	.addEventListener('change', function(event) {
@@ -32,7 +32,7 @@ document
 
 ## Fancy dropdown
 
-```fancy.html
+```fancy-dropdown.html
 <select name="dropdown">
 	<option>Select</option>
 	<option>Option A</option>
@@ -41,17 +41,17 @@ document
 </select>
 ```
 
-```fancy.css
+```fancy-dropdown.css
 select {
 	font-size: 1.5em;
 	background-color: red;
 }
 ```
 
-```fancy.js
+```fancy-dropdown.js
 document
 	.querySelector('[name="dropdown"]')
 	.addEventListener('change', function(event) {
-		alert('You selected: ' + event.target.value);
+		alert('You fancy: ' + event.target.value);
 	});
 ```

@@ -2,7 +2,6 @@ const fs = require('fs')
 const path = require('path')
 const webpack = require('webpack')
 const MemoryFs = require('memory-fs')
-const memfs = new MemoryFs()
 
 class ResolverPlugin {
 	constructor({ dirpath, fileSystem, virtualFileSystem }) {
@@ -18,8 +17,8 @@ class ResolverPlugin {
 
 			if (isRelativeFilepath && !this.virtualFileSystem.existsSync(absoluteFilepath)) {
 				const requestFileContent = this.fileSystem.readFileSync(absoluteFilepath, { encoding: 'utf8' })
-				memfs.mkdirpSync(path.dirname(absoluteFilepath))
-				memfs.writeFileSync(absoluteFilepath, requestFileContent)
+				this.virtualFileSystem.mkdirpSync(path.dirname(absoluteFilepath))
+				this.virtualFileSystem.writeFileSync(absoluteFilepath, requestFileContent)
 			}
 
 			const target = resolver.ensureHook('parsedResolve')
@@ -29,14 +28,18 @@ class ResolverPlugin {
 	}
 }
 
-module.exports = (content, { dirpath = null, webpackMode = null } = {}) => {
+module.exports = (content, extension, { dirpath = null, webpackMode = null } = {}) => {
 	return new Promise((resolve, reject) => {
 		if (!dirpath) {
-			return resolve(null)
+			return resolve(content)
+		}
+		if (extension !== 'js') {
+			return resolve(content)
 		}
 
-		const entryFilepath = path.join(dirpath, 'entry.js')
+		const entryFilepath = path.join(dirpath, `entry.${extension}`)
 
+		const memfs = new MemoryFs()
 		memfs.mkdirpSync(dirpath)
 		memfs.writeFileSync(entryFilepath, content)
 		memfs.writeFileSync('/package.json', '{}')
@@ -46,7 +49,7 @@ module.exports = (content, { dirpath = null, webpackMode = null } = {}) => {
 			entry: entryFilepath,
 			output: {
 				path: '/dist',
-				filename: 'main.js',
+				filename: `dist.${extension}`,
 			},
 			resolve: {
 				descriptionFiles: ['package.json'],
@@ -58,6 +61,9 @@ module.exports = (content, { dirpath = null, webpackMode = null } = {}) => {
 						virtualFileSystem: memfs,
 					}),
 				],
+			},
+			externals: {
+				document: 'document',
 			},
 		})
 
@@ -85,7 +91,7 @@ module.exports = (content, { dirpath = null, webpackMode = null } = {}) => {
 				console.error(info.errors)
 				reject(info.errors)
 			} else {
-				const content = memfs.readFileSync('/dist/main.js', 'utf8')
+				const content = memfs.readFileSync(`/dist/dist.${extension}`, 'utf8')
 				resolve(content)
 			}
 		})

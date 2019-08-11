@@ -1,6 +1,6 @@
 module.exports = block =>
 	({
-		html: block.content,
-		css: `<style>${block.content}</style>`,
-		js: `<script>${block.content}</script>`,
-	}[block.language] || block.content)
+		html: block.executableContent,
+		css: `<style>${block.executableContent}</style>`,
+		js: `<script>${block.executableContent}</script>`,
+	}[block.language] || block.executableContent)
