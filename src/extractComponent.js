@@ -49,13 +49,7 @@ module.exports = (markdown, { dirpath = null, webpackMode = null, iframePathFn =
 					.groupBy('specimenName')
 					.map((blocks, specimenName) => ({
 						name: specimenName,
-						blocks: blocks.map(block => ({
-							language: block.language,
-							flags: block.flags,
-							props: block.props,
-							displayContent: block.displayContent,
-							executableContent: block.executableContent,
-						})),
+						blocks: blocks.map(block => _.omit(block, 'specimenName')),
 					}))
 					.value()
 
