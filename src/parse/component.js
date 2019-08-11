@@ -8,7 +8,7 @@ const toHtmlString = require('rehype-stringify')
 const _ = require('lodash')
 const parseSpecimenBlocks = require('./specimenBlocks')
 const resolveSpecimenBlockImports = require('../transform/resolveSpecimenBlockImports')
-const insertSpecimenEmbeds = require('../transform/insertSpecimenEmbeds')
+const addSpecimenEmbeds = require('../transform/addSpecimenEmbeds')
 const removeHiddenCodeBlocks = require('../transform/removeHiddenCodeBlocks')
 
 module.exports = (markdown, { dirpath = null, webpackMode = null, iframePathFn = null } = {}) =>
@@ -19,7 +19,7 @@ module.exports = (markdown, { dirpath = null, webpackMode = null, iframePathFn =
 			.use(extractFrontmatter, { name: 'frontmatter', yaml: yamlParser })
 			.use(parseSpecimenBlocks)
 			.use(resolveSpecimenBlockImports, { dirpath, webpackMode })
-			.use(insertSpecimenEmbeds)
+			.use(addSpecimenEmbeds)
 			.use(removeHiddenCodeBlocks)
 			.use(toHtmlTree, {
 				handlers: {
