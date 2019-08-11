@@ -38,9 +38,9 @@ module.exports = () => (tree, file) => {
 			props,
 			displayContent,
 		}
-		
+
 		specimenBlocks.push(block)
-		
+
 		node.block = block
 		node.value = displayContent
 	})
