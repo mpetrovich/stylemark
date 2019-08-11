@@ -23,6 +23,7 @@ module.exports = () => (tree, file) => {
 		const displayContent = parsed.content
 		const props = parsed.data
 
+		// Converts "alpha beta" to { alpha: true, beta: true }
 		const meta = (node.meta || '').trim().split(' ')
 		const flags = _(meta)
 			.compact()
