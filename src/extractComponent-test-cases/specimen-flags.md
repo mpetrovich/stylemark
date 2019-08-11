@@ -9,14 +9,14 @@ Specimen with `hidden` flags:
 <b>Specimen</b>
 ```
 
-```specimen.css hidden
+```specimen.css hidden foo
 b { color: red }
 ```
 
-```specimen.js nothidden
+```specimen.js bar not-hidden
 var foo = 'not hidden'
 ```
 
-```specimen.js ignored hidden ignored
+```specimen.js foo hidden bar
 var bar = 'hidden'
 ```

@@ -2,6 +2,7 @@ const visit = require('unist-util-visit')
 const extractFrontmatter = require('gray-matter')
 const fs = require('fs')
 const path = require('path')
+const _ = require('lodash')
 
 const extractNameAndLanguage = string => {
 	const matches = /(.+)\.([^.]+)$/.exec(string || '') // Matches `(specimenName).(language)`
@@ -21,11 +22,12 @@ module.exports = () => (tree, file) => {
 		const parsed = extractFrontmatter(node.value)
 		const displayContent = parsed.content
 		const props = parsed.data
-		const flags = {}
-
-		if (/\bhidden\b/.test(node.meta)) {
-			flags.hidden = true
-		}
+		const meta = (node.meta || '').trim().split(' ')
+		const flags = _(meta)
+			.compact()
+			.keyBy(flag => flag)
+			.mapValues(flag => true)
+			.value()
 
 		specimenBlocks.push({
 			specimenName,
@@ -36,6 +38,7 @@ module.exports = () => (tree, file) => {
 		})
 
 		node.value = displayContent
+		node.flags = flags
 	})
 
 	file.data.specimenBlocks = specimenBlocks

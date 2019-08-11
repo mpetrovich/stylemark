@@ -96,7 +96,7 @@ test('Specimens are extracted from named code blocks', async t => {
 	})
 })
 
-test('Specimen blocks can have inline flags', async t => {
+test('Specimen blocks can have arbitrary inline flags', async t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/specimen-flags.md`, {
 		encoding: 'utf8',
 	})
@@ -123,21 +123,21 @@ test('Specimen blocks can have inline flags', async t => {
 					},
 					{
 						language: 'css',
-						flags: { hidden: true },
+						flags: { hidden: true, foo: true },
 						props: {},
 						displayContent: 'b { color: red }',
 						executableContent: 'b { color: red }',
 					},
 					{
 						language: 'js',
-						flags: {},
+						flags: { bar: true, 'not-hidden': true },
 						props: {},
 						displayContent: `var foo = 'not hidden'`,
 						executableContent: `var foo = 'not hidden'`,
 					},
 					{
 						language: 'js',
-						flags: { hidden: true },
+						flags: { hidden: true, foo: true, bar: true },
 						props: {},
 						displayContent: `var bar = 'hidden'`,
 						executableContent: `var bar = 'hidden'`,
@@ -264,6 +264,9 @@ test('Imported files in JS specimen blocks are inlined', async t => {
 		],
 	})
 })
+
+test.failing('Imported files in CSS specimen blocks are inlined', t => {})
+test.failing('Imported files in HTML specimen blocks are inlined', t => {})
 
 test('An iframe is added before the first HTML block of each specimen', async t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/iframes.md`, { encoding: 'utf8' })
