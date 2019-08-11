@@ -1,1 +1,1 @@
-var externalImport1 = 'one'
+var externalImport2 = 'two'

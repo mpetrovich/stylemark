@@ -176,7 +176,7 @@ test('Specimen blocks can have frontmatter props', async t => {
 	})
 })
 
-test('Import statements in code blocks are inlined', async t => {
+test('Imported files in JS specimen blocks are inlined', async t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/imports.md`, { encoding: 'utf8' })
 	const dirpath = path.resolve(__dirname, '/extractComponent-test-cases/')
 	const component = await extractComponent(markdown, { dirpath })
@@ -191,46 +191,15 @@ test('Import statements in code blocks are inlined', async t => {
 		},
 		specimens: [
 			{
-				name: 'specimen-1',
+				name: 'specimen',
 				blocks: [
-					{
-						language: 'html',
-						flags: {},
-						props: {},
-						displayContent: '<b>Specimen 1</b>',
-					},
-					{
-						language: 'css',
-						flags: {},
-						props: {},
-						displayContent: 'b { color: red }',
-					},
-				],
-			},
-			{
-				name: 'specimen-2',
-				blocks: [
-					{
-						language: 'html',
-						flags: {},
-						props: {},
-						displayContent: `import './imports.import-1.html'
-<b>Specimen 2</b>`,
-					},
 					{
 						language: 'js',
 						flags: {},
 						props: {},
-						displayContent: `import './imports.import-2.js'
-import './imports.import-3.js'
-var specimen = 2`,
-					},
-					{
-						language: 'css',
-						flags: {},
-						props: {},
-						displayContent: `import './imports.import-4.css'
-b { color: green }`,
+						displayContent: `import './imports.import-1.js'
+import './imports.import-2.js'
+var specimen = 1`,
 					},
 				],
 			},
