@@ -7,6 +7,7 @@ const toHtmlTree = require('remark-rehype')
 const toHtmlString = require('rehype-stringify')
 const _ = require('lodash')
 const extractSpecimenBlocks = require('./extractSpecimenBlocks')
+const inlineSpecimenBlockImports = require('./inlineSpecimenBlockImports')
 const insertSpecimenEmbeds = require('./insertSpecimenEmbeds')
 const removeHiddenCodeBlocks = require('./removeHiddenCodeBlocks')
 
@@ -16,6 +17,7 @@ module.exports = (markdown, { dirpath = null, iframePathFn = null } = {}) => {
 		.use(parseFrontmatter)
 		.use(extractFrontmatter, { name: 'frontmatter', yaml: yamlParser })
 		.use(extractSpecimenBlocks)
+		// .use(inlineSpecimenBlockImports, { dirpath })
 		.use(insertSpecimenEmbeds)
 		.use(removeHiddenCodeBlocks)
 		.use(toHtmlTree, {

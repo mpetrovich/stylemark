@@ -19,10 +19,7 @@ module.exports = () => (tree, file) => {
 		}
 
 		const parsed = extractFrontmatter(node.value)
-
 		const displayContent = parsed.content
-		node.value = displayContent
-
 		const props = parsed.data
 		const flags = {}
 
@@ -37,6 +34,8 @@ module.exports = () => (tree, file) => {
 			props,
 			displayContent,
 		})
+
+		node.value = displayContent
 	})
 
 	file.data.specimenBlocks = specimenBlocks
