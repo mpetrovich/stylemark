@@ -29,10 +29,10 @@
     "test:watch": "ava --watch",
     "format": "prettier --write src/**/*.js"
   },
-  "homepage": "https://github.com/nextbigsoundinc/stylemark",
-  "repository": "https://github.com/nextbigsoundinc/stylemark.git",
+  "homepage": "https://github.com/mpetrovich/stylemark",
+  "repository": "https://github.com/mpetrovich/stylemark.git",
   "bugs": {
-    "url": "https://github.com/nextbigsoundinc/stylemark/issues"
+    "url": "https://github.com/mpetrovich/stylemark/issues"
   },
   "author": "Mike Petrovich <michael.c.petrovich@gmail.com>",
   "license": "MIT",
