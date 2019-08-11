@@ -26,7 +26,7 @@
   ],
   "scripts": {
     "test": "nyc ava",
-    "test:watch": "ava --watch",
+    "test:watch": "ava --watch --verbose",
     "format": "prettier --write src/**/*.js"
   },
   "homepage": "https://github.com/mpetrovich/stylemark",

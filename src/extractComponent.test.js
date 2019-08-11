@@ -62,12 +62,14 @@ test('Specimens are extracted from named code blocks', async t => {
 						flags: {},
 						props: {},
 						displayContent: '<b>Specimen 1</b>',
+						executableContent: '<b>Specimen 1</b>',
 					},
 					{
 						language: 'css',
 						flags: {},
 						props: {},
 						displayContent: 'b { color: red }',
+						executableContent: 'b { color: red }',
 					},
 				],
 			},
@@ -79,12 +81,14 @@ test('Specimens are extracted from named code blocks', async t => {
 						flags: {},
 						props: {},
 						displayContent: '<b>Specimen 2</b>',
+						executableContent: '<b>Specimen 2</b>',
 					},
 					{
 						language: 'css',
 						flags: {},
 						props: {},
 						displayContent: 'b { color: green }',
+						executableContent: 'b { color: green }',
 					},
 				],
 			},
@@ -115,24 +119,28 @@ test('Specimen blocks can have inline flags', async t => {
 						flags: {},
 						props: {},
 						displayContent: '<b>Specimen</b>',
+						executableContent: '<b>Specimen</b>',
 					},
 					{
 						language: 'css',
 						flags: { hidden: true },
 						props: {},
 						displayContent: 'b { color: red }',
+						executableContent: 'b { color: red }',
 					},
 					{
 						language: 'js',
 						flags: {},
 						props: {},
 						displayContent: `var foo = 'not hidden'`,
+						executableContent: `var foo = 'not hidden'`,
 					},
 					{
 						language: 'js',
 						flags: { hidden: true },
 						props: {},
 						displayContent: `var bar = 'hidden'`,
+						executableContent: `var bar = 'hidden'`,
 					},
 				],
 			},
@@ -163,12 +171,14 @@ test('Specimen blocks can have frontmatter props', async t => {
 						flags: {},
 						props: { key: 'value' },
 						displayContent: '<b>Specimen</b>',
+						executableContent: '<b>Specimen</b>',
 					},
 					{
 						language: 'css',
 						flags: { hidden: true },
 						props: { key: 'value', list: ['one', 'two', 'three'] },
 						displayContent: 'b { color: green }',
+						executableContent: 'b { color: green }',
 					},
 				],
 			},
@@ -178,8 +188,14 @@ test('Specimen blocks can have frontmatter props', async t => {
 
 test('Imported files in JS specimen blocks are inlined', async t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/imports.md`, { encoding: 'utf8' })
-	const dirpath = path.resolve(__dirname, '/extractComponent-test-cases/')
-	const component = await extractComponent(markdown, { dirpath })
+	const dirpath = path.resolve(__dirname, 'extractComponent-test-cases/')
+	const component = await extractComponent(markdown, { dirpath, webpackMode: 'development' })
+
+	const executableContent = component.specimens[0].blocks[0].executableContent
+	delete component.specimens[0].blocks[0].executableContent
+	t.assert(executableContent.indexOf(`var externalImport1 = 'one'`) !== -1)
+	t.assert(executableContent.indexOf(`var externalImport2 = 'two'`) !== -1)
+	t.assert(executableContent.indexOf(`var specimen = 1`) !== -1)
 
 	t.deepEqual(component, {
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/imports.expected.html`, {

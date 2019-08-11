@@ -7,18 +7,18 @@ const toHtmlTree = require('remark-rehype')
 const toHtmlString = require('rehype-stringify')
 const _ = require('lodash')
 const extractSpecimenBlocks = require('./extractSpecimenBlocks')
-const inlineSpecimenBlockImports = require('./inlineSpecimenBlockImports')
+const resolveSpecimenBlockImports = require('./resolveSpecimenBlockImports')
 const insertSpecimenEmbeds = require('./insertSpecimenEmbeds')
 const removeHiddenCodeBlocks = require('./removeHiddenCodeBlocks')
 
-module.exports = (markdown, { dirpath = null, iframePathFn = null } = {}) =>
+module.exports = (markdown, { dirpath = null, webpackMode = null, iframePathFn = null } = {}) =>
 	new Promise((resolve, reject) => {
 		unified()
 			.use(parseMarkdown)
 			.use(parseFrontmatter)
 			.use(extractFrontmatter, { name: 'frontmatter', yaml: yamlParser })
 			.use(extractSpecimenBlocks)
-			.use(inlineSpecimenBlockImports, { dirpath })
+			.use(resolveSpecimenBlockImports, { dirpath, webpackMode })
 			.use(insertSpecimenEmbeds)
 			.use(removeHiddenCodeBlocks)
 			.use(toHtmlTree, {
@@ -54,6 +54,7 @@ module.exports = (markdown, { dirpath = null, iframePathFn = null } = {}) =>
 							flags: block.flags,
 							props: block.props,
 							displayContent: block.displayContent,
+							executableContent: block.executableContent,
 						})),
 					}))
 					.value()

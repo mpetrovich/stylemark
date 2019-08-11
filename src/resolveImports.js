@@ -29,16 +29,20 @@ class ResolverPlugin {
 	}
 }
 
-module.exports = (content, { dirpath }) => {
+module.exports = (content, { dirpath = null, webpackMode = null } = {}) => {
 	return new Promise((resolve, reject) => {
+		if (!dirpath) {
+			return resolve(null)
+		}
+
 		const entryFilepath = path.join(dirpath, 'entry.js')
 
 		memfs.mkdirpSync(dirpath)
 		memfs.writeFileSync(entryFilepath, content)
-		memfs.writeFileSync('package.json', '{}')
+		memfs.writeFileSync('/package.json', '{}')
 
 		const compiler = webpack({
-			mode: 'production',
+			mode: webpackMode || 'production',
 			entry: entryFilepath,
 			output: {
 				path: '/dist',
@@ -46,8 +50,7 @@ module.exports = (content, { dirpath }) => {
 			},
 			resolve: {
 				descriptionFiles: ['package.json'],
-				enforceExtension: true,
-				extensions: ['.js'],
+				aliasFields: [],
 				plugins: [
 					new ResolverPlugin({
 						dirpath,
@@ -69,8 +72,7 @@ module.exports = (content, { dirpath }) => {
 				if (error.details) {
 					console.error(error.details)
 				}
-				reject(error)
-				return
+				return reject(error)
 			}
 
 			const info = stats.toJson()
