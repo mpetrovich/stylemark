@@ -7,9 +7,9 @@ const toHtmlTree = require('remark-rehype')
 const toHtmlString = require('rehype-stringify')
 const _ = require('lodash')
 const parseSpecimens = require('./specimens')
-const resolveSpecimenBlockImports = require('../transform/resolveSpecimenBlockImports')
+const resolveBlockImports = require('../transform/resolveBlockImports')
 const addSpecimenEmbeds = require('../transform/addSpecimenEmbeds')
-const removeHiddenCodeBlocks = require('../transform/removeHiddenCodeBlocks')
+const removeHiddenBlocks = require('../transform/removeHiddenBlocks')
 
 module.exports = (markdown, { dirpath = null, webpackMode = null, iframePathFn = null } = {}) =>
 	new Promise((resolve, reject) => {
@@ -18,9 +18,9 @@ module.exports = (markdown, { dirpath = null, webpackMode = null, iframePathFn =
 			.use(parseFrontmatter)
 			.use(extractFrontmatter, { name: 'frontmatter', yaml: yamlParser })
 			.use(parseSpecimens)
-			.use(resolveSpecimenBlockImports, { dirpath, webpackMode })
+			.use(resolveBlockImports, { dirpath, webpackMode })
 			.use(addSpecimenEmbeds)
-			.use(removeHiddenCodeBlocks)
+			.use(removeHiddenBlocks)
 			.use(toHtmlTree, {
 				handlers: {
 					'specimen-embed': (h, node) =>

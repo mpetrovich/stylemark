@@ -31,16 +31,18 @@ module.exports = () => (tree, file) => {
 			.mapValues(flag => true)
 			.value()
 
-		specimenBlocks.push({
+		const block = {
 			specimenName,
 			language,
 			flags,
 			props,
 			displayContent,
-		})
-
+		}
+		
+		specimenBlocks.push(block)
+		
+		node.block = block
 		node.value = displayContent
-		node.flags = flags
 	})
 
 	file.data.specimens = _(specimenBlocks)
