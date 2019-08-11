@@ -58,6 +58,7 @@ test('Specimens are extracted from named code blocks', async t => {
 				name: 'specimen-1',
 				blocks: [
 					{
+						specimenName: 'specimen-1',
 						language: 'html',
 						flags: {},
 						props: {},
@@ -65,6 +66,7 @@ test('Specimens are extracted from named code blocks', async t => {
 						executableContent: '<b>Specimen 1</b>',
 					},
 					{
+						specimenName: 'specimen-1',
 						language: 'css',
 						flags: {},
 						props: {},
@@ -77,6 +79,7 @@ test('Specimens are extracted from named code blocks', async t => {
 				name: 'specimen-2',
 				blocks: [
 					{
+						specimenName: 'specimen-2',
 						language: 'html',
 						flags: {},
 						props: {},
@@ -84,6 +87,7 @@ test('Specimens are extracted from named code blocks', async t => {
 						executableContent: '<b>Specimen 2</b>',
 					},
 					{
+						specimenName: 'specimen-2',
 						language: 'css',
 						flags: {},
 						props: {},
@@ -115,6 +119,7 @@ test('Specimen blocks can have arbitrary inline flags', async t => {
 				name: 'specimen',
 				blocks: [
 					{
+						specimenName: 'specimen',
 						language: 'html',
 						flags: {},
 						props: {},
@@ -122,6 +127,7 @@ test('Specimen blocks can have arbitrary inline flags', async t => {
 						executableContent: '<b>Specimen</b>',
 					},
 					{
+						specimenName: 'specimen',
 						language: 'css',
 						flags: { hidden: true, foo: true },
 						props: {},
@@ -129,6 +135,7 @@ test('Specimen blocks can have arbitrary inline flags', async t => {
 						executableContent: 'b { color: red }',
 					},
 					{
+						specimenName: 'specimen',
 						language: 'js',
 						flags: { bar: true, 'not-hidden': true },
 						props: {},
@@ -136,6 +143,7 @@ test('Specimen blocks can have arbitrary inline flags', async t => {
 						executableContent: `var foo = 'not hidden'`,
 					},
 					{
+						specimenName: 'specimen',
 						language: 'js',
 						flags: { hidden: true, foo: true, bar: true },
 						props: {},
@@ -167,6 +175,7 @@ test('Specimen blocks can have arbitrary frontmatter props', async t => {
 				name: 'specimen',
 				blocks: [
 					{
+						specimenName: 'specimen',
 						language: 'html',
 						flags: {},
 						props: { key: 'value' },
@@ -174,6 +183,7 @@ test('Specimen blocks can have arbitrary frontmatter props', async t => {
 						executableContent: '<b>Specimen</b>',
 					},
 					{
+						specimenName: 'specimen',
 						language: 'css',
 						flags: { hidden: true },
 						props: { key: 'value', list: ['one', 'two', 'three'] },
@@ -243,6 +253,7 @@ test('Imported files in JS specimen blocks are inlined', async t => {
 				name: 'specimen-1',
 				blocks: [
 					{
+						specimenName: 'specimen-1',
 						language: 'js',
 						flags: {},
 						props: {},
@@ -254,6 +265,7 @@ test('Imported files in JS specimen blocks are inlined', async t => {
 				name: 'specimen-2',
 				blocks: [
 					{
+						specimenName: 'specimen-2',
 						language: 'js',
 						flags: {},
 						props: {},
