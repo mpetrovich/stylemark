@@ -22,6 +22,7 @@ module.exports = () => (tree, file) => {
 		const parsed = extractFrontmatter(node.value)
 		const displayContent = parsed.content
 		const props = parsed.data
+
 		const meta = (node.meta || '').trim().split(' ')
 		const flags = _(meta)
 			.compact()
