@@ -22,7 +22,6 @@ module.exports = ({ dirpath }) => (tree, file) => {
 		const parsed = extractFrontmatter(node.value)
 
 		const displayContent = parsed.content
-		const executeContent = dirpath ? inlineImports(displayContent, { dirpath }) : displayContent
 		node.value = displayContent
 
 		const props = parsed.data
@@ -37,10 +36,12 @@ module.exports = ({ dirpath }) => (tree, file) => {
 			language,
 			flags,
 			props,
-			executeContent,
 			displayContent,
 		})
 	})
+
+	// const executeContent = dirpath ? inlineImports(displayContent, { dirpath }) : displayContent
+	// specimenBlocks = specimenBlocks.map(block => ({ ...block, executeContent: block.displayContent }))
 
 	file.data.specimenBlocks = specimenBlocks
 }

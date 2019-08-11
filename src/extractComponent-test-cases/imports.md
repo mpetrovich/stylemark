@@ -27,5 +27,6 @@ var specimen = 2
 ```
 
 ```specimen-2.css
+import './imports.import-4.css'
 b { color: green }
 ```

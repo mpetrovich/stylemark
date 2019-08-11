@@ -29,7 +29,7 @@ class ResolverPlugin {
 	}
 }
 
-const inlinerAsync = (content, { dirpath }) => {
+module.exports = (content, { dirpath }) => {
 	return new Promise((resolve, reject) => {
 		const entryFilepath = path.join(dirpath, 'entry.js')
 
@@ -46,7 +46,7 @@ const inlinerAsync = (content, { dirpath }) => {
 			resolve: {
 				plugins: [
 					new ResolverPlugin({
-						dirpath: path.resolve(__dirname, 'src'),
+						dirpath,
 						fileSystem: fs,
 						virtualFileSystem: memfs,
 					}),
@@ -79,15 +79,9 @@ const inlinerAsync = (content, { dirpath }) => {
 				console.error(info.errors)
 				reject(info.errors)
 			} else {
-				const content = memfs.readFileSync('/dist/main.js')
+				const content = memfs.readFileSync('/dist/main.js', 'utf8')
 				resolve(content)
 			}
 		})
 	})
 }
-
-async function inlinerSync(content, options) {
-	return await inlinerAsync(content, options)
-}
-
-module.exports = (content, options) => inlinerSync(content, options)

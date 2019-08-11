@@ -47,7 +47,6 @@ module.exports = (markdown, { dirpath = null, iframePathFn = null } = {}) => {
 				language: block.language,
 				flags: block.flags,
 				props: block.props,
-				executeContent: block.executeContent,
 				displayContent: block.displayContent,
 			})),
 		}))
