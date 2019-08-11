@@ -11,53 +11,58 @@ const inlineSpecimenBlockImports = require('./inlineSpecimenBlockImports')
 const insertSpecimenEmbeds = require('./insertSpecimenEmbeds')
 const removeHiddenCodeBlocks = require('./removeHiddenCodeBlocks')
 
-module.exports = (markdown, { dirpath = null, iframePathFn = null } = {}) => {
-	const result = unified()
-		.use(parseMarkdown)
-		.use(parseFrontmatter)
-		.use(extractFrontmatter, { name: 'frontmatter', yaml: yamlParser })
-		.use(extractSpecimenBlocks)
-		// .use(inlineSpecimenBlockImports, { dirpath })
-		.use(insertSpecimenEmbeds)
-		.use(removeHiddenCodeBlocks)
-		.use(toHtmlTree, {
-			handlers: {
-				'specimen-embed': (h, node) =>
-					iframePathFn
-						? h(node, 'iframe', {
-								src: iframePathFn({
-									componentName: node.componentName,
-									specimenName: node.specimenName,
-									language: node.language,
-								}),
-						  })
-						: null,
-			},
-		})
-		.use(toHtmlString)
-		.processSync(markdown)
+module.exports = (markdown, { dirpath = null, iframePathFn = null } = {}) =>
+	new Promise((resolve, reject) => {
+		unified()
+			.use(parseMarkdown)
+			.use(parseFrontmatter)
+			.use(extractFrontmatter, { name: 'frontmatter', yaml: yamlParser })
+			.use(extractSpecimenBlocks)
+			.use(inlineSpecimenBlockImports, { dirpath })
+			.use(insertSpecimenEmbeds)
+			.use(removeHiddenCodeBlocks)
+			.use(toHtmlTree, {
+				handlers: {
+					'specimen-embed': (h, node) =>
+						iframePathFn
+							? h(node, 'iframe', {
+									src: iframePathFn({
+										componentName: node.componentName,
+										specimenName: node.specimenName,
+										language: node.language,
+									}),
+							  })
+							: null,
+				},
+			})
+			.use(toHtmlString)
+			.process(markdown, (error, file) => {
+				if (error) {
+					return reject(error)
+				}
 
-	if (!result.data.frontmatter || !result.data.frontmatter.name) {
-		return null
-	}
+				if (!file.data.frontmatter || !file.data.frontmatter.name) {
+					return resolve(null)
+				}
 
-	const specimens = _(result.data.specimenBlocks)
-		.groupBy('specimenName')
-		.map((blocks, specimenName) => ({
-			name: specimenName,
-			blocks: blocks.map(block => ({
-				language: block.language,
-				flags: block.flags,
-				props: block.props,
-				displayContent: block.displayContent,
-			})),
-		}))
-		.value()
+				const specimens = _(file.data.specimenBlocks)
+					.groupBy('specimenName')
+					.map((blocks, specimenName) => ({
+						name: specimenName,
+						blocks: blocks.map(block => ({
+							language: block.language,
+							flags: block.flags,
+							props: block.props,
+							displayContent: block.displayContent,
+						})),
+					}))
+					.value()
 
-	return {
-		name: result.data.frontmatter.name,
-		meta: _.omit(result.data.frontmatter, 'name'),
-		specimens,
-		contentHtml: result.contents,
-	}
-}
+				resolve({
+					name: file.data.frontmatter.name,
+					meta: _.omit(file.data.frontmatter, 'name'),
+					specimens,
+					contentHtml: file.contents,
+				})
+			})
+	})

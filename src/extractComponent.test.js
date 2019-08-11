@@ -3,29 +3,29 @@ import { readFileSync } from 'fs'
 import path from 'path'
 import extractComponent from './extractComponent'
 
-test('No component is extracted from markdown that does not have frontmatter', t => {
+test('No component is extracted from markdown that does not have frontmatter', async t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/no-frontmatter.md`, {
 		encoding: 'utf8',
 	})
-	const component = extractComponent(markdown)
+	const component = await extractComponent(markdown)
 
 	t.is(component, null)
 })
 
-test('No component is extracted from markdown that has frontmatter but no name property', t => {
+test('No component is extracted from markdown that has frontmatter but no name property', async t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/no-frontmatter-name.md`, {
 		encoding: 'utf8',
 	})
-	const component = extractComponent(markdown)
+	const component = await extractComponent(markdown)
 
 	t.is(component, null)
 })
 
-test('A component is extracted from markdown that has frontmatter with a name property', t => {
+test('A component is extracted from markdown that has frontmatter with a name property', async t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/frontmatter.md`, {
 		encoding: 'utf8',
 	})
-	const component = extractComponent(markdown)
+	const component = await extractComponent(markdown)
 
 	t.deepEqual(component, {
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/frontmatter.expected.html`, {
@@ -39,11 +39,11 @@ test('A component is extracted from markdown that has frontmatter with a name pr
 	})
 })
 
-test('Specimens are extracted from named code blocks', t => {
+test('Specimens are extracted from named code blocks', async t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/specimens.md`, {
 		encoding: 'utf8',
 	})
-	const component = extractComponent(markdown)
+	const component = await extractComponent(markdown)
 
 	t.deepEqual(component, {
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/specimens.expected.html`, {
@@ -92,11 +92,11 @@ test('Specimens are extracted from named code blocks', t => {
 	})
 })
 
-test('Specimen blocks can have inline flags', t => {
+test('Specimen blocks can have inline flags', async t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/specimen-flags.md`, {
 		encoding: 'utf8',
 	})
-	const component = extractComponent(markdown)
+	const component = await extractComponent(markdown)
 
 	t.deepEqual(component, {
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/specimen-flags.expected.html`, {
@@ -140,11 +140,11 @@ test('Specimen blocks can have inline flags', t => {
 	})
 })
 
-test('Specimen blocks can have frontmatter props', t => {
+test('Specimen blocks can have frontmatter props', async t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/specimen-props.md`, {
 		encoding: 'utf8',
 	})
-	const component = extractComponent(markdown)
+	const component = await extractComponent(markdown)
 
 	t.deepEqual(component, {
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/specimen-props.expected.html`, {
@@ -176,10 +176,10 @@ test('Specimen blocks can have frontmatter props', t => {
 	})
 })
 
-test('Import statements in code blocks are inlined', t => {
+test('Import statements in code blocks are inlined', async t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/imports.md`, { encoding: 'utf8' })
 	const dirpath = path.resolve(__dirname, '/extractComponent-test-cases/')
-	const component = extractComponent(markdown, { dirpath })
+	const component = await extractComponent(markdown, { dirpath })
 
 	t.deepEqual(component, {
 		contentHtml: readFileSync(`${__dirname}/extractComponent-test-cases/imports.expected.html`, {
@@ -238,10 +238,10 @@ b { color: green }`,
 	})
 })
 
-test('An iframe is added before the first HTML block (hidden or non-hidden) of each specimen', t => {
+test('An iframe is added before the first HTML block (hidden or non-hidden) of each specimen', async t => {
 	const markdown = readFileSync(`${__dirname}/extractComponent-test-cases/iframes.md`, { encoding: 'utf8' })
 	const iframePathFn = ({ componentName, specimenName, language }) => `${componentName}/${specimenName}.${language}`
-	const component = extractComponent(markdown, { iframePathFn })
+	const component = await extractComponent(markdown, { iframePathFn })
 
 	t.is(
 		component.contentHtml,

@@ -35,6 +35,7 @@ module.exports = (content, { dirpath }) => {
 
 		memfs.mkdirpSync(dirpath)
 		memfs.writeFileSync(entryFilepath, content)
+		memfs.writeFileSync('package.json', '{}')
 
 		const compiler = webpack({
 			mode: 'production',
@@ -44,6 +45,9 @@ module.exports = (content, { dirpath }) => {
 				filename: 'main.js',
 			},
 			resolve: {
+				descriptionFiles: ['package.json'],
+				enforceExtension: true,
+				extensions: ['.js'],
 				plugins: [
 					new ResolverPlugin({
 						dirpath,
