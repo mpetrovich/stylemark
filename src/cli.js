@@ -4,12 +4,14 @@
 
 const fs = require('fs-extra')
 const path = require('path')
+const Library = require('./model/library')
 const parseComponent = require('./parse/component')
 const compileComponent = require('./transform/compileComponent')
 const renderComponent = require('./render/component')
 const renderLibrary = require('./render/library')
 const renderSpecimen = require('./render/specimen')
 const renderBlock = require('./render/block')
+
 const iframePathFn = ({ component, specimen }) => `${component.metadata.name}/${specimen.name}.html`
 
 ;(async () => {
@@ -28,7 +30,7 @@ const iframePathFn = ({ component, specimen }) => `${component.metadata.name}/${
 		})
 	)
 
-	const library = { name: 'Example Library', components }
+	const library = new Library({ name: 'Example Library', components })
 
 	library.components.forEach(component => {
 		component.specimens.forEach(specimen => {
