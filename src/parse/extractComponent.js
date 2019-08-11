@@ -7,9 +7,9 @@ const toHtmlTree = require('remark-rehype')
 const toHtmlString = require('rehype-stringify')
 const _ = require('lodash')
 const extractSpecimenBlocks = require('./extractSpecimenBlocks')
-const resolveSpecimenBlockImports = require('./resolveSpecimenBlockImports')
-const insertSpecimenEmbeds = require('./insertSpecimenEmbeds')
-const removeHiddenCodeBlocks = require('./removeHiddenCodeBlocks')
+const resolveSpecimenBlockImports = require('../transform/resolveSpecimenBlockImports')
+const insertSpecimenEmbeds = require('../transform/insertSpecimenEmbeds')
+const removeHiddenCodeBlocks = require('../transform/removeHiddenCodeBlocks')
 
 module.exports = (markdown, { dirpath = null, webpackMode = null, iframePathFn = null } = {}) =>
 	new Promise((resolve, reject) => {
