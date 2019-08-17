@@ -1,4 +1,4 @@
-# <img src="https://user-images.githubusercontent.com/1235062/63217295-06d97f00-c112-11e9-9082-930885bfffd8.png" width="50" valign="middle"> Stylemark &nbsp; [![npm version](https://badge.fury.io/js/stylemark.svg)](https://badge.fury.io/js/stylemark) [![Build Status](https://travis-ci.org/mpetrovich/stylemark.svg?branch=master)](https://travis-ci.org/mpetrovich/stylemark)
+# <img src="https://user-images.githubusercontent.com/1235062/63217295-06d97f00-c112-11e9-9082-930885bfffd8.png" width="45" valign="middle"> Stylemark &nbsp; [![npm version](https://badge.fury.io/js/stylemark.svg)](https://badge.fury.io/js/stylemark) [![Build Status](https://travis-ci.org/mpetrovich/stylemark.svg?branch=master)](https://travis-ci.org/mpetrovich/stylemark)
 
 Framework-agnostic living style guide generator.
 
