@@ -1,4 +1,4 @@
-# Stylemark &nbsp; [![npm version](https://badge.fury.io/js/stylemark.svg)](https://badge.fury.io/js/stylemark) [![Build Status](https://travis-ci.org/mpetrovich/stylemark.svg?branch=master)](https://travis-ci.org/mpetrovich/stylemark)
+# <img src="https://user-images.githubusercontent.com/1235062/63217295-06d97f00-c112-11e9-9082-930885bfffd8.png" width="50" valign="middle"> Stylemark &nbsp; [![npm version](https://badge.fury.io/js/stylemark.svg)](https://badge.fury.io/js/stylemark) [![Build Status](https://travis-ci.org/mpetrovich/stylemark.svg?branch=master)](https://travis-ci.org/mpetrovich/stylemark)
 
 Framework-agnostic living style guide generator.
 
@@ -81,3 +81,36 @@ This is a danger button:
 */
 export default ({ variant, children }) => (…)
 ````
+
+## Installation
+
+Stylemark requires Node.js v8+
+
+```sh
+npm install stylemark
+```
+
+To support common frameworks, install the following addons:
+
+```sh
+npm install stylemark-react
+npm install stylemark-vue
+npm install stylemark-angular
+npm install stylemark-ember
+```
+
+## Configuration
+
+Stylemark can be configured in several ways.
+
+## Usage
+
+#### Command line
+
+#### Node.js API
+
+## Customization
+
+## Extending
+
+## Contributing
