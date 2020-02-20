@@ -20,21 +20,24 @@ module.exports = library => `<!doctype html>
 		<aside>
 			<nav>
 				${library.components
-					.map(component => `<a href="#${component.metadata.name}" class="nav-link">${component.metadata.name}</a>`)
-					.join('')}
+                    .map(
+                        component =>
+                            `<a href="#${component.metadata.name}" class="nav-link">${component.metadata.name}</a>`
+                    )
+                    .join("")}
 			</nav>
 		</aside>
 		<main>
 			${library.components
-				.map(
-					component => `
+                .map(
+                    component => `
 						<article id="${component.metadata.name}">
 						<h1>${component.metadata.name}</h1>
 						${component.html}
 						</article>
 					`
-				)
-				.join('')}
+                )
+                .join("")}
 		</main>
 	</body>
 </html>`
