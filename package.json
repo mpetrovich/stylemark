@@ -1,7 +1,9 @@
 {
   "name": "stylemark",
   "version": "3.1.2",
-  "description": "A living style guide generator for everything.",
+  "license": "MIT",
+  "author": "Mike Petrovich <michael.c.petrovich@gmail.com>",
+  "description": "Generate interactive style guides from Markdown.",
   "keywords": [
     "styleguide generator",
     "style guide generator",
@@ -24,20 +26,13 @@
     "component library",
     "design pattern"
   ],
-  "scripts": {
-    "test": "nyc ava",
-    "test:watch": "ava --watch --verbose",
-    "format": "prettier --write src/**/*.js"
-  },
   "homepage": "https://github.com/mpetrovich/stylemark",
   "repository": "https://github.com/mpetrovich/stylemark.git",
   "bugs": {
     "url": "https://github.com/mpetrovich/stylemark/issues"
   },
-  "author": "Mike Petrovich <michael.c.petrovich@gmail.com>",
-  "license": "MIT",
-  "engine": {
-    "node": "8.x"
+  "engines": {
+    "node": ">=8.0"
   },
   "dependencies": {
     "fs-extra": "^8.1.0",
@@ -61,5 +56,10 @@
     "ava": "^2.2.0",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2"
+  },
+  "scripts": {
+    "test": "nyc ava",
+    "test:watch": "ava --watch --verbose",
+    "format": "prettier --write src/**/*.js"
   }
 }
