@@ -1,4 +1,4 @@
-# <img src="https://user-images.githubusercontent.com/1235062/63217295-06d97f00-c112-11e9-9082-930885bfffd8.png" width="40" valign="middle"> Stylemark &nbsp; [![npm version](https://badge.fury.io/js/stylemark.svg)](https://badge.fury.io/js/stylemark) [![Build Status](https://travis-ci.org/mpetrovich/stylemark.svg?branch=master)](https://travis-ci.org/mpetrovich/stylemark)
+# Stylemark &nbsp; [![npm version](https://badge.fury.io/js/stylemark.svg)](https://badge.fury.io/js/stylemark) [![Build Status](https://travis-ci.org/mpetrovich/stylemark.svg?branch=master)](https://travis-ci.org/mpetrovich/stylemark)
 
 Generate interactive style guides from Markdown.
 
@@ -53,7 +53,7 @@ module.exports = {
 
 Components are documented using markdown in code comments or in separate markdown files.
 
-#### In a source code comment
+### In a source code comment
 
 `button.js`:
 
@@ -69,13 +69,21 @@ Button variants:
 <Button variant="primary">Primary</Button>
 <Button variant="danger">Danger</Button>
 ```
+
+Button sizes:
+
+```sizes.jsx
+<Button size="s">Small</Button>
+<Button size="m">Medium</Button>
+<Button size="l">Large</Button>
+```
 */
-export default ({ variant, children }) => {
-    return <button className={`button ${variant}`}>{children}</button>
+export default ({ variant, size, children }) => {
+    return <button className={`button -${variant} -${size}`}>{children}</button>
 }
 ````
 
-#### In a markdown file
+### In a markdown file
 
 `button.md`:
 
@@ -90,4 +98,39 @@ Button variants:
 <Button variant="primary">Primary</Button>
 <Button variant="danger">Danger</Button>
 ```
+
+Button sizes:
+
+```sizes.jsx
+<Button size="s">Small</Button>
+<Button size="m">Medium</Button>
+<Button size="l">Large</Button>
+```
 ````
+
+## Specimens
+
+A specimen is an interactive example made up of one or more named Markdown code blocks.
+
+````md
+```form.html
+<form>
+    <input name="email" type="email" placeholder="name@example.com">
+    <input name="password" type="password">
+    <button type="submit">Log in</button>
+</form>
+```
+
+```form.css
+input, button { display: block }
+```
+
+```form.js
+document.querySelector('form').addEventListener('submit', event => {
+    event.preventDefault()
+    alert('You logged in')
+})
+```
+````
+
+Specimen code blocks are insulated from each other. For instance, CSS styles defined for one specimen will not affect other specimens.
