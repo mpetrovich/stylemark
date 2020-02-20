@@ -1,86 +1,13 @@
 # <img src="https://user-images.githubusercontent.com/1235062/63217295-06d97f00-c112-11e9-9082-930885bfffd8.png" width="40" valign="middle"> Stylemark &nbsp; [![npm version](https://badge.fury.io/js/stylemark.svg)](https://badge.fury.io/js/stylemark) [![Build Status](https://travis-ci.org/mpetrovich/stylemark.svg?branch=master)](https://travis-ci.org/mpetrovich/stylemark)
 
-Framework-agnostic living style guide generator.
+Generate interactive style guides from Markdown.
 
 ## Table of contents
 
-1. [Quickstart](#quickstart)
-1. [Documenting components](#documenting-components)
-1. [Installation](#installation)
-1. [Configuration](#configuration)
-1. [Usage](#usage)
-1. [Customization](#customization)
-1. [Extending](#extending)
-1. [Contributing](#contributing)
-
-## Quickstart
-
-```sh
-npx stylemark <input path> <output path>
-```
-
-This command will generate a living style guide in a new `<output path>` directory from documented components in the `<input path>` directory.
-
-By default, files with these extensions will be searched: `.md` `.markdown` `.js` `.jsx` `.ts` `.css` `.scss` `.less`
-
-Example:
-
-```sh
-npx stylemark src/ styleguide/
-```
-
-## Documenting components
-
-Components are documented using markdown syntax.
-
-#### In a markdown file
-
-`button.md`:
-
-````md
----
-name: Button
-category: Interactive
----
-
-This is a primary button:
-
-```basic.jsx
-<Button variant="primary">Primary</Button>
-```
-
-This is a danger button:
-
-```danger.jsx
-<Button variant="danger">Danger</Button>
-```
-````
-
-#### In source code comments
-
-`button.js`:
-
-````js
-/*
----
-name: Button
-category: Interactive
----
-
-This is a primary button:
-
-```basic.jsx
-<Button variant="primary">Primary</Button>
-```
-
-This is a danger button:
-
-```danger.jsx
-<Button variant="danger">Danger</Button>
-```
-*/
-export default ({ variant, children }) => (…)
-````
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Documenting components](#documenting-components)
 
 ## Installation
 
@@ -90,7 +17,7 @@ Stylemark requires Node.js v8+
 npm install stylemark
 ```
 
-To support common frameworks, install the following addons:
+Install the appropriate addons if your components use any of these UI frameworks:
 
 ```sh
 npm install stylemark-react
@@ -99,18 +26,68 @@ npm install stylemark-angular
 npm install stylemark-ember
 ```
 
-## Configuration
-
-Stylemark can be configured in several ways.
-
 ## Usage
 
-#### Command line
+```sh
+npx stylemark <config_path>
+```
 
-#### Node.js API
+## Configuration
 
-## Customization
+Stylemark can be configured with a JS or JSON file.
 
-## Extending
+```js
+module.exports = {
+    // [REQUIRED] Input path (string) or paths (array). Paths will be resolved relative to this config file. Globs are supported. This value will be passed directly to globby as the `patterns` parameter: https://github.com/sindresorhus/globby/blob/v11.0.0/readme.md
+    input: "src/**/*.{jsx,css}",
 
-## Contributing
+    // [REQUIRED] Output directory path, relative to this config file. This directory and any intermediate directories will be automatically created if they don't exist.
+    output: "styleguide/",
+
+    // [REQUIRED] Display name of the generated styleguide.
+    title: "ACME Styleguide",
+}
+```
+
+## Documenting components
+
+Components are documented using markdown in code comments or in separate markdown files.
+
+#### In a source code comment
+
+`button.js`:
+
+````js
+/*
+---
+name: Button
+---
+
+Button variants:
+
+```variants.jsx
+<Button variant="primary">Primary</Button>
+<Button variant="danger">Danger</Button>
+```
+*/
+export default ({ variant, children }) => {
+    return <button className={`button ${variant}`}>{children}</button>
+}
+````
+
+#### In a markdown file
+
+`button.md`:
+
+````md
+---
+name: Button
+---
+
+Button variants:
+
+```variants.jsx
+<Button variant="primary">Primary</Button>
+<Button variant="danger">Danger</Button>
+```
+````
