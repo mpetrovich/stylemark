@@ -8,7 +8,13 @@ const Specimen = require("../model/specimen")
 
 const extractNameAndLanguage = string => {
     const matches = /(.+)\.([^.]+)$/.exec(string || "") // Matches `(specimenName).(language)`
-    return matches ? matches.slice(1) : []
+    const [name, language] = matches ? matches.slice(1) : []
+    return [name, language]
+}
+
+const extractFlags = string => {
+    const flags = _.compact(string.trim().split(" "))
+    return flags
 }
 
 module.exports = () => (tree, file) => {
@@ -24,15 +30,7 @@ module.exports = () => (tree, file) => {
         const parsed = extractFrontmatter(node.value)
         const displayContent = parsed.content
         const props = parsed.data
-
-        // Converts "alpha beta" to { alpha: true, beta: true }
-        const meta = (node.meta || "").trim().split(" ")
-        const flags = _(meta)
-            .compact()
-            .keyBy(flag => flag)
-            .mapValues(flag => true)
-            .value()
-
+        const flags = extractFlags(node.meta || "")
         const block = new Block({
             specimenName,
             language,
@@ -40,15 +38,15 @@ module.exports = () => (tree, file) => {
             props,
             displayContent,
         })
-
         specimenBlocks.push(block)
 
         node.block = block
         node.value = displayContent
     })
 
-    file.data.specimens = _(specimenBlocks)
+    const specimens = _(specimenBlocks)
         .groupBy("specimenName")
         .map((blocks, specimenName) => new Specimen({ name: specimenName, blocks }))
         .value()
+    file.data.specimens = specimens
 }

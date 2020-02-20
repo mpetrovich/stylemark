@@ -1,5 +1,5 @@
 module.exports = class {
-    constructor({ metadata, specimens, markdown, markdownTree = null, htmlTree = null, html = "" }) {
+    constructor({ metadata, specimens, markdown, markdownTree, htmlTree, html }) {
         this.metadata = metadata
         this.specimens = specimens
         this.markdown = markdown

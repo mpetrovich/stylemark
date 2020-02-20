@@ -23,6 +23,6 @@ module.exports = markdown => {
 
     const metadata = _.get(file, "data.frontmatter", {})
     const specimens = file.data.specimens
-
-    return metadata.name ? new Component({ metadata, specimens, markdown, markdownTree }) : null
+    const component = metadata.name ? new Component({ metadata, specimens, markdown, markdownTree }) : null
+    return component
 }
