@@ -5,8 +5,8 @@ const extractFrontmatter = require("remark-extract-frontmatter")
 const parseFrontmatter = require("remark-frontmatter")
 const yamlParser = require("yaml").parse
 const _ = require("lodash")
-const parseSpecimens = require("./specimens")
-const Component = require("../model/component")
+const parseSpecimens = require("./parseSpecimens")
+const Component = require("../models/Component")
 
 module.exports = markdown => {
     const file = vfile(markdown)
