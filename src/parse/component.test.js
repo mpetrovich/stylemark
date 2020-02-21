@@ -13,7 +13,7 @@ test("No component is parsed from markdown that does not have frontmatter", asyn
 })
 
 test("No component is parsed from markdown that has frontmatter but no name property", async t => {
-    const markdown = readFileSync(`${__dirname}/component.test/no-frontmatter-name.md`, { encoding: "utf8" })
+    const markdown = readFileSync(`${__dirname}/component.test/frontmatter-without-name.md`, { encoding: "utf8" })
     const component = parseComponent(markdown)
 
     t.is(component, null)
