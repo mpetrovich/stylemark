@@ -6,7 +6,7 @@ import Block from "../model/block"
 import Specimen from "../model/specimen"
 
 test("No component is parsed from markdown that does not have frontmatter", async t => {
-    const markdown = readFileSync(`${__dirname}/component.test/no-frontmatter.md`, { encoding: "utf8" })
+    const markdown = readFileSync(`${__dirname}/component.test/without-frontmatter.md`, { encoding: "utf8" })
     const component = parseComponent(markdown)
 
     t.is(component, null)

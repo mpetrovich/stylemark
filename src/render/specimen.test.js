@@ -8,7 +8,7 @@ test("Nothing is rendered for a specimen without blocks", t => {
         name: "specimen-name",
         blocks: [],
     }
-    const expectedHtml = readFileSync(`${__dirname}/specimen-test-cases/no-blocks.html`, { encoding: "utf8" })
+    const expectedHtml = readFileSync(`${__dirname}/specimen.test/without-blocks.html`, { encoding: "utf8" })
 
     t.is(renderSpecimen(specimen, { renderBlock }), expectedHtml)
 })
@@ -24,7 +24,7 @@ test("Specimen blocks for HTML, CSS, and JS are rendered", t => {
             { language: "js", executableContent: `var bar = 'bar'` },
         ],
     }
-    const expectedHtml = readFileSync(`${__dirname}/specimen-test-cases/blocks.html`, { encoding: "utf8" })
+    const expectedHtml = readFileSync(`${__dirname}/specimen.test/blocks.html`, { encoding: "utf8" })
 
     t.is(renderSpecimen(specimen, { renderBlock }), expectedHtml)
 })
