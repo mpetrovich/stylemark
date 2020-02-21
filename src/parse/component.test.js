@@ -6,21 +6,45 @@ import Block from "../model/block"
 import Specimen from "../model/specimen"
 
 test("No component is parsed from markdown that does not have frontmatter", async t => {
-    const markdown = readFileSync(`${__dirname}/component.test/without-frontmatter.md`, { encoding: "utf8" })
+    const markdown = `
+# This is a heading
+
+This is paragraph content.
+`
     const component = parseComponent(markdown)
 
     t.is(component, null)
 })
 
 test("No component is parsed from markdown that has frontmatter but no name property", async t => {
-    const markdown = readFileSync(`${__dirname}/component.test/frontmatter-without-name.md`, { encoding: "utf8" })
+    const markdown = `
+---
+category: Component Category
+---
+
+# This is a heading
+
+This is paragraph content.
+`
     const component = parseComponent(markdown)
 
     t.is(component, null)
 })
 
 test("A component is parsed from markdown that has frontmatter with a name property", async t => {
-    const markdown = readFileSync(`${__dirname}/component.test/frontmatter.md`, { encoding: "utf8" })
+    const markdown = `
+---
+name: Component Name
+category: Component Category
+tags:
+- foo
+- bar
+---
+
+# This is a heading
+
+This is paragraph content.
+`
     const component = parseComponent(markdown)
 
     t.is(component.markdown, markdown)
@@ -33,7 +57,7 @@ test("A component is parsed from markdown that has frontmatter with a name prope
 })
 
 test("Specimens are parsed from named code blocks", async t => {
-    const markdown = readFileSync(`${__dirname}/component.test/specimens.md`, { encoding: "utf8" })
+    const markdown = readFileSync(`${__dirname}/component.test/specimens.input.md`, { encoding: "utf8" })
     const component = parseComponent(markdown)
 
     t.deepEqual(component.specimens, [
@@ -79,7 +103,7 @@ test("Specimens are parsed from named code blocks", async t => {
 })
 
 test("Specimen blocks can have arbitrary inline flags", async t => {
-    const markdown = readFileSync(`${__dirname}/component.test/specimen-flags.md`, { encoding: "utf8" })
+    const markdown = readFileSync(`${__dirname}/component.test/specimen-flags.input.md`, { encoding: "utf8" })
     const component = parseComponent(markdown)
 
     t.deepEqual(component.specimens, [
@@ -120,7 +144,7 @@ test("Specimen blocks can have arbitrary inline flags", async t => {
 })
 
 test("Specimen blocks can have arbitrary frontmatter props", async t => {
-    const markdown = readFileSync(`${__dirname}/component.test/specimen-props.md`, { encoding: "utf8" })
+    const markdown = readFileSync(`${__dirname}/component.test/specimen-props.input.md`, { encoding: "utf8" })
     const component = parseComponent(markdown)
 
     t.deepEqual(component.specimens, [
