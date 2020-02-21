@@ -16,13 +16,12 @@ module.exports = markdown => {
         .use(parseFrontmatter)
         .use(extractFrontmatter, { name: "frontmatter", yaml: yamlParser })
         .parse(file)
+    const frontmatter = _.get(file, "data.frontmatter", {})
 
     unified()
         .use(parseSpecimens)
         .runSync(markdownTree, file)
-
-    const metadata = _.get(file, "data.frontmatter", {})
     const specimens = file.data.specimens
-    const component = metadata.name ? new Component({ metadata, specimens, markdown, markdownTree }) : null
-    return component
+
+    return frontmatter.name ? new Component({ metadata: frontmatter, specimens, markdown, markdownTree }) : null
 }

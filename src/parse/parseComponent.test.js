@@ -1,6 +1,5 @@
 import test from "ava"
 import { readFileSync } from "fs"
-import _ from "lodash"
 import parseComponent from "./parseComponent"
 import Block from "../models/Block"
 import Specimen from "../models/Specimen"
@@ -9,7 +8,7 @@ test("No component is parsed from markdown that does not have frontmatter", asyn
     const markdown = `
 # This is a heading
 
-This is paragraph content.
+This is a paragraph.
 `
     const component = parseComponent(markdown)
 
@@ -24,7 +23,7 @@ category: Component Category
 
 # This is a heading
 
-This is paragraph content.
+This is a paragraph.
 `
     const component = parseComponent(markdown)
 
@@ -43,7 +42,7 @@ tags:
 
 # This is a heading
 
-This is paragraph content.
+This is a paragraph.
 `
     const component = parseComponent(markdown)
 
