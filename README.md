@@ -4,10 +4,10 @@ Generate interactive style guides from Markdown.
 
 ## Table of contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [Documenting components](#documenting-components)
+-   [Installation](#installation)
+-   [Usage](#usage)
+-   [Configuration](#configuration)
+-   [Documenting components](#documenting-components)
 
 ## Installation
 
@@ -38,7 +38,7 @@ Stylemark can be configured with a JS or JSON file.
 
 ```js
 module.exports = {
-    // [REQUIRED] Input path (string) or paths (array). Paths will be resolved relative to this config file. Globs are supported. This value will be passed directly to globby as the `patterns` parameter: https://github.com/sindresorhus/globby/blob/v11.0.0/readme.md
+    // [REQUIRED] Input path (string) or paths (array). Globs are supported. Paths will be resolved relative to this config file. This value will be passed directly to globby as the `patterns` parameter: https://github.com/sindresorhus/globby/blob/v11.0.0/readme.md
     input: "src/**/*.{jsx,css}",
 
     // [REQUIRED] Output directory path, relative to this config file. This directory and any intermediate directories will be automatically created if they don't exist.
