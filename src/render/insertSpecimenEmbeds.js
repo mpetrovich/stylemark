@@ -15,7 +15,7 @@ module.exports = ({ component, nodeName }) => (tree, file) => {
             hasAlreadyBeenRendered[specimenName] = true
 
             const specimen = _.find(component.specimens, { name: specimenName })
-            const node = u(nodeName, { component, specimen }, "")
+            const node = u(nodeName, { specimen }, "")
             parent.children.splice(index, 0, node)
 
             return index + 2
