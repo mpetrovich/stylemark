@@ -40,3 +40,20 @@ test("A component with specimens can be rendered", async t => {
 </code></pre>`
     )
 })
+
+test("Hidden specimen blocks are not rendered", async t => {
+    const markdown = readFileSync(`${__dirname}/renderComponent.test/with-hidden-blocks.input.md`, { encoding: "utf8" })
+    const component = parseComponent(markdown)
+
+    t.is(
+        renderComponent(component),
+        `<h1>First specimen</h1>
+<div id="specimen-one"></div>
+<pre><code class="language-html">&#x3C;b>One&#x3C;/b>
+</code></pre>
+<h1>Second specimen</h1>
+<div id="specimen-two"></div>
+<pre><code class="language-css">b { color: green }
+</code></pre>`
+    )
+})
