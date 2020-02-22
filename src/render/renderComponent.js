@@ -7,12 +7,13 @@ const insertSpecimenEmbeds = require("./insertSpecimenEmbeds")
 const renderSpecimen = require("./renderSpecimen")
 
 module.exports = component => {
+    const embedNodeName = "specimen-embed"
     const htmlTree = unified()
-        .use(insertSpecimenEmbeds, { component, nodeName: "specimen-embed" })
+        .use(insertSpecimenEmbeds, { component, embedNodeName })
         .use(removeHiddenBlocks)
         .use(removeBlockNames)
         .use(toHtmlTree, {
-            handlers: { "specimen-embed": renderSpecimen },
+            handlers: { [embedNodeName]: renderSpecimen },
         })
         .runSync(component.markdownTree)
 

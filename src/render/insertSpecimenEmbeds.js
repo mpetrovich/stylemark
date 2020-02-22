@@ -5,7 +5,7 @@ const parseBlockNameAndLanguage = require("../parse/parseBlockNameAndLanguage")
 
 const isRenderableLanguage = { html: true }
 
-module.exports = ({ component, nodeName }) => (tree, file) => {
+module.exports = ({ component, embedNodeName }) => (tree, file) => {
     const hasAlreadyBeenRendered = {}
 
     visit(tree, "code", (node, index, parent) => {
@@ -15,7 +15,7 @@ module.exports = ({ component, nodeName }) => (tree, file) => {
             hasAlreadyBeenRendered[specimenName] = true
 
             const specimen = _.find(component.specimens, { name: specimenName })
-            const node = u(nodeName, { specimen }, "")
+            const node = u(embedNodeName, { specimen }, "")
             parent.children.splice(index, 0, node)
 
             return index + 2
