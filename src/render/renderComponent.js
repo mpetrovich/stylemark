@@ -4,16 +4,16 @@ const toHtmlString = require("rehype-stringify")
 const removeHiddenBlocks = require("./removeHiddenBlocks")
 const removeBlockNames = require("./removeBlockNames")
 const insertSpecimenEmbeds = require("./insertSpecimenEmbeds")
-const renderSpecimen = require("./renderSpecimen")
+const renderSpecimenEmbed = require("./renderSpecimenEmbed")
 
 module.exports = component => {
-    const embedNodeName = "specimen-embed"
+    const nodeName = "specimen-embed"
     const htmlTree = unified()
-        .use(insertSpecimenEmbeds, { component, embedNodeName })
+        .use(insertSpecimenEmbeds, { component, nodeName })
         .use(removeHiddenBlocks)
         .use(removeBlockNames)
         .use(toHtmlTree, {
-            handlers: { [embedNodeName]: renderSpecimen },
+            handlers: { [nodeName]: renderSpecimenEmbed("attachSpecimen") },
         })
         .runSync(component.markdownTree)
 
