@@ -28,23 +28,49 @@ npm install stylemark-ember
 
 ## Usage
 
+### Command-line
+
 ```sh
 npx stylemark <config_path>
 ```
+
+`<config_path>` can refer to a JS or JSON file.
+
+### Node.js
+
+```js
+const stylemark = require("stylemark")
+
+stylemark(config)
+```
+
+`config` is a configuration object as described below.
 
 ## Configuration
 
 Stylemark can be configured with a JS or JSON file.
 
-```js
-module.exports = {
-    // [REQUIRED] Input path (string) or paths (array). Globs are supported. Paths will be resolved relative to this config file. This value will be passed directly to globby as the `patterns` parameter: https://github.com/sindresorhus/globby/blob/v11.0.0/readme.md
-    input: "src/**/*.{jsx,css}",
+Example `stylemark.config.json`:
 
-    // [REQUIRED] Output directory path, relative to this config file. This directory and any intermediate directories will be automatically created if they don't exist.
-    output: "styleguide/",
+```json
+{
+    // [REQUIRED] One or more input path globs. Paths are relative to the config file if present or current working directory otherwise. For globbing patterns, see: https://github.com/sindresorhus/globby/blob/v11.0.0/readme.md#globbing-patterns
+    "input": ["src/**/*.{jsx,css}", "!*.test.js"],
+
+    // [REQUIRED] Output directory path. Paths is relative to the config file if present or current working directory otherwise. Directories will be automatically created if they don't exist.
+    "output": "styleguide/",
 
     // [REQUIRED] Display name of the generated styleguide.
+    "title": "ACME Styleguide"
+}
+```
+
+Example `stylemark.config.js`:
+
+```js
+module.exports = {
+    input: ["src/**/*.{jsx,css}", "!*.test.js"],
+    output: "styleguide/",
     title: "ACME Styleguide",
 }
 ```
