@@ -11,14 +11,15 @@ module.exports = ({ component, specimenEmbedNodeName }) => (tree, file) => {
     visit(tree, "code", (node, index, parent) => {
         const [specimenName, language] = parseBlockNameAndLanguage(node.lang)
 
-        if (specimenName && isRenderableLanguage[language] && !hasBeenInserted[specimenName]) {
-            hasBeenInserted[specimenName] = true
-
-            const specimen = _.find(component.specimens, { name: specimenName })
-            const node = u(specimenEmbedNodeName, { specimen }, "")
-            parent.children.splice(index, 0, node)
-
-            return index + 2
+        if (!specimenName || !isRenderableLanguage[language] || hasBeenInserted[specimenName]) {
+            return
         }
+
+        const specimen = _.find(component.specimens, { name: specimenName })
+        const specimenEmbedNode = u(specimenEmbedNodeName, { specimen }, "")
+        parent.children.splice(index, 0, specimenEmbedNode)
+        hasBeenInserted[specimenName] = true
+
+        return index + 2
     })
 }
