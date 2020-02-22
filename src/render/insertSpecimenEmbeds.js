@@ -3,7 +3,7 @@ const u = require("unist-builder")
 const _ = require("lodash")
 const parseBlockNameAndLanguage = require("../parse/parseBlockNameAndLanguage")
 
-const isRenderableLanguage = { html: true }
+const renderableLanguages = ["html", "jsx"]
 
 module.exports = ({ component, specimenEmbedNodeName }) => (tree, file) => {
     const hasBeenInserted = {}
@@ -11,7 +11,7 @@ module.exports = ({ component, specimenEmbedNodeName }) => (tree, file) => {
     visit(tree, "code", (node, index, parent) => {
         const [specimenName, language] = parseBlockNameAndLanguage(node.lang)
 
-        if (!specimenName || !isRenderableLanguage[language] || hasBeenInserted[specimenName]) {
+        if (!specimenName || !renderableLanguages.includes(language) || hasBeenInserted[specimenName]) {
             return
         }
 

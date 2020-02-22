@@ -4,8 +4,8 @@ name: Component Name
 
 # First specimen
 
-```one.html
-<b>One</b>
+```one.jsx
+<b className="red">One</b>
 ```
 
 ```one.js
@@ -13,7 +13,7 @@ console.log('One')
 ```
 
 ```one.css
-b { color: red }
+.red { color: red }
 ```
 
 # Second specimen

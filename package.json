@@ -35,6 +35,8 @@
     "node": ">=8.0"
   },
   "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-react": "^6.24.1",
     "gray-matter": "^4.0.2",
     "lodash": "^4.17.15",
     "rehype-stringify": "^5.0.0",
