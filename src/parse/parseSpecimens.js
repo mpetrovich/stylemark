@@ -21,18 +21,18 @@ module.exports = () => (tree, file) => {
         const flags = parseBlockFlags(node.meta || "")
         const frontmatter = parseFrontmatter(node.value)
         const props = frontmatter.data
-        const displayContent = frontmatter.content
+        const content = frontmatter.content
         const block = new Block({
             specimenName,
             language,
             flags,
             props,
-            displayContent,
+            content,
         })
         specimenBlocks.push(block)
 
         node.block = block
-        node.value = displayContent
+        node.value = content
     })
 
     const specimens = _(specimenBlocks)

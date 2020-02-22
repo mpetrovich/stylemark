@@ -8,6 +8,10 @@ name: Component Name
 <b>One</b>
 ```
 
+```one.js
+console.log('One')
+```
+
 ```one.css hidden
 b { color: red }
 ```
@@ -16,6 +20,10 @@ b { color: red }
 
 ```two.html hidden
 <b>Two</b>
+```
+
+```two.js
+console.log('Two')
 ```
 
 ```two.css

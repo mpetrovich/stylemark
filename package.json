@@ -35,7 +35,6 @@
     "node": ">=8.0"
   },
   "dependencies": {
-    "fs-extra": "^8.1.0",
     "gray-matter": "^4.0.2",
     "lodash": "^4.17.15",
     "rehype-stringify": "^5.0.0",
