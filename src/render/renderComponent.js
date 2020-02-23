@@ -12,7 +12,7 @@ module.exports = component => {
         .use(removeHiddenBlocks)
         .use(removeBlockNames)
         .use(toHtmlTree, {
-            handlers: { "specimen-embed": renderSpecimenEmbed({ renderSpecimenFnName: "attachSpecimen" }) },
+            handlers: { "specimen-embed": renderSpecimenEmbed },
         })
         .runSync(component.markdownTree)
 

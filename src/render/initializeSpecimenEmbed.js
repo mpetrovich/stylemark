@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 
-function attachSpecimen(selector, specimen) {
-    const host = document.querySelector(selector)
+function initializeSpecimenEmbed(specimen) {
+    const host = document.currentScript.parentElement
     const shadow = host.attachShadow({ mode: "open" })
 
     specimen.blocks.forEach(block => {

@@ -3,11 +3,11 @@
 <head>
     <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-	<script src="../src/render/attachSpecimen.js"></script>
+	<script src="../src/render/initializeSpecimenEmbed.js"></script>
 </head>
 <body>
 	<h1>First specimen</h1>
-<div id="specimen-one"><script>attachSpecimen("#specimen-one", {"name":"one","blocks":[{"specimenName":"one","language":"jsx","content":"<b className=\"red\">One</b>","flags":[],"props":{},"compiledContent":"React.createElement(\n  \"b\",\n  { className: \"red\" },\n  \"One\"\n);"},{"specimenName":"one","language":"js","content":"console.log('One')","flags":[],"props":{}},{"specimenName":"one","language":"css","content":".red { color: red }","flags":[],"props":{}}]})</script></div>
+<div><script>initializeSpecimenEmbed({"name":"one","blocks":[{"specimenName":"one","language":"jsx","content":"<b className=\"red\">One</b>","flags":[],"props":{},"compiledContent":"React.createElement(\n  \"b\",\n  { className: \"red\" },\n  \"One\"\n);"},{"specimenName":"one","language":"js","content":"console.log('One')","flags":[],"props":{}},{"specimenName":"one","language":"css","content":".red { color: red }","flags":[],"props":{}}]})</script></div>
 <pre><code class="language-jsx">&#x3C;b className="red">One&#x3C;/b>
 </code></pre>
 <pre><code class="language-js">console.log('One')
@@ -15,7 +15,7 @@
 <pre><code class="language-css">.red { color: red }
 </code></pre>
 <h1>Second specimen</h1>
-<div id="specimen-two"><script>attachSpecimen("#specimen-two", {"name":"two","blocks":[{"specimenName":"two","language":"html","content":"<b>Two</b>","flags":[],"props":{}},{"specimenName":"two","language":"js","content":"console.log('Two')","flags":[],"props":{}},{"specimenName":"two","language":"css","content":"b { color: green }","flags":[],"props":{}}]})</script></div>
+<div><script>initializeSpecimenEmbed({"name":"two","blocks":[{"specimenName":"two","language":"html","content":"<b>Two</b>","flags":[],"props":{}},{"specimenName":"two","language":"js","content":"console.log('Two')","flags":[],"props":{}},{"specimenName":"two","language":"css","content":"b { color: green }","flags":[],"props":{}}]})</script></div>
 <pre><code class="language-html">&#x3C;b>Two&#x3C;/b>
 </code></pre>
 <pre><code class="language-js">console.log('Two')
