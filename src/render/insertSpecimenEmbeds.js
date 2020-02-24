@@ -3,7 +3,7 @@ const u = require("unist-builder")
 const _ = require("lodash")
 const parseBlockNameAndLanguage = require("../parse/parseBlockNameAndLanguage")
 
-const renderableLanguages = ["html", "jsx"]
+const renderableLanguages = ["html"]
 
 module.exports = ({ component, specimenEmbedNodeName }) => (tree, file) => {
     const hasBeenInserted = {}

@@ -4,8 +4,8 @@ name: Component Name
 
 # First specimen
 
-```one.jsx
-<b className="red">One</b>
+```one.html
+<b class="red">One</b>
 ```
 
 ```one.js
