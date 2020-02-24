@@ -1,62 +1,67 @@
 {
-  "name": "stylemark",
-  "version": "3.1.2",
-  "license": "MIT",
-  "author": "Mike Petrovich <michael.c.petrovich@gmail.com>",
-  "description": "Generate interactive style guides from Markdown.",
-  "keywords": [
-    "styleguide generator",
-    "style guide generator",
-    "living styleguide generator",
-    "living style guide generator",
-    "react styleguide",
-    "react style guide",
-    "angular styleguide",
-    "angular style guide",
-    "ember styleguide",
-    "ember style guide",
-    "css styleguide",
-    "css style guide",
-    "less styleguide",
-    "less style guide",
-    "sass styleguide",
-    "sass style guide",
-    "living styleguide",
-    "living style guide",
-    "component library",
-    "design pattern"
-  ],
-  "homepage": "https://github.com/mpetrovich/stylemark",
-  "repository": "https://github.com/mpetrovich/stylemark.git",
-  "bugs": {
-    "url": "https://github.com/mpetrovich/stylemark/issues"
-  },
-  "engines": {
-    "node": ">=8.0"
-  },
-  "dependencies": {
-    "gray-matter": "^4.0.2",
-    "lodash": "^4.17.15",
-    "rehype-stringify": "^5.0.0",
-    "remark-extract-frontmatter": "^2.0.0",
-    "remark-frontmatter": "^1.3.1",
-    "remark-parse": "^6.0.3",
-    "remark-rehype": "^5.0.0",
-    "unified": "^7.1.0",
-    "unist-builder": "^2.0.3",
-    "unist-util-remove": "^2.0.0",
-    "unist-util-visit": "^2.0.2",
-    "vfile": "^4.0.1",
-    "yaml": "^1.1.0"
-  },
-  "devDependencies": {
-    "ava": "^2.2.0",
-    "nyc": "^14.1.1",
-    "prettier": "^1.18.2"
-  },
-  "scripts": {
-    "test": "nyc ava",
-    "test:watch": "ava --watch --verbose",
-    "format": "prettier --write src/**/*.js"
-  }
+    "name": "stylemark",
+    "version": "3.1.2",
+    "license": "MIT",
+    "author": "Mike Petrovich <michael.c.petrovich@gmail.com>",
+    "description": "Generate interactive style guides from Markdown.",
+    "keywords": [
+        "styleguide generator",
+        "style guide generator",
+        "living styleguide generator",
+        "living style guide generator",
+        "react styleguide",
+        "react style guide",
+        "angular styleguide",
+        "angular style guide",
+        "ember styleguide",
+        "ember style guide",
+        "css styleguide",
+        "css style guide",
+        "less styleguide",
+        "less style guide",
+        "sass styleguide",
+        "sass style guide",
+        "living styleguide",
+        "living style guide",
+        "component library",
+        "design pattern"
+    ],
+    "homepage": "https://github.com/mpetrovich/stylemark",
+    "repository": "https://github.com/mpetrovich/stylemark.git",
+    "bugs": {
+        "url": "https://github.com/mpetrovich/stylemark/issues"
+    },
+    "engines": {
+        "node": ">=8.0"
+    },
+    "main": "src/stylemark.js",
+    "dependencies": {
+        "globby": "^11.0.0",
+        "gray-matter": "^4.0.2",
+        "lodash": "^4.17.15",
+        "mkdirp": "^1.0.3",
+        "rehype-stringify": "^5.0.0",
+        "remark-extract-frontmatter": "^2.0.0",
+        "remark-frontmatter": "^1.3.1",
+        "remark-parse": "^6.0.3",
+        "remark-rehype": "^5.0.0",
+        "string.prototype.matchall": "^4.0.2",
+        "unified": "^7.1.0",
+        "unist-builder": "^2.0.3",
+        "unist-util-remove": "^2.0.0",
+        "unist-util-visit": "^2.0.2",
+        "vfile": "^4.0.1",
+        "yaml": "^1.1.0",
+        "yargs": "^15.1.0"
+    },
+    "devDependencies": {
+        "ava": "^2.2.0",
+        "nyc": "^14.1.1",
+        "prettier": "^1.18.2"
+    },
+    "scripts": {
+        "test": "nyc ava",
+        "test:watch": "ava --watch --verbose",
+        "format": "prettier --write src/**/*.js"
+    }
 }

@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-function initializeSpecimenEmbed(specimen) {
+function initializeSpecimenEmbed(id, specimen) {
     const host = document.currentScript.parentElement
     const shadow = host.attachShadow({ mode: "open" })
 
@@ -15,7 +15,12 @@ function initializeSpecimenEmbed(specimen) {
         } else if (block.language === "js") {
             const script = document.createElement("script")
             script.type = "text/javascript"
-            script.textContent = block.content
+            script.textContent = `
+                (function() {
+                    const $0 = document.getElementById("${id}").shadowRoot;
+                    console.log($0);
+                    ${block.content}
+                })()`
             shadow.appendChild(script)
         }
     })

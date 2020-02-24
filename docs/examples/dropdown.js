@@ -1,3 +1,4 @@
+/*
 ---
 name: Dropdown
 category: Form
@@ -23,8 +24,7 @@ select {
 ```
 
 ```basic-dropdown.js
-import { onChange } from './utils'
-onChange('select', value => `You selected: ${value}`)
+$0.querySelector("select").addEventListener("change", e => alert(`Selected ${e.target.value}`))
 ```
 
 ## Fancy dropdown
@@ -46,6 +46,11 @@ select {
 ```
 
 ```fancy-dropdown.js
-import { onChange } from './utils'
-onChange('select', value => `You fancy: ${value}`)
+$0.querySelector("select").addEventListener("change", e => alert(`Selected ${e.target.value}`))
 ```
+*/
+export class dropdown {
+    /*
+	some javascript here
+	*/
+}

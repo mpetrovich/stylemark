@@ -61,7 +61,7 @@ Example `stylemark.config.json`:
     "output": "styleguide/",
 
     // [REQUIRED] Display name of the generated styleguide.
-    "title": "ACME Styleguide"
+    "name": "ACME Styleguide"
 }
 ```
 
