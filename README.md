@@ -67,7 +67,7 @@ Example:
 
 ## Documenting components
 
-Components are documented using markdown in code comments or in separate markdown files.
+Components are documented using markdown in code comments or in separate markdown files. [See the docs](docs/components.md) for details.
 
 ### In a source code comment
 
@@ -123,30 +123,3 @@ Button sizes:
 <Button size="l">Large</Button>
 ```
 ````
-
-## Specimens
-
-A specimen is an interactive example made up of one or more named Markdown code blocks.
-
-````md
-```form.html
-<form>
-    <input name="email" type="email" placeholder="name@example.com">
-    <input name="password" type="password">
-    <button type="submit">Log in</button>
-</form>
-```
-
-```form.css
-input, button { display: block }
-```
-
-```form.js
-document.querySelector('form').addEventListener('submit', event => {
-    event.preventDefault()
-    alert('You logged in')
-})
-```
-````
-
-Specimen code blocks are insulated from each other. For instance, CSS styles defined for one specimen will not affect other specimens.
