@@ -19,7 +19,7 @@ npm install stylemark
 
 ## Usage
 
-### Command-line interface (CLI)
+### On the command line
 
 ```sh
 npx stylemark <config> [-w|--watch]
@@ -30,7 +30,7 @@ npx stylemark <config> [-w|--watch]
 | `<config>`      | JS or JSON file containing a configuration object                                                          |
 | `-w`, `--watch` | Opens the generated styleguide in a browser and reloads when any matching input files are added or changed |
 
-### Node.js API
+### In Node.js
 
 ```js
 const stylemark = require("stylemark")
@@ -40,12 +40,12 @@ stylemark(config)
 
 ## Configuration
 
-| Property | Type                       | Default                                                | Description                                                                           |
-| -------- | -------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------- |
-| `input`  | string or array of strings |                                                        | Input path globs. See [Globbing patterns](#globbing-patterns).                        |
-| `output` | string                     |                                                        | Output directory path. Directories will be automatically created if they don't exist. |
-| `cwd`    | string                     | CLI: config file directory<br>Node.js: `process.cwd()` | Base path that `input` and `output` paths are relative to.                            |
-| `name`   | string                     | `Stylemark`                                            | Display name of the generated styleguide.                                             |
+| Property | Type                       | Default               | Description                                                                                                                                        |
+| -------- | -------------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `input`  | string or array of strings |                       | Input path globs. See [Globbing patterns](#globbing-patterns).                                                                                     |
+| `output` | string                     |                       | Output directory path. Directories will be automatically created if they don't exist.                                                              |
+| `cwd`    | string                     | Config file directory | Base path that `input` and `output` paths are relative to. By default, paths are resolved relative to the config file when using the command line. |
+| `name`   | string                     | `Stylemark`           | Display name of the generated styleguide.                                                                                                          |
 
 Example:
 
