@@ -19,8 +19,8 @@ module.exports = config => {
     const name = config.name
     const library = new Library({ name, components })
 
-    const outpath = path.resolve(cwd, config.output, "index.html")
+    const outpath = path.resolve(cwd, config.output)
     const html = renderLibrary(library)
-    mkdirp(path.dirname(outpath))
-    fs.writeFileSync(outpath, html)
+    mkdirp(outpath)
+    fs.writeFileSync(path.join(outpath, "index.html"), html)
 }

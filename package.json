@@ -36,6 +36,7 @@
     },
     "main": "src/stylemark.js",
     "dependencies": {
+        "browser-sync": "^2.26.7",
         "globby": "^11.0.0",
         "gray-matter": "^4.0.2",
         "lodash": "^4.17.15",
