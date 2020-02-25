@@ -18,7 +18,6 @@ function initializeSpecimenEmbed(id, specimen) {
             script.textContent = `
                 (function() {
                     const $0 = document.getElementById("${id}").shadowRoot;
-                    console.log($0);
                     ${block.content}
                 })()`
             shadow.appendChild(script)

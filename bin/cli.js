@@ -2,50 +2,48 @@
 
 /* istanbul ignore file */
 
-const stylemark = require("../src/stylemark")
 const path = require("path")
-const browser = require("browser-sync").create()
+const mkdirp = require("mkdirp")
+const _ = require("lodash")
+const browser = require("browser-sync")
+const chokidar = require("chokidar")
+const getMatchingFiles = require("../src/parse/getMatchingFiles")
+const stylemark = require("../src/stylemark")
 
 const args = require("yargs")
-    .usage("Usage: $0 -i [path] -o [path] -n [str]")
-    .example('$0 -i "src/**/*.{js,md}" -o "dist/styleguide" -n "ACME Styleguide" -w')
-    .option("input", {
-        alias: "i",
-        type: "string",
-        description: "Input path, globs supported",
-        demandOption: true,
+    .command("$0 <config> [-w|--watch]", "", yargs => {
+        yargs.positional("config", {
+            description: "JS or JSON config filepath",
+            type: "string",
+        })
     })
-    .option("output", {
-        alias: "o",
-        type: "string",
-        description: "Output path",
-        demandOption: true,
-    })
-    .option("name", {
-        alias: "n",
-        type: "string",
-        description: "Display name",
-    })
+    .demandCommand(1, "ERROR: Must provide a config path")
     .option("watch", {
         alias: "w",
         type: "boolean",
         description: "Open in a browser and reload on changes",
     }).argv
 
-const input = args.input
-const output = args.output
-const name = args.name || path.basename(process.cwd())
-const watch = args.watch
+const configPath = path.resolve(args.config)
+const config = require(configPath)
 
-stylemark({ name, input, output })
+const cwd = path.dirname(configPath)
+const input = getMatchingFiles(config.input, cwd)
+const output = path.isAbsolute(config.output) ? config.output : path.resolve(cwd, config.output)
+const name = config.name
+const debounce = config.debounce || 500
+const generate = _.debounce(() => stylemark({ name, input, output }, debounce))
 
-if (watch) {
-    browser.init({
+if (args.watch) {
+    mkdirp(output)
+    chokidar.watch(input, { persistent: true }).on("all", generate)
+    browser.create().init({
         ui: false,
         files: path.resolve(output, "**", "*.*"),
         watchEvents: ["add", "change"],
         server: output,
-        reloadDebounce: 500,
         notify: false,
     })
 }
+
+generate()
