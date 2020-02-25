@@ -26,11 +26,10 @@ const args = require("yargs")
 
 const configPath = path.resolve(args.config)
 const config = require(configPath)
-
 const cwd = path.dirname(configPath)
 const input = getMatchingFiles(config.input, cwd)
 const output = path.isAbsolute(config.output) ? config.output : path.resolve(cwd, config.output)
-const name = config.name
+const name = config.name || "Stylemark"
 const debounce = config.debounce || 500
 const generate = _.debounce(() => stylemark({ name, input, output }, debounce))
 

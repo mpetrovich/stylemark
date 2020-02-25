@@ -17,26 +17,20 @@ Stylemark requires Node.js v8+
 npm install stylemark
 ```
 
-Install the appropriate addons if your components use any of these UI frameworks:
-
-```sh
-npm install stylemark-react
-npm install stylemark-vue
-npm install stylemark-angular
-npm install stylemark-ember
-```
-
 ## Usage
 
-### Command-line
+### Command-line interface (CLI)
 
 ```sh
-npx stylemark <config_path>
+npx stylemark <config> [-w|--watch]
 ```
 
-`<config_path>` can refer to a JS or JSON file.
+| Parameter       | Description                                                                                                |
+| --------------- | ---------------------------------------------------------------------------------------------------------- |
+| `<config>`      | JS or JSON file containing a configuration object                                                          |
+| `-w`, `--watch` | Opens the generated styleguide in a browser and reloads when any matching input files are added or changed |
 
-### Node.js
+### Node.js API
 
 ```js
 const stylemark = require("stylemark")
@@ -44,36 +38,32 @@ const stylemark = require("stylemark")
 stylemark(config)
 ```
 
-`config` is a configuration object as described below.
-
 ## Configuration
 
-Stylemark can be configured with a JS or JSON file.
+| Property | Type                       | Default                                                | Description                                                                           |
+| -------- | -------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| `input`  | string or array of strings |                                                        | Input path globs. See [Globbing patterns](#globbing-patterns).                        |
+| `output` | string                     |                                                        | Output directory path. Directories will be automatically created if they don't exist. |
+| `cwd`    | string                     | CLI: config file directory<br>Node.js: `process.cwd()` | Base path that `input` and `output` paths are relative to.                            |
+| `name`   | string                     | `Stylemark`                                            | Display name of the generated styleguide.                                             |
 
-Example `stylemark.config.json`:
-
-```json
-{
-    // [REQUIRED] One or more input path globs. Paths are relative to the config file if present or current working directory otherwise. For globbing patterns, see: https://github.com/sindresorhus/globby/blob/v11.0.0/readme.md#globbing-patterns
-    "input": ["src/**/*.{jsx,css}", "!*.test.js"],
-
-    // [REQUIRED] Output directory path. Paths is relative to the config file if present or current working directory otherwise. Directories will be automatically created if they don't exist.
-    "output": "styleguide/",
-
-    // [REQUIRED] Display name of the generated styleguide.
-    "name": "ACME Styleguide"
-}
-```
-
-Example `stylemark.config.js`:
+Example:
 
 ```js
-module.exports = {
-    input: ["src/**/*.{jsx,css}", "!*.test.js"],
-    output: "styleguide/",
-    title: "ACME Styleguide",
+{
+    input: ["src/**/*.{js,md}", "!*.test.js"],
+    output: "dist/styleguide",
+    name: "ACME Styleguide",
 }
 ```
+
+### Globbing patterns
+
+-   `*` matches any number of characters, but not `/`
+-   `?` matches a single character, but not `/`
+-   `**` matches any number of characters, including `/`, as long as it's the only thing in a path part
+-   `{}` allows for a comma-separated list of "or" expressions
+-   `!` at the beginning of a pattern will negate the match
 
 ## Documenting components
 

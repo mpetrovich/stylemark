@@ -1,0 +1,5 @@
+{
+    "input": "*.{js,md}",
+    "output": "../../dist",
+    "name": "Test Styleguide"
+}
