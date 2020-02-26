@@ -7,7 +7,7 @@ const mkdirp = require("mkdirp")
 const _ = require("lodash")
 const browser = require("browser-sync")
 const chokidar = require("chokidar")
-const getMatchingFiles = require("../src/parse/getMatchingFiles")
+const getMatchingFiles = require("../src/utils/getMatchingFiles")
 const stylemark = require("../src/stylemark")
 
 const args = require("yargs")
