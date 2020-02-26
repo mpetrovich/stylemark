@@ -1,6 +1,5 @@
 const fs = require("fs")
 const path = require("path")
-const globby = require("globby")
 const mkdirp = require("mkdirp")
 const _ = require("lodash")
 const Library = require("./models/Library")
