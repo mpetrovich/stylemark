@@ -6,7 +6,7 @@ const Library = require("./models/Library")
 const getMatchingFiles = require("./utils/getMatchingFiles")
 const extractCommentBlocks = require("./parse/extractCommentBlocks")
 const parseComponent = require("./parse/parseComponent")
-const renderLibrary = require("./render/renderLibrary")
+const compileLibrary = require("./compile/compileLibrary")
 
 module.exports = ({ input, output, name, cwd }) => {
     const filepaths = getMatchingFiles(input, cwd)
@@ -17,7 +17,7 @@ module.exports = ({ input, output, name, cwd }) => {
     })
     const library = new Library({ name, components })
 
-    const html = renderLibrary(library)
+    const html = compileLibrary(library)
     mkdirp(output)
     fs.writeFileSync(path.join(output, "index.html"), html)
 }

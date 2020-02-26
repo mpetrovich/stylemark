@@ -1,6 +1,6 @@
 const fs = require("fs")
 const path = require("path")
-const renderComponent = require("./renderComponent")
+const compileComponent = require("./compileComponent")
 
 module.exports = library => `<!doctype html>
 <html>
@@ -9,7 +9,7 @@ module.exports = library => `<!doctype html>
 	<script>${fs.readFileSync(path.resolve(__dirname, "initializeSpecimenEmbed.js"), { encoding: "utf8" })}</script>
 </head>
 <body>
-	${library.components.map(renderComponent).join("")}
+	${library.components.map(compileComponent).join("")}
 </body>
 </html>
 `
