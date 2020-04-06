@@ -36,6 +36,8 @@
     },
     "main": "src/stylemark.js",
     "dependencies": {
+        "babel-core": "^6.26.3",
+        "babel-preset-react": "^6.24.1",
         "browser-sync": "^2.26.7",
         "globby": "^11.0.0",
         "gray-matter": "^4.0.2",

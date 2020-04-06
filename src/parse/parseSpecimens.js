@@ -1,8 +1,7 @@
 const visit = require("unist-util-visit")
-const parseFrontmatter = require("gray-matter")
-const fs = require("fs")
-const path = require("path")
 const _ = require("lodash")
+const babel = require("babel-core")
+const parseFrontmatter = require("gray-matter")
 const parseBlockNameAndLanguage = require("./parseBlockNameAndLanguage")
 const parseBlockFlags = require("./parseBlockFlags")
 const Block = require("../models/Block")
@@ -21,7 +20,10 @@ module.exports = () => (tree, file) => {
         const flags = parseBlockFlags(node.meta || "")
         const frontmatter = parseFrontmatter(node.value)
         const props = frontmatter.data
-        const content = frontmatter.content
+        const content =
+            node.lang === "jsx"
+                ? babel.transform(frontmatter.content, { presets: ["babel-preset-react"] }).code
+                : frontmatter.content
         const block = new Block({
             specimenName,
             language,

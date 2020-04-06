@@ -5,7 +5,9 @@ function initializeSpecimenEmbed(id, specimen) {
     const shadow = host.attachShadow({ mode: "open" })
 
     specimen.blocks.forEach(block => {
-        if (block.language === "html") {
+        if (block.language === "jsx") {
+            shadow.innerHTML += ReactDOM.render(block.content, shadow)
+        } else if (block.language === "html") {
             shadow.innerHTML += block.content
         } else if (block.language === "css") {
             const style = document.createElement("style")
