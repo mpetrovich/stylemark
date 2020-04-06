@@ -1,4 +1,4 @@
-# DEPRECATED in favor of [other tools with better support](https://blog.bitsrc.io/6-tools-for-documenting-your-react-components-like-a-pro-5027cdfb40c6).
+# DEPRECATED: No longer maintained. For alternatives, see https://bit.ly/39OzykR
 
 # Stylemark &nbsp; [![npm version](https://badge.fury.io/js/stylemark.svg)](https://badge.fury.io/js/stylemark) [![Build Status](https://travis-ci.org/nextbigsoundinc/stylemark.svg?branch=master)](https://travis-ci.org/nextbigsoundinc/stylemark)
 
