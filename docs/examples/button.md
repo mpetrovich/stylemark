@@ -19,7 +19,7 @@ button {
 ```
 
 ```basic-button.js
-$0.querySelector("button").addEventListener("click", e => alert("Clicked button"))
+$root.querySelector("button").addEventListener("click", e => alert("Clicked button"))
 ```
 
 ## Fancy button
@@ -36,5 +36,5 @@ button {
 ```
 
 ```fancy-button.js
-$0.querySelector("button").addEventListener("click", e => alert("Clicked fancy button"))
+$root.querySelector("button").addEventListener("click", e => alert("Clicked fancy button"))
 ```
