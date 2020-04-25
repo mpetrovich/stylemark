@@ -34,7 +34,7 @@
     "engines": {
         "node": ">=8.0"
     },
-    "main": "src/stylemark.js",
+    "main": "src/index.js",
     "dependencies": {
         "browser-sync": "^2.26.7",
         "debug": "^4.1.1",

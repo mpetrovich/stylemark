@@ -9,7 +9,7 @@ const chokidar = require("chokidar")
 const debug = require("debug")("stylemark:cli")
 const importFresh = require("import-fresh")
 const getMatchingFiles = require("../src/utils/getMatchingFiles")
-const stylemark = require("../src/stylemark")
+const stylemark = require("../src/index")
 
 const args = require("yargs")
     .command("$0 <config> [-w|--watch]", "", yargs => {
