@@ -37,8 +37,10 @@
     "main": "src/stylemark.js",
     "dependencies": {
         "browser-sync": "^2.26.7",
+        "debug": "^4.1.1",
         "globby": "^11.0.0",
         "gray-matter": "^4.0.2",
+        "import-fresh": "^3.2.1",
         "lodash": "^4.17.15",
         "mkdirp": "^1.0.3",
         "rehype-stringify": "^5.0.0",
