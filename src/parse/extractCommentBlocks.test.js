@@ -1,5 +1,4 @@
 import test from "ava"
-import { readFileSync } from "fs"
 import extractCommentBlocks from "./extractCommentBlocks"
 
 test("No comment blocks are extracted from content that contains none", async t => {
