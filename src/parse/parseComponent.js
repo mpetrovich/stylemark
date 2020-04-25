@@ -23,5 +23,10 @@ module.exports = markdown => {
         .runSync(markdownTree, file)
     const specimens = file.data.specimens
 
-    return frontmatter.name ? new Component({ metadata: frontmatter, specimens, markdown, markdownTree }) : null
+    if (!frontmatter.name) {
+        return null
+    }
+
+    const component = new Component({ metadata: frontmatter, specimens, markdown, markdownTree })
+    return component
 }
