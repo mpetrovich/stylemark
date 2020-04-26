@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 const fs = require("fs")
 const path = require("path")
 const compileComponent = require("./compileComponent")

@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-
 function initializeSpecimenEmbed(id, specimen) {
     const host = document.currentScript.parentElement
     const shadow = host.attachShadow({ mode: "open" })
