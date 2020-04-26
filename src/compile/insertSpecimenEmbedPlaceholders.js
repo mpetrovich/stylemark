@@ -5,7 +5,12 @@ const parseBlockNameAndType = require("../parse/parseBlockNameAndType")
 
 const renderableBlockTypes = ["html"]
 
-module.exports = ({ component, specimenEmbedNodeName }) => (tree, file) => {
+const insertNewNode = (nodes, index, nodeName, data) => {
+    const node = u(nodeName, data, "")
+    nodes.splice(index, 0, node)
+}
+
+module.exports = ({ component, nodeName }) => (tree, file) => {
     const specimensInsertedSoFar = new Set()
 
     visit(tree, "code", (node, index, parent) => {
@@ -19,10 +24,8 @@ module.exports = ({ component, specimenEmbedNodeName }) => (tree, file) => {
         }
 
         const specimen = _.find(component.specimens, { name: specimenName })
-        const specimenEmbedNode = u(specimenEmbedNodeName, { specimen }, "")
-        parent.children.splice(index, 0, specimenEmbedNode)
+        insertNewNode(parent.children, index, nodeName, { specimen })
         specimensInsertedSoFar.add(specimenName)
-
         return index + 2
     })
 }

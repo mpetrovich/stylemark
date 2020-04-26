@@ -8,7 +8,7 @@ const insertSpecimenEmbedScript = require("./insertSpecimenEmbedScript")
 
 module.exports = component => {
     const htmlTree = unified()
-        .use(insertSpecimenEmbedPlaceholders, { component, specimenEmbedNodeName: "specimen-embed" })
+        .use(insertSpecimenEmbedPlaceholders, { component, nodeName: "specimen-embed" })
         .use(removeHiddenBlocks)
         .use(removeBlockNames)
         .use(toHtmlTree, {
