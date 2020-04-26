@@ -17,7 +17,7 @@ function initializeSpecimenEmbed(id, specimen) {
             script.type = "text/javascript"
             script.textContent = `
                 (function() {
-                    const $root = document.getElementById("${id}").shadowRoot;
+                    const $document = document.getElementById("${id}").shadowRoot;
                     ${block.content}
                 })()`
             shadow.appendChild(script)
