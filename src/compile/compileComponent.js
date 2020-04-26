@@ -4,7 +4,7 @@ const toHtmlString = require("rehype-stringify")
 const removeHiddenBlocks = require("./removeHiddenBlocks")
 const removeBlockNames = require("./removeBlockNames")
 const insertSpecimenEmbedPlaceholders = require("./insertSpecimenEmbedPlaceholders")
-const replaceSpecimenEmbedPlaceholder = require("./replaceSpecimenEmbedPlaceholder")
+const insertSpecimenEmbedScript = require("./insertSpecimenEmbedScript")
 
 module.exports = component => {
     const htmlTree = unified()
@@ -12,7 +12,7 @@ module.exports = component => {
         .use(removeHiddenBlocks)
         .use(removeBlockNames)
         .use(toHtmlTree, {
-            handlers: { "specimen-embed": replaceSpecimenEmbedPlaceholder },
+            handlers: { "specimen-embed": insertSpecimenEmbedScript },
         })
         .runSync(component.markdownTree)
 
