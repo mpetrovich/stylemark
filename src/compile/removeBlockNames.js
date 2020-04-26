@@ -1,12 +1,12 @@
 const visit = require("unist-util-visit")
-const parseBlockNameAndLanguage = require("../parse/parseBlockNameAndLanguage")
+const parseBlockNameAndType = require("../parse/parseBlockNameAndType")
 
 module.exports = () => (tree, file) => {
     visit(tree, "code", node => {
-        const [name, language] = parseBlockNameAndLanguage(node.lang)
+        const [name, type] = parseBlockNameAndType(node.lang)
 
         if (name) {
-            node.lang = language
+            node.lang = type
         }
     })
 }

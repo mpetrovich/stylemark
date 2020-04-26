@@ -1,7 +1,7 @@
 module.exports = class {
-    constructor({ specimenName, language, content, flags, props }) {
+    constructor({ specimenName, type, content, flags, props }) {
         this.specimenName = specimenName
-        this.language = language
+        this.type = type
         this.content = content
         this.flags = flags || []
         this.props = props || {}

@@ -1,7 +1,7 @@
 const visit = require("unist-util-visit")
 const parseFrontmatter = require("gray-matter")
 const _ = require("lodash")
-const parseBlockNameAndLanguage = require("./parseBlockNameAndLanguage")
+const parseBlockNameAndType = require("./parseBlockNameAndType")
 const parseBlockFlags = require("./parseBlockFlags")
 const Block = require("../models/Block")
 const Specimen = require("../models/Specimen")
@@ -10,7 +10,7 @@ module.exports = () => (tree, file) => {
     const specimenBlocks = []
 
     visit(tree, "code", node => {
-        const [specimenName, language] = parseBlockNameAndLanguage(node.lang)
+        const [specimenName, type] = parseBlockNameAndType(node.lang)
 
         if (!specimenName) {
             return
@@ -22,7 +22,7 @@ module.exports = () => (tree, file) => {
         const content = frontmatter.content
         const block = new Block({
             specimenName,
-            language,
+            type,
             flags,
             props,
             content,

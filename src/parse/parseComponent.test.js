@@ -65,14 +65,14 @@ test("Specimens are parsed from named code blocks", async t => {
             blocks: [
                 new Block({
                     specimenName: "specimen-1",
-                    language: "html",
+                    type: "html",
                     flags: [],
                     props: {},
                     content: "<b>Specimen 1</b>",
                 }),
                 new Block({
                     specimenName: "specimen-1",
-                    language: "css",
+                    type: "css",
                     flags: [],
                     props: {},
                     content: "b { color: red }",
@@ -84,14 +84,14 @@ test("Specimens are parsed from named code blocks", async t => {
             blocks: [
                 new Block({
                     specimenName: "specimen-2",
-                    language: "html",
+                    type: "html",
                     flags: [],
                     props: {},
                     content: "<b>Specimen 2</b>",
                 }),
                 new Block({
                     specimenName: "specimen-2",
-                    language: "css",
+                    type: "css",
                     flags: [],
                     props: {},
                     content: "b { color: green }",
@@ -111,28 +111,28 @@ test("Specimen blocks can have arbitrary inline flags", async t => {
             blocks: [
                 new Block({
                     specimenName: "specimen",
-                    language: "html",
+                    type: "html",
                     flags: [],
                     props: {},
                     content: "<b>Specimen</b>",
                 }),
                 new Block({
                     specimenName: "specimen",
-                    language: "css",
+                    type: "css",
                     flags: ["hidden", "foo"],
                     props: {},
                     content: "b { color: red }",
                 }),
                 new Block({
                     specimenName: "specimen",
-                    language: "js",
+                    type: "js",
                     flags: ["bar", "not-hidden"],
                     props: {},
                     content: `var foo = 'not hidden'`,
                 }),
                 new Block({
                     specimenName: "specimen",
-                    language: "js",
+                    type: "js",
                     flags: ["foo", "hidden", "bar"],
                     props: {},
                     content: `var bar = 'hidden'`,
@@ -152,14 +152,14 @@ test("Specimen blocks can have arbitrary frontmatter props", async t => {
             blocks: [
                 new Block({
                     specimenName: "specimen",
-                    language: "html",
+                    type: "html",
                     flags: [],
                     props: { key: "value" },
                     content: "<b>Specimen</b>",
                 }),
                 new Block({
                     specimenName: "specimen",
-                    language: "css",
+                    type: "css",
                     flags: ["hidden"],
                     props: { key: "value", list: ["one", "two", "three"] },
                     content: "b { color: green }",
