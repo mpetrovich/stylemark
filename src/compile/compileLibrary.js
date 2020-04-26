@@ -10,10 +10,15 @@ module.exports = library => `<!doctype html>
 <html>
 <head>
     <title>${library.name}</title>
-	<script>${initSpecimenEmbedScript}</script>
+    <script>${initSpecimenEmbedScript}</script>
 </head>
 <body>
-	${library.components.map(compileComponent).join("")}
+    <nav>
+        ${library.components.map(component => `<a href="#">${component.metadata.name}</a>`).join("")}
+    </nav>
+    <main>
+        ${library.components.map(compileComponent).join("")}
+    </main>
 </body>
 </html>
 `
