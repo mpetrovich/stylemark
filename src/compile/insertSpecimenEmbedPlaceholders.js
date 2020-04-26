@@ -6,19 +6,22 @@ const parseBlockNameAndType = require("../parse/parseBlockNameAndType")
 const renderableBlockTypes = ["html"]
 
 module.exports = ({ component, specimenEmbedNodeName }) => (tree, file) => {
-    const hasBeenInserted = {}
+    const specimensInsertedSoFar = new Set()
 
     visit(tree, "code", (node, index, parent) => {
         const [specimenName, blockType] = parseBlockNameAndType(node.lang)
+        const isRenderable = renderableBlockTypes.includes(blockType)
+        const wasAlreadyInserted = specimensInsertedSoFar.has(specimenName)
+        const shouldBeInserted = specimenName && isRenderable && !wasAlreadyInserted
 
-        if (!specimenName || !renderableBlockTypes.includes(blockType) || hasBeenInserted[specimenName]) {
+        if (!shouldBeInserted) {
             return
         }
 
         const specimen = _.find(component.specimens, { name: specimenName })
         const specimenEmbedNode = u(specimenEmbedNodeName, { specimen }, "")
         parent.children.splice(index, 0, specimenEmbedNode)
-        hasBeenInserted[specimenName] = true
+        specimensInsertedSoFar.add(specimenName)
 
         return index + 2
     })

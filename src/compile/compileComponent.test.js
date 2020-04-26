@@ -90,3 +90,22 @@ test("Block names are stripped when compiled", async t => {
 </code></pre>`
     )
 })
+
+test("A single embed is inserted for specimens with multiple renderable blocks", async t => {
+    const markdown = readFileSync(`${__dirname}/compileComponent.test/with-multiple-renderable-blocks.input.md`, {
+        encoding: "utf8",
+    })
+    const component = parseComponent(markdown)
+
+    t.is(
+        compileComponent(component),
+        `<h1>First specimen</h1>
+<div id="specimen-one"><script>initializeSpecimenEmbed("specimen-one", {"name":"one","blocks":[{"specimenName":"one","type":"html","content":"<b>One</b>","flags":[],"props":{}},{"specimenName":"one","type":"html","content":"<b>Two</b>","flags":[],"props":{}},{"specimenName":"one","type":"css","content":"b { color: blue }","flags":[],"props":{}}]})</script></div>
+<pre><code class="language-html">&#x3C;b>One&#x3C;/b>
+</code></pre>
+<pre><code class="language-html">&#x3C;b>Two&#x3C;/b>
+</code></pre>
+<pre><code class="language-css">b { color: blue }
+</code></pre>`
+    )
+})
