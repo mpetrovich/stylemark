@@ -11,7 +11,7 @@ Generate interactive style guides from Markdown.
 
 ## Installation
 
-Stylemark requires Node.js v8+
+Requires Node.js v8+
 
 ```sh
 npm install stylemark
@@ -19,53 +19,57 @@ npm install stylemark
 
 ## Usage
 
-### On the command line
+### Command line
 
 ```sh
-npx stylemark <config filepath> [-w|--watch]
+npx stylemark <config> [-w|--watch]
 ```
 
-| Parameter       | Description                                       |
-| --------------- | ------------------------------------------------- |
-| `<config>`      | JS or JSON file containing a configuration object |
-| `-w`, `--watch` | Launches a hot-reloading styleguide in a browser  |
+| Parameter       | Description                                      |
+| --------------- | ------------------------------------------------ |
+| `<config>`      | JS or JSON configuration filepath                |
+| `-w`, `--watch` | Launches a hot-reloading styleguide in a browser |
 
-### In Node.js
+### Node.js
 
 ```js
 const stylemark = require("stylemark")
 
-stylemark({
-    /* see configuration below */
-})
+stylemark(/* see configuration below */)
 ```
 
 ## Configuration
 
-| Property | Type                       | Default               | Description                                                                                                                             |
-| -------- | -------------------------- | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `input`  | string or array of strings |                       | Input path globs. See [Globbing patterns](#globbing-patterns).                                                                          |
-| `output` | string                     |                       | Output directory path. Directories will be automatically created if they don't exist.                                                   |
-| `cwd`    | string                     | Config file directory | Base path that `input` and `output` paths are relative to. When using the command line, paths are resolved relative to the config file. |
-| `name`   | string                     | `Stylemark`           | Display name of the generated styleguide.                                                                                               |
-
-Example:
-
 ```js
 {
+    /*
+        String or array of filepath globs.
+
+        Globbing patterns:
+          *  matches any number of characters, but not /
+          ?  matches a single character, but not /
+          ** matches any number of characters, including /, as long as it's the only thing in a path part
+          {} allows for a comma-separated list of "or" expressions
+          !  at the beginning of a pattern will negate the match
+    */
     input: ["src/**/*.{js,md}", "!*.test.js"],
+
+    /*
+        Output directory path. Directories will be automatically created if they don't exist.
+    */
     output: "dist/styleguide",
+
+    /*
+        Base path that input and output paths are relative to. When using Stylemark on the command line, this will be automatically set to the directory containing the config file.
+    */
+    cwd: "../",
+
+    /*
+        Display name of the generated styleguide.
+    */
     name: "ACME Styleguide",
 }
 ```
-
-### Globbing patterns
-
--   `*` matches any number of characters, but not `/`
--   `?` matches a single character, but not `/`
--   `**` matches any number of characters, including `/`, as long as it's the only thing in a path part
--   `{}` allows for a comma-separated list of "or" expressions
--   `!` at the beginning of a pattern will negate the match
 
 ## Documenting components
 
