@@ -1,9 +1,5 @@
 module.exports = class {
-    constructor({ specimenName, type, content, flags, props }) {
-        this.specimenName = specimenName
-        this.type = type
-        this.content = content
-        this.flags = flags || []
-        this.props = props || {}
+    constructor({ specimenName, type, content, flags = [], props = {} }) {
+        Object.assign(this, { specimenName, type, content, flags, props })
     }
 }
