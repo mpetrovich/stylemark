@@ -52,25 +52,52 @@ const generateStyleguide = config => {
     stylemark(config)
 }
 
-const configPath = path.resolve(args.config)
-const config = loadAndParseConfig(configPath)
-generateStyleguide(config)
+const watchLocalFiles = config => {
+    const isLocalFile = str => str && /^(<|https?:|:\/\/)/.test(str) === false
+    const localFiles = [].concat(config.input, config.head, config.body, Object.keys(config.assets)).filter(isLocalFile)
 
-if (args.watch) {
-    chokidar.watch(input, { ignoreInitial: true, persistent: true }).on("all", () => {
-        debug(`Change detected in: ${input}`)
-        generateStyleguide(config)
-    })
-    chokidar.watch(configPath, { ignoreInitial: true, persistent: true }).on("all", () => {
-        debug(`Change detected in: ${configPath}`)
+    debug("Watching for changes in:", localFiles)
+    const watcher = chokidar
+        .watch(localFiles, { cwd: config.cwd, ignoreInitial: true, persistent: true })
+        .on("all", () => {
+            debug("Change detected in:", localFiles)
+            generateStyleguide(config)
+        })
+    return watcher
+}
+
+const watchConfig = (configPath, initialConfig) => {
+    chokidar.watch(configPath, { ignoreInitial: true, persistent: true }).on("all", async () => {
+        debug("Change detected in:", configPath)
         const config = loadAndParseConfig(configPath)
         generateStyleguide(config)
+
+        await watchConfig.localFileWatcher.close()
+        watchConfig.localFileWatcher = watchLocalFiles(config)
     })
+
+    watchConfig.localFileWatcher = watchLocalFiles(initialConfig)
+}
+
+const launchBrowser = config => {
     browser.create().init({
         ui: false,
-        files: path.resolve(output, "**", "*.*"),
+        files: path.resolve(config.output, "**", "*.*"),
         watchEvents: ["add", "change"],
-        server: output,
+        server: config.output,
         notify: false,
     })
 }
+
+const run = args => {
+    const configPath = path.resolve(args.config)
+    const config = loadAndParseConfig(configPath)
+    generateStyleguide(config)
+
+    if (args.watch) {
+        watchConfig(configPath, config)
+        launchBrowser(config)
+    }
+}
+
+run(args)
