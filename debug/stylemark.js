@@ -12,11 +12,12 @@ module.exports = {
         body: [
             "<script>console.log('inline body script')</script>",
             "external-body.js",
-            "jquery.js",
+            '<script src="jquery.js"></script>',
             '<script>$("body").css({background: "green"})</script>',
         ],
         assets: {
-            "images/stylemark.png": "logo.png",
+            "images/stylemark.png": "images/logo.png",
+            "assets/*.png": "images/",
             "robots.txt": true,
             "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.slim.min.js": "jquery.js",
         },

@@ -22,10 +22,13 @@
     "main": "src/index.js",
     "dependencies": {
         "browser-sync": "^2.26.7",
+        "cp-file": "^9.0.0",
+        "cpy": "^8.1.0",
         "debug": "^4.1.1",
         "globby": "^11.0.0",
         "gray-matter": "^4.0.2",
         "import-fresh": "^3.2.1",
+        "is-glob": "^4.0.1",
         "lodash": "^4.17.15",
         "mkdirp": "^1.0.3",
         "node-fetch": "^2.6.0",

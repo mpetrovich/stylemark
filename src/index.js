@@ -5,6 +5,9 @@ const fs = require("fs")
 const fetch = require("node-fetch")
 const path = require("path")
 const mkdirp = require("mkdirp")
+const cpy = require("cpy")
+const cpFile = require("cp-file")
+const isGlob = require("is-glob")
 const _ = require("lodash")
 const Library = require("./models/Library")
 const getMatchingFiles = require("./utils/getMatchingFiles")
@@ -65,10 +68,21 @@ const downloadRemoteAssetFiles = (theme, outputPath) => {
 
 const copyLocalAssetFiles = (theme, cwd, outputPath) => {
     const localAssets = _.pickBy(theme.assets, (to, from) => isLocalFile(from))
-    _.forEach(localAssets, (to, from) => {
+    _.forEach(localAssets, async (to, from) => {
+        const useSourcePath = to === true
         const src = path.resolve(cwd, from)
-        const dest = path.resolve(outputPath, to === true ? from : to)
-        fs.copyFileSync(src, dest)
+        const dest = path.resolve(outputPath, useSourcePath ? from : to)
+        try {
+            if (isGlob(from)) {
+                debug(`Copying files from "${cwd}/${from}" to "${dest}"`)
+                await cpy(from, dest, { cwd })
+            } else {
+                debug(`Copying file from "${src}" to "${dest}"`)
+                await cpFile(src, dest)
+            }
+        } catch (error) {
+            debug(`Error copying file(s) "${cwd}/${from}" to "${dest}":`, error)
+        }
     })
 }
 
@@ -80,7 +94,7 @@ const copyLocalHeadAndBodyFiles = (theme, cwd, outputPath) => {
         try {
             fs.copyFileSync(src, dest)
         } catch (error) {
-            debug(`Error copying file "${src}":`, error)
+            debug(`Error copying file "${src}" to "${dest}":`, error)
         }
     })
 }

@@ -32,7 +32,7 @@ module.exports = (library, theme) => {
     ${head.map(getTag).join("\n")}
 </head>
 <body>
-    <img src="logo.png">
+    <img src="images/logo.png">
     <nav>
         ${library.components.map(component => `<a href="#">${component.metadata.name}</a>`).join("")}
     </nav>

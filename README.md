@@ -53,13 +53,7 @@ stylemark(/* see configuration below */)
     /*
         String or array of filepath globs.
 
-        Globbing patterns:
-          *   matches any number of characters, but not /
-          ?   matches a single character, but not /
-          **  matches any number of characters, including /, as long as it's
-              the only thing in a path part
-          {}  allows for a comma-separated list of "or" expressions
-          !   at the beginning of a pattern will negate the match
+        See globbing patterns below.
     */
     input: ["src/**/*.{js,md}", "!*.test.js"],
 
@@ -110,19 +104,28 @@ stylemark(/* see configuration below */)
             Static assets to copy to the output directory.
 
             Key = Source path relative to the `input` setting above.
-                  Remote URLs will be downloaded.
+                  Remote URLs will be downloaded. Globs are supported.
 
             Value = Destination path relative to the `output` setting above.
                     Passing `true` will use the same relative path as the key.
         */
         assets: {
             "images/logo.png": "logo.png",
+            "assets/*.png": "images/",
             "robots.txt": true,
             "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.slim.min.js": "jquery.js"
         }
     }
 }
 ```
+
+### Globbing patterns
+
+-   `*` matches any number of characters, but not `/`
+-   `?` matches a single character, but not `/`
+-   `**` matches any number of characters, including `/`, as long as it's the only thing in a path part
+-   `{}` allows for a comma-separated list of "or" expressions
+-   `!` at the beginning of a pattern will negate the match
 
 ## Documenting components
 
