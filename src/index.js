@@ -14,6 +14,29 @@ const compileLibrary = require("./compile/compileLibrary")
 
 const requiredHeadAssets = [path.resolve(__dirname, "assets/initializeSpecimenEmbed.js")]
 
+const stylemark = ({ input, output, name, cwd, theme = {} }) => {
+    const outputPath = path.resolve(cwd, output)
+
+    theme = {
+        ...theme,
+        head: theme.head || [],
+        body: theme.body || [],
+        assets: theme.assets || [],
+    }
+    theme.head = theme.head.concat(requiredHeadAssets)
+
+    const library = parseLibrary(input, cwd, name)
+    outputLibrary(library, theme, outputPath)
+    copyThemeFiles(theme, cwd, outputPath)
+}
+
+const parseLibrary = (input, cwd, name) => {
+    const files = getMatchingFiles(input, cwd)
+    const components = parseComponents(files)
+    const library = new Library({ name, components })
+    return library
+}
+
 const parseComponents = files => {
     const components = _.flatMap(files, file => {
         const content = fs.readFileSync(file, { encoding: "utf8" })
@@ -23,31 +46,33 @@ const parseComponents = files => {
     return components
 }
 
-const downloadFile = (url, to) => {
-    fetch(url).then(response => {
-        const stream = fs.createWriteStream(to)
-        response.body.pipe(stream)
-    })
-}
-
-const isLocalFile = str => str && /^(<|https?:|:\/\/)/.test(str) === false
-const isUrl = str => /^https?:\/\//.test(str)
-
-module.exports = ({ input, output, name, cwd, theme = {} }) => {
-    const outputPath = path.resolve(cwd, output)
-
-    const inputFiles = getMatchingFiles(input, cwd)
-    const components = parseComponents(inputFiles)
-    const library = new Library({ name, components })
-
-    theme.head = (theme.head || []).concat(requiredHeadAssets)
-    theme.body = theme.body || []
-    theme.assets = theme.assets || []
-
+const outputLibrary = (library, theme, outputPath) => {
     const html = compileLibrary(library, theme)
     mkdirp.sync(outputPath)
     fs.writeFileSync(path.resolve(outputPath, "index.html"), html)
+}
 
+const copyThemeFiles = (theme, cwd, outputPath) => {
+    downloadRemoteAssetFiles(theme, outputPath)
+    copyLocalAssetFiles(theme, cwd, outputPath)
+    copyLocalHeadAndBodyFiles(theme, cwd, outputPath)
+}
+
+const downloadRemoteAssetFiles = (theme, outputPath) => {
+    const urlAssets = _.pickBy(theme.assets, (to, from) => isUrl(from))
+    _.forEach(urlAssets, (local, url) => downloadFile(url, path.resolve(outputPath, local)))
+}
+
+const copyLocalAssetFiles = (theme, cwd, outputPath) => {
+    const localAssets = _.pickBy(theme.assets, (to, from) => isLocalFile(from))
+    _.forEach(localAssets, (to, from) => {
+        const src = path.resolve(cwd, from)
+        const dest = path.resolve(outputPath, to === true ? from : to)
+        fs.copyFileSync(src, dest)
+    })
+}
+
+const copyLocalHeadAndBodyFiles = (theme, cwd, outputPath) => {
     const localHeadBodyFiles = [].concat(theme.head, theme.body).filter(isLocalFile)
     localHeadBodyFiles.forEach(file => {
         const src = path.resolve(cwd, file)
@@ -58,14 +83,19 @@ module.exports = ({ input, output, name, cwd, theme = {} }) => {
             debug(`Error copying file "${src}":`, error)
         }
     })
-
-    const urlAssets = _.pickBy(theme.assets, (to, from) => isUrl(from))
-    _.forEach(urlAssets, (local, url) => downloadFile(url, path.resolve(outputPath, local)))
-
-    const localAssets = _.pickBy(theme.assets, (to, from) => isLocalFile(from))
-    _.forEach(localAssets, (to, from) => {
-        const src = path.resolve(cwd, from)
-        const dest = path.resolve(outputPath, to === true ? from : to)
-        fs.copyFileSync(src, dest)
-    })
 }
+
+const isLocalFile = str => str && /^(<|https?:|:\/\/)/.test(str) === false
+const isUrl = str => /^https?:\/\//.test(str)
+
+const downloadFile = async (url, to) => {
+    try {
+        const response = await fetch(url)
+        const stream = fs.createWriteStream(to)
+        response.body.pipe(stream)
+    } catch (error) {
+        debug(`Error downloading URL "${url}" to file "${to}":`, error)
+    }
+}
+
+module.exports = stylemark
