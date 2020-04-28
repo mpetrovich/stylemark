@@ -9,6 +9,7 @@ const chokidar = require("chokidar")
 const debug = require("debug")("stylemark:cli")
 const importFresh = require("import-fresh")
 const getMatchingFiles = require("../src/utils/getMatchingFiles")
+const Config = require("../src/models/Config")
 const stylemark = require("../src/index")
 
 const args = require("yargs")
@@ -26,30 +27,17 @@ const args = require("yargs")
     }).argv
 
 const loadConfig = configPath => {
-    debug(`Loading config from: ${configPath}`)
-    const rawConfig = importFresh(configPath)
-    rawConfig.cwd = path.dirname(configPath)
-    debug("Loaded config", rawConfig)
-    return rawConfig
-}
+    debug("Loading config from:", configPath)
+    const raw = importFresh(configPath)
+    raw.cwd = path.dirname(configPath)
+    debug("Loaded config", raw)
 
-const parseConfig = rawConfig => {
-    const input = getMatchingFiles(rawConfig.input, rawConfig.cwd)
-    const output = path.isAbsolute(rawConfig.output) ? rawConfig.output : path.resolve(rawConfig.cwd, rawConfig.output)
-    const { cwd, name = "Stylemark", head = [], body = [], assets = [] } = rawConfig
-    const config = { input, output, cwd, name, head, body, assets }
+    raw.input = getMatchingFiles(raw.input, raw.cwd)
+    raw.output = path.isAbsolute(raw.output) ? raw.output : path.resolve(raw.cwd, raw.output)
+    const config = new Config(raw)
     debug("Parsed config", config)
+
     return config
-}
-
-const loadAndParseConfig = configPath => {
-    const rawConfig = loadConfig(configPath)
-    return parseConfig(rawConfig)
-}
-
-const generateStyleguide = config => {
-    debug("Generating styleguide", config)
-    stylemark(config)
 }
 
 const watchLocalFiles = config => {
@@ -61,7 +49,7 @@ const watchLocalFiles = config => {
         .watch(localFiles, { cwd: config.cwd, ignoreInitial: true, persistent: true })
         .on("all", () => {
             debug("Change detected in:", localFiles)
-            generateStyleguide(config)
+            stylemark(config)
         })
     return watcher
 }
@@ -69,8 +57,8 @@ const watchLocalFiles = config => {
 const watchConfig = (configPath, initialConfig) => {
     chokidar.watch(configPath, { ignoreInitial: true, persistent: true }).on("all", async () => {
         debug("Change detected in:", configPath)
-        const config = loadAndParseConfig(configPath)
-        generateStyleguide(config)
+        const config = loadConfig(configPath)
+        stylemark(config)
 
         await watchConfig.localFileWatcher.close()
         watchConfig.localFileWatcher = watchLocalFiles(config)
@@ -91,8 +79,8 @@ const launchBrowser = config => {
 
 const run = args => {
     const configPath = path.resolve(args.config)
-    const config = loadAndParseConfig(configPath)
-    generateStyleguide(config)
+    const config = loadConfig(configPath)
+    stylemark(config)
 
     if (args.watch) {
         watchConfig(configPath, config)

@@ -15,9 +15,11 @@ module.exports = {
         '<script>$("body").css({background: "green"})</script>',
     ],
     assets: {
-        "assets/stylemark.png": "images/logo.png",
         "assets/*.png": "images/",
         "robots.txt": true,
         "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.slim.min.js": "jquery.js",
+    },
+    themeOptions: {
+        logo: "assets/stylemark.png",
     },
 }

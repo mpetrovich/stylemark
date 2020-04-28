@@ -4,21 +4,28 @@ const debug = require("debug")("stylemark:processor")
 const fs = require("fs")
 const fetch = require("node-fetch")
 const path = require("path")
-const mkdirp = require("mkdirp")
-const cpy = require("cpy")
-const cpFile = require("cp-file")
-const isGlob = require("is-glob")
 const _ = require("lodash")
 const Config = require("./models/Config")
 const Library = require("./models/Library")
 const getMatchingFiles = require("./utils/getMatchingFiles")
+const copyMatchingFiles = require("./utils/copyMatchingFiles")
 const extractCommentBlocks = require("./parse/extractCommentBlocks")
 const parseComponent = require("./parse/parseComponent")
-const compileLibrary = require("./compile/compileLibrary")
+const defaultTheme = require("./themes/solo")
 
 const requiredHeadAssets = [path.resolve(__dirname, "assets/initializeSpecimenEmbed.js")]
 
-const stylemark = ({ input, output, cwd, name, head = [], body = [], assets = [] }) => {
+const stylemark = ({
+    input,
+    output,
+    cwd,
+    name,
+    head = [],
+    body = [],
+    assets = [],
+    theme = defaultTheme,
+    themeOptions = {},
+}) => {
     const config = new Config({
         input,
         output: path.resolve(cwd, output),
@@ -27,9 +34,12 @@ const stylemark = ({ input, output, cwd, name, head = [], body = [], assets = []
         head: head.concat(requiredHeadAssets),
         body,
         assets,
+        theme,
+        themeOptions,
     })
+    debug("Using config", config)
     const library = parseLibrary(config)
-    outputLibrary(library, config)
+    theme(library, config)
     copyThemeFiles(config)
 }
 
@@ -49,53 +59,30 @@ const parseComponents = files => {
     return components
 }
 
-const outputLibrary = (library, config) => {
-    const html = compileLibrary(library, config)
-    mkdirp.sync(config.output)
-    fs.writeFileSync(path.resolve(config.output, "index.html"), html)
-}
-
 const copyThemeFiles = config => {
-    downloadRemoteAssetFiles(config)
-    copyLocalAssetFiles(config)
+    downloadRemoteUrls(config)
+    copyLocalFiles(config)
     copyLocalHeadAndBodyFiles(config)
 }
 
-const downloadRemoteAssetFiles = config => {
-    const urlAssets = _.pickBy(config.assets, (to, from) => isUrl(from))
-    _.forEach(urlAssets, (local, url) => downloadFile(url, path.resolve(config.output, local)))
+const downloadRemoteUrls = config => {
+    const urls = _.pickBy(config.assets, (to, from) => isUrl(from))
+    _.forEach(urls, (local, url) => downloadFile(url, path.resolve(config.output, local)))
 }
 
-const copyLocalAssetFiles = config => {
-    const localAssets = _.pickBy(config.assets, (to, from) => isLocalFile(from))
-    _.forEach(localAssets, async (to, from) => {
-        const useSourcePath = to === true
-        const src = path.resolve(config.cwd, from)
-        const dest = path.resolve(config.output, useSourcePath ? from : to)
-        try {
-            if (isGlob(from)) {
-                debug(`Copying files from "${config.cwd}/${from}" to "${dest}"`)
-                await cpy(from, dest, { cwd: config.cwd })
-            } else {
-                debug(`Copying file from "${src}" to "${dest}"`)
-                await cpFile(src, dest)
-            }
-        } catch (error) {
-            debug(`Error copying file(s) "${config.cwd}/${from}" to "${dest}":`, error)
-        }
+const copyLocalFiles = config => {
+    const localFiles = _.pickBy(config.assets, (to, from) => isLocalFile(from))
+    _.forEach(localFiles, async (to, from) => {
+        to = path.resolve(config.output, to === true ? from : to)
+        copyMatchingFiles(config.cwd, from, to)
     })
 }
 
 const copyLocalHeadAndBodyFiles = config => {
     const localHeadBodyFiles = [].concat(config.head, config.body).filter(isLocalFile)
     localHeadBodyFiles.forEach(file => {
-        const src = path.resolve(config.cwd, file)
-        const dest = path.resolve(config.output, path.basename(file))
-        try {
-            fs.copyFileSync(src, dest)
-        } catch (error) {
-            debug(`Error copying file "${src}" to "${dest}":`, error)
-        }
+        const to = path.resolve(config.output, path.basename(file))
+        copyMatchingFiles(config.cwd, file, to)
     })
 }
 
