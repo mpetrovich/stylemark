@@ -43,6 +43,11 @@ stylemark(/* see configuration below */)
 ```js
 {
     /*
+        Base path that all paths in this config are relative to. When using Stylemark on the command line, this will be automatically set to the directory containing the config file.
+    */
+    cwd: "../",
+
+    /*
         String or array of filepath globs.
 
         Globbing patterns:
@@ -60,14 +65,31 @@ stylemark(/* see configuration below */)
     output: "dist/styleguide",
 
     /*
-        Base path that input and output paths are relative to. When using Stylemark on the command line, this will be automatically set to the directory containing the config file.
-    */
-    cwd: "../",
-
-    /*
         Display name of the generated styleguide.
     */
     name: "ACME Styleguide",
+
+    /*
+        Theme settings.
+    */
+    theme: {
+        /*
+            Elements and assets to append to the <head> tag. Bare URLs ending in .js or .css will be automatically wrapped in the appropriate <script> or <link> tags. Filepaths are resolved relative to the `cwd` setting above and will be automatically copied to the output directory.
+        */
+        head: [
+            `<meta name="google-site-verification" content="+nxGUDJ4QpAZ5l9Bsjdi102tLVC21AIh5d1Nl23908vVuFHs34=">`,
+            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js",
+            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css",
+        ],
+
+        /*
+            Elements and assets to append to the <body> tag. Bare URLs ending in .js or .css will be automatically wrapped in the appropriate <script> or <link> tags. Filepaths are resolved relative to the `cwd` setting above and will be automatically copied to the output directory.
+        */
+        body: [
+            `<script>window.foo = "bar"</script>`,
+            "dist/all.js",
+        ]
+    }
 }
 ```
 

@@ -27,45 +27,44 @@ const args = require("yargs")
 
 const loadConfig = configPath => {
     debug(`Loading config from: ${configPath}`)
-    const config = importFresh(configPath)
-    config.cwd = path.dirname(configPath)
-    debug("Loaded config", config)
+    const rawConfig = importFresh(configPath)
+    rawConfig.cwd = path.dirname(configPath)
+    debug("Loaded config", rawConfig)
+    return rawConfig
+}
+
+const parseConfig = rawConfig => {
+    const input = getMatchingFiles(rawConfig.input, rawConfig.cwd)
+    const output = path.isAbsolute(rawConfig.output) ? rawConfig.output : path.resolve(rawConfig.cwd, rawConfig.output)
+    const { cwd, theme, name = "Stylemark" } = rawConfig
+    const config = { input, output, cwd, name, theme }
+    debug("Parsed config", config)
     return config
 }
 
-const parseConfig = config => {
-    const input = getMatchingFiles(config.input, config.cwd)
-    const output = path.isAbsolute(config.output) ? config.output : path.resolve(config.cwd, config.output)
-    const name = config.name || "Stylemark"
-    const cwd = config.cwd
-    debug("Parsed config", { input, output, name, cwd })
-    return { input, output, name, cwd }
-}
-
 const loadAndParseConfig = configPath => {
-    const config = loadConfig(configPath)
-    const { input, output, name, cwd } = parseConfig(config)
-    return { input, output, name, cwd }
+    const rawConfig = loadConfig(configPath)
+    return parseConfig(rawConfig)
 }
 
-const generateStyleguide = ({ input, output, name, cwd }) => {
-    debug("Generating styleguide", { input, output, name, cwd })
-    stylemark({ input, output, name, cwd })
+const generateStyleguide = config => {
+    debug("Generating styleguide", config)
+    stylemark(config)
 }
 
 const configPath = path.resolve(args.config)
-const { input, output, name, cwd } = loadAndParseConfig(configPath)
-generateStyleguide({ input, output, name, cwd })
+const config = loadAndParseConfig(configPath)
+generateStyleguide(config)
 
 if (args.watch) {
     chokidar.watch(input, { ignoreInitial: true, persistent: true }).on("all", () => {
         debug(`Change detected in: ${input}`)
-        generateStyleguide({ input, output, name, cwd })
+        generateStyleguide(config)
     })
     chokidar.watch(configPath, { ignoreInitial: true, persistent: true }).on("all", () => {
         debug(`Change detected in: ${configPath}`)
-        const { input, output, name, cwd } = loadAndParseConfig(configPath)
-        generateStyleguide({ input, output, name, cwd })
+        const config = loadAndParseConfig(configPath)
+        generateStyleguide(config)
     })
     browser.create().init({
         ui: false,

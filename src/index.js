@@ -10,17 +10,39 @@ const extractCommentBlocks = require("./parse/extractCommentBlocks")
 const parseComponent = require("./parse/parseComponent")
 const compileLibrary = require("./compile/compileLibrary")
 
-module.exports = ({ input, output, name, cwd }) => {
-    const inputFilepaths = getMatchingFiles(input, cwd)
-    const components = _.flatMap(inputFilepaths, filepath => {
-        const content = fs.readFileSync(filepath, { encoding: "utf8" })
-        const isMarkdownFile = filepath.endsWith(".md") || filepath.endsWith(".markdown")
+const requiredHeadAssets = [path.resolve(__dirname, "assets/initializeSpecimenEmbed.js")]
+
+const parseComponents = files => {
+    const components = _.flatMap(files, file => {
+        const content = fs.readFileSync(file, { encoding: "utf8" })
+        const isMarkdownFile = file.endsWith(".md") || file.endsWith(".markdown")
         return isMarkdownFile ? parseComponent(content) : extractCommentBlocks(content).map(parseComponent)
     })
-    const library = new Library({ name, components })
-    const html = compileLibrary(library)
+    return components
+}
 
-    const outputFilepath = path.join(output, "index.html")
-    mkdirp(output)
-    fs.writeFileSync(outputFilepath, html)
+const copyFiles = (files, from, to) => {
+    files.forEach(file => {
+        const src = path.resolve(from, file)
+        const dest = path.resolve(to, path.basename(file))
+        fs.copyFileSync(src, dest)
+    })
+}
+
+const isLocalFile = str => /^(<|https?:|:\/\/)/.test(str) === false
+
+module.exports = ({ input, output, name, cwd, theme = {} }) => {
+    const inputFiles = getMatchingFiles(input, cwd)
+    const components = parseComponents(inputFiles)
+    const library = new Library({ name, components })
+
+    theme.head = (theme.head || []).concat(requiredHeadAssets)
+    theme.body = theme.body || []
+
+    const html = compileLibrary(library, theme)
+    mkdirp.sync(output)
+    fs.writeFileSync(path.resolve(output, "index.html"), html)
+
+    const localFiles = [].concat(theme.head, theme.body).filter(isLocalFile)
+    copyFiles(localFiles, cwd, path.resolve(cwd, output))
 }
