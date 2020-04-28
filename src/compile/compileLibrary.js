@@ -22,20 +22,24 @@ const getTag = asset => {
 }
 
 module.exports = (library, theme) => {
+    const head = theme.head || []
+    const body = theme.body || []
+
     return `<!doctype html>
 <html>
 <head>
     <title>${library.name}</title>
-    ${theme.head.map(getTag).join("\n")}
+    ${head.map(getTag).join("\n")}
 </head>
 <body>
+    <img src="logo.png">
     <nav>
         ${library.components.map(component => `<a href="#">${component.metadata.name}</a>`).join("")}
     </nav>
     <main>
         ${library.components.map(compileComponent).join("")}
     </main>
-    ${theme.body.map(getTag).join("\n")}
+    ${body.map(getTag).join("\n")}
 </body>
 </html>
 `

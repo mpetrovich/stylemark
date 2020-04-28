@@ -43,7 +43,9 @@ stylemark(/* see configuration below */)
 ```js
 {
     /*
-        Base path that all paths in this config are relative to. When using Stylemark on the command line, this will be automatically set to the directory containing the config file.
+        Base path that all paths in this config are relative to.
+
+        When using Stylemark on the command line, this will be automatically set to the directory containing the config file.
     */
     cwd: "../",
 
@@ -60,7 +62,9 @@ stylemark(/* see configuration below */)
     input: ["src/**/*.{js,md}", "!*.test.js"],
 
     /*
-        Output directory path. Directories will be automatically created if they don't exist.
+        Output directory path.
+
+        Directories will be automatically created if they don't exist.
     */
     output: "dist/styleguide",
 
@@ -74,7 +78,9 @@ stylemark(/* see configuration below */)
     */
     theme: {
         /*
-            Elements and assets to append to the <head> tag. Bare URLs ending in .js or .css will be automatically wrapped in the appropriate <script> or <link> tags. Filepaths are resolved relative to the `cwd` setting above and will be automatically copied to the output directory.
+            Elements and assets to append to the <head> tag.
+
+            Bare URLs ending in .js or .css will be automatically wrapped in the appropriate <script> or <link> tags. Filepaths are resolved relative to the `cwd` setting above and will be automatically copied to the output directory.
         */
         head: [
             `<meta name="google-site-verification" content="+nxGUDJ4QpAZ5l9Bsjdi102tLVC21AIh5d1Nl23908vVuFHs34=">`,
@@ -83,12 +89,26 @@ stylemark(/* see configuration below */)
         ],
 
         /*
-            Elements and assets to append to the <body> tag. Bare URLs ending in .js or .css will be automatically wrapped in the appropriate <script> or <link> tags. Filepaths are resolved relative to the `cwd` setting above and will be automatically copied to the output directory.
+            Elements and assets to append to the <body> tag.
+
+            Bare URLs ending in .js or .css will be automatically wrapped in the appropriate <script> or <link> tags. Filepaths are resolved relative to the `cwd` setting above and will be automatically copied to the output directory.
         */
         body: [
             `<script>window.foo = "bar"</script>`,
             "dist/all.js",
-        ]
+        ],
+
+        /*
+            Static assets to copy to the output directory.
+
+            Key = Source path relative to `input` setting. Remote URLs will be downloaded.
+            Value = Destination path relative to `output` setting. A value of `true` will use the same relative path as the key.
+        */
+        assets: {
+            "images/logo.png": "logo.png",
+            "robots.txt": true,
+            "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.slim.min.js": "jquery.js"
+        }
     }
 }
 ```

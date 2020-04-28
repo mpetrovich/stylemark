@@ -1,6 +1,8 @@
 /* istanbul ignore file */
 
+const debug = require("debug")("stylemark:processor")
 const fs = require("fs")
+const fetch = require("node-fetch")
 const path = require("path")
 const mkdirp = require("mkdirp")
 const _ = require("lodash")
@@ -21,28 +23,49 @@ const parseComponents = files => {
     return components
 }
 
-const copyFiles = (files, from, to) => {
-    files.forEach(file => {
-        const src = path.resolve(from, file)
-        const dest = path.resolve(to, path.basename(file))
-        fs.copyFileSync(src, dest)
+const downloadFile = (url, to) => {
+    fetch(url).then(response => {
+        const stream = fs.createWriteStream(to)
+        response.body.pipe(stream)
     })
 }
 
-const isLocalFile = str => /^(<|https?:|:\/\/)/.test(str) === false
+const isLocalFile = str => str && /^(<|https?:|:\/\/)/.test(str) === false
+const isUrl = str => /^https?:\/\//.test(str)
 
 module.exports = ({ input, output, name, cwd, theme = {} }) => {
+    const outputPath = path.resolve(cwd, output)
+
     const inputFiles = getMatchingFiles(input, cwd)
     const components = parseComponents(inputFiles)
     const library = new Library({ name, components })
 
     theme.head = (theme.head || []).concat(requiredHeadAssets)
     theme.body = theme.body || []
+    theme.assets = theme.assets || []
 
     const html = compileLibrary(library, theme)
-    mkdirp.sync(output)
-    fs.writeFileSync(path.resolve(output, "index.html"), html)
+    mkdirp.sync(outputPath)
+    fs.writeFileSync(path.resolve(outputPath, "index.html"), html)
 
-    const localFiles = [].concat(theme.head, theme.body).filter(isLocalFile)
-    copyFiles(localFiles, cwd, path.resolve(cwd, output))
+    const localHeadBodyFiles = [].concat(theme.head, theme.body).filter(isLocalFile)
+    localHeadBodyFiles.forEach(file => {
+        const src = path.resolve(cwd, file)
+        const dest = path.resolve(outputPath, path.basename(file))
+        try {
+            fs.copyFileSync(src, dest)
+        } catch (error) {
+            debug(`Error copying file "${src}":`, error)
+        }
+    })
+
+    const urlAssets = _.pickBy(theme.assets, (to, from) => isUrl(from))
+    _.forEach(urlAssets, (local, url) => downloadFile(url, path.resolve(outputPath, local)))
+
+    const localAssets = _.pickBy(theme.assets, (to, from) => isLocalFile(from))
+    _.forEach(localAssets, (to, from) => {
+        const src = path.resolve(cwd, from)
+        const dest = path.resolve(outputPath, to === true ? from : to)
+        fs.copyFileSync(src, dest)
+    })
 }
