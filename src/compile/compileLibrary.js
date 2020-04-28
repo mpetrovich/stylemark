@@ -21,10 +21,7 @@ const getTag = asset => {
     }
 }
 
-module.exports = (library, theme) => {
-    const head = theme.head || []
-    const body = theme.body || []
-
+module.exports = (library, { head, body }) => {
     return `<!doctype html>
 <html>
 <head>

@@ -36,8 +36,8 @@ const loadConfig = configPath => {
 const parseConfig = rawConfig => {
     const input = getMatchingFiles(rawConfig.input, rawConfig.cwd)
     const output = path.isAbsolute(rawConfig.output) ? rawConfig.output : path.resolve(rawConfig.cwd, rawConfig.output)
-    const { cwd, theme, name = "Stylemark" } = rawConfig
-    const config = { input, output, cwd, name, theme }
+    const { cwd, name = "Stylemark", head = [], body = [], assets = [] } = rawConfig
+    const config = { input, output, cwd, name, head, body, assets }
     debug("Parsed config", config)
     return config
 }

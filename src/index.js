@@ -17,23 +17,15 @@ const compileLibrary = require("./compile/compileLibrary")
 
 const requiredHeadAssets = [path.resolve(__dirname, "assets/initializeSpecimenEmbed.js")]
 
-const stylemark = ({ input, output, name, cwd, theme = {} }) => {
-    const outputPath = path.resolve(cwd, output)
-
-    theme = {
-        ...theme,
-        head: theme.head || [],
-        body: theme.body || [],
-        assets: theme.assets || [],
-    }
-    theme.head = theme.head.concat(requiredHeadAssets)
-
-    const library = parseLibrary(input, cwd, name)
-    outputLibrary(library, theme, outputPath)
-    copyThemeFiles(theme, cwd, outputPath)
+const stylemark = ({ input, output, name, cwd, head = [], body = [], assets = [] }) => {
+    const library = parseLibrary({ input, cwd, name })
+    output = path.resolve(cwd, output)
+    head = head.concat(requiredHeadAssets)
+    outputLibrary({ library, head, body, output })
+    copyThemeFiles({ head, body, assets, cwd, output })
 }
 
-const parseLibrary = (input, cwd, name) => {
+const parseLibrary = ({ input, cwd, name }) => {
     const files = getMatchingFiles(input, cwd)
     const components = parseComponents(files)
     const library = new Library({ name, components })
@@ -49,29 +41,29 @@ const parseComponents = files => {
     return components
 }
 
-const outputLibrary = (library, theme, outputPath) => {
-    const html = compileLibrary(library, theme)
-    mkdirp.sync(outputPath)
-    fs.writeFileSync(path.resolve(outputPath, "index.html"), html)
+const outputLibrary = ({ library, head, body, output }) => {
+    const html = compileLibrary(library, { head, body })
+    mkdirp.sync(output)
+    fs.writeFileSync(path.resolve(output, "index.html"), html)
 }
 
-const copyThemeFiles = (theme, cwd, outputPath) => {
-    downloadRemoteAssetFiles(theme, outputPath)
-    copyLocalAssetFiles(theme, cwd, outputPath)
-    copyLocalHeadAndBodyFiles(theme, cwd, outputPath)
+const copyThemeFiles = ({ head, body, assets, cwd, output }) => {
+    downloadRemoteAssetFiles({ assets, output })
+    copyLocalAssetFiles({ assets, cwd, output })
+    copyLocalHeadAndBodyFiles({ head, body, cwd, output })
 }
 
-const downloadRemoteAssetFiles = (theme, outputPath) => {
-    const urlAssets = _.pickBy(theme.assets, (to, from) => isUrl(from))
-    _.forEach(urlAssets, (local, url) => downloadFile(url, path.resolve(outputPath, local)))
+const downloadRemoteAssetFiles = ({ assets, output }) => {
+    const urlAssets = _.pickBy(assets, (to, from) => isUrl(from))
+    _.forEach(urlAssets, (local, url) => downloadFile(url, path.resolve(output, local)))
 }
 
-const copyLocalAssetFiles = (theme, cwd, outputPath) => {
-    const localAssets = _.pickBy(theme.assets, (to, from) => isLocalFile(from))
+const copyLocalAssetFiles = ({ assets, cwd, output }) => {
+    const localAssets = _.pickBy(assets, (to, from) => isLocalFile(from))
     _.forEach(localAssets, async (to, from) => {
         const useSourcePath = to === true
         const src = path.resolve(cwd, from)
-        const dest = path.resolve(outputPath, useSourcePath ? from : to)
+        const dest = path.resolve(output, useSourcePath ? from : to)
         try {
             if (isGlob(from)) {
                 debug(`Copying files from "${cwd}/${from}" to "${dest}"`)
@@ -86,11 +78,11 @@ const copyLocalAssetFiles = (theme, cwd, outputPath) => {
     })
 }
 
-const copyLocalHeadAndBodyFiles = (theme, cwd, outputPath) => {
-    const localHeadBodyFiles = [].concat(theme.head, theme.body).filter(isLocalFile)
+const copyLocalHeadAndBodyFiles = ({ head, body, cwd, output }) => {
+    const localHeadBodyFiles = [].concat(head, body).filter(isLocalFile)
     localHeadBodyFiles.forEach(file => {
         const src = path.resolve(cwd, file)
-        const dest = path.resolve(outputPath, path.basename(file))
+        const dest = path.resolve(output, path.basename(file))
         try {
             fs.copyFileSync(src, dest)
         } catch (error) {
