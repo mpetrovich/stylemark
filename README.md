@@ -46,7 +46,7 @@ stylemark(/* see configuration below */)
         Base path that all paths in this config are relative to.
 
         When using Stylemark on the command line, this will be automatically
-        set to the directory containing the config file.
+        default to the directory containing the config file.
     */
     cwd: "../",
 
