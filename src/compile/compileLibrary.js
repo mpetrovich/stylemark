@@ -21,12 +21,12 @@ const getTag = asset => {
     }
 }
 
-module.exports = (library, { head, body }) => {
+module.exports = (library, config) => {
     return `<!doctype html>
 <html>
 <head>
     <title>${library.name}</title>
-    ${head.map(getTag).join("\n")}
+    ${config.head.map(getTag).join("\n")}
 </head>
 <body>
     <img src="images/logo.png">
@@ -36,7 +36,7 @@ module.exports = (library, { head, body }) => {
     <main>
         ${library.components.map(compileComponent).join("")}
     </main>
-    ${body.map(getTag).join("\n")}
+    ${config.body.map(getTag).join("\n")}
 </body>
 </html>
 `
