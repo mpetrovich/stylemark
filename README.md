@@ -45,7 +45,8 @@ stylemark(/* see configuration below */)
     /*
         Base path that all paths in this config are relative to.
 
-        When using Stylemark on the command line, this will be automatically set to the directory containing the config file.
+        When using Stylemark on the command line, this will be automatically
+        set to the directory containing the config file.
     */
     cwd: "../",
 
@@ -53,11 +54,12 @@ stylemark(/* see configuration below */)
         String or array of filepath globs.
 
         Globbing patterns:
-          *  matches any number of characters, but not /
-          ?  matches a single character, but not /
-          ** matches any number of characters, including /, as long as it's the only thing in a path part
-          {} allows for a comma-separated list of "or" expressions
-          !  at the beginning of a pattern will negate the match
+          *   matches any number of characters, but not /
+          ?   matches a single character, but not /
+          **  matches any number of characters, including /, as long as it's
+              the only thing in a path part
+          {}  allows for a comma-separated list of "or" expressions
+          !   at the beginning of a pattern will negate the match
     */
     input: ["src/**/*.{js,md}", "!*.test.js"],
 
@@ -80,7 +82,10 @@ stylemark(/* see configuration below */)
         /*
             Elements and assets to append to the <head> tag.
 
-            Bare URLs ending in .js or .css will be automatically wrapped in the appropriate <script> or <link> tags. Filepaths are resolved relative to the `cwd` setting above and will be automatically copied to the output directory.
+            Bare URLs ending in .js or .css will be automatically wrapped in
+            the appropriate <script> or <link> tags. Filepaths are resolved
+            relative to the `cwd` setting above and will be automatically
+            copied to the output directory.
         */
         head: [
             `<meta name="google-site-verification" content="+nxGUDJ4QpAZ5l9Bsjdi102tLVC21AIh5d1Nl23908vVuFHs34=">`,
@@ -91,7 +96,10 @@ stylemark(/* see configuration below */)
         /*
             Elements and assets to append to the <body> tag.
 
-            Bare URLs ending in .js or .css will be automatically wrapped in the appropriate <script> or <link> tags. Filepaths are resolved relative to the `cwd` setting above and will be automatically copied to the output directory.
+            Bare URLs ending in .js or .css will be automatically wrapped in
+            the appropriate <script> or <link> tags. Filepaths are resolved
+            relative to the `cwd` setting above and will be automatically
+            copied to the output directory.
         */
         body: [
             `<script>window.foo = "bar"</script>`,
@@ -101,8 +109,11 @@ stylemark(/* see configuration below */)
         /*
             Static assets to copy to the output directory.
 
-            Key = Source path relative to `input` setting. Remote URLs will be downloaded.
-            Value = Destination path relative to `output` setting. A value of `true` will use the same relative path as the key.
+            Key = Source path relative to the `input` setting above.
+                  Remote URLs will be downloaded.
+
+            Value = Destination path relative to the `output` setting above.
+                    Passing `true` will use the same relative path as the key.
         */
         assets: {
             "images/logo.png": "logo.png",
