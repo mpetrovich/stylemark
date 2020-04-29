@@ -19,6 +19,7 @@ module.exports = {
         "robots.txt": true,
         "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.slim.min.js": "jquery.js",
     },
+    theme: require("../src/themes/solo"),
     themeOptions: {
         logo: "assets/stylemark.png",
     },
