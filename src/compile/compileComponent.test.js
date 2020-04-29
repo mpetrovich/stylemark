@@ -27,7 +27,7 @@ test("A component with specimens can be compiled", async t => {
     t.is(
         compileComponent(component),
         `<h1>First specimen</h1>
-<div id="specimen-one"><script>initializeSpecimenEmbed("specimen-one", {"name":"one","blocks":[{"specimenName":"one","type":"html","content":"<b>One</b>","flags":[],"props":{}},{"specimenName":"one","type":"js","content":"console.log('One')","flags":[],"props":{}},{"specimenName":"one","type":"css","content":"b { color: red }","flags":[],"props":{}}]})</script></div>
+<div><script>stylemark.initSpecimen({"name":"one","blocks":[{"specimenName":"one","type":"html","content":"<b>One</b>","flags":[],"props":{}},{"specimenName":"one","type":"js","content":"console.log('One')","flags":[],"props":{}},{"specimenName":"one","type":"css","content":"b { color: red }","flags":[],"props":{}}]})</script></div>
 <pre><code class="language-html">&#x3C;b>One&#x3C;/b>
 </code></pre>
 <pre><code class="language-js">console.log('One')
@@ -35,7 +35,7 @@ test("A component with specimens can be compiled", async t => {
 <pre><code class="language-css">b { color: red }
 </code></pre>
 <h1>Second specimen</h1>
-<div id="specimen-two"><script>initializeSpecimenEmbed("specimen-two", {"name":"two","blocks":[{"specimenName":"two","type":"html","content":"<b>Two</b>","flags":[],"props":{}},{"specimenName":"two","type":"js","content":"console.log('Two')","flags":[],"props":{}},{"specimenName":"two","type":"css","content":"b { color: green }","flags":[],"props":{}}]})</script></div>
+<div><script>stylemark.initSpecimen({"name":"two","blocks":[{"specimenName":"two","type":"html","content":"<b>Two</b>","flags":[],"props":{}},{"specimenName":"two","type":"js","content":"console.log('Two')","flags":[],"props":{}},{"specimenName":"two","type":"css","content":"b { color: green }","flags":[],"props":{}}]})</script></div>
 <pre><code class="language-html">&#x3C;b>Two&#x3C;/b>
 </code></pre>
 <pre><code class="language-js">console.log('Two')
@@ -54,13 +54,13 @@ test("Hidden specimen blocks are not compiled", async t => {
     t.is(
         compileComponent(component),
         `<h1>First specimen</h1>
-<div id="specimen-one"><script>initializeSpecimenEmbed("specimen-one", {"name":"one","blocks":[{"specimenName":"one","type":"html","content":"<b>One</b>","flags":[],"props":{}},{"specimenName":"one","type":"js","content":"console.log('One')","flags":[],"props":{}},{"specimenName":"one","type":"css","content":"b { color: red }","flags":["hidden"],"props":{}}]})</script></div>
+<div><script>stylemark.initSpecimen({"name":"one","blocks":[{"specimenName":"one","type":"html","content":"<b>One</b>","flags":[],"props":{}},{"specimenName":"one","type":"js","content":"console.log('One')","flags":[],"props":{}},{"specimenName":"one","type":"css","content":"b { color: red }","flags":["hidden"],"props":{}}]})</script></div>
 <pre><code class="language-html">&#x3C;b>One&#x3C;/b>
 </code></pre>
 <pre><code class="language-js">console.log('One')
 </code></pre>
 <h1>Second specimen</h1>
-<div id="specimen-two"><script>initializeSpecimenEmbed("specimen-two", {"name":"two","blocks":[{"specimenName":"two","type":"html","content":"<b>Two</b>","flags":["hidden"],"props":{}},{"specimenName":"two","type":"js","content":"console.log('Two')","flags":[],"props":{}},{"specimenName":"two","type":"css","content":"b { color: green }","flags":[],"props":{}}]})</script></div>
+<div><script>stylemark.initSpecimen({"name":"two","blocks":[{"specimenName":"two","type":"html","content":"<b>Two</b>","flags":["hidden"],"props":{}},{"specimenName":"two","type":"js","content":"console.log('Two')","flags":[],"props":{}},{"specimenName":"two","type":"css","content":"b { color: green }","flags":[],"props":{}}]})</script></div>
 <pre><code class="language-js">console.log('Two')
 </code></pre>
 <pre><code class="language-css">b { color: green }
@@ -77,13 +77,13 @@ test("Block names are stripped when compiled", async t => {
     t.is(
         compileComponent(component),
         `<h1>First specimen</h1>
-<div id="specimen-one"><script>initializeSpecimenEmbed("specimen-one", {"name":"one","blocks":[{"specimenName":"one","type":"html","content":"<b>One</b>","flags":[],"props":{}}]})</script></div>
+<div><script>stylemark.initSpecimen({"name":"one","blocks":[{"specimenName":"one","type":"html","content":"<b>One</b>","flags":[],"props":{}}]})</script></div>
 <pre><code class="language-html">&#x3C;b>One&#x3C;/b>
 </code></pre>
 <pre><code class="language-css">b { color: blue; }
 </code></pre>
 <h1>Second specimen</h1>
-<div id="specimen-two"><script>initializeSpecimenEmbed("specimen-two", {"name":"two","blocks":[{"specimenName":"two","type":"html","content":"<b>Two</b>","flags":[],"props":{}}]})</script></div>
+<div><script>stylemark.initSpecimen({"name":"two","blocks":[{"specimenName":"two","type":"html","content":"<b>Two</b>","flags":[],"props":{}}]})</script></div>
 <pre><code class="language-html">&#x3C;b>Two&#x3C;/b>
 </code></pre>
 <pre><code class="language-js">console.log("unrelated")
@@ -100,7 +100,7 @@ test("A single embed is inserted for specimens with multiple renderable blocks",
     t.is(
         compileComponent(component),
         `<h1>First specimen</h1>
-<div id="specimen-one"><script>initializeSpecimenEmbed("specimen-one", {"name":"one","blocks":[{"specimenName":"one","type":"html","content":"<b>One</b>","flags":[],"props":{}},{"specimenName":"one","type":"html","content":"<b>Two</b>","flags":[],"props":{}},{"specimenName":"one","type":"css","content":"b { color: blue }","flags":[],"props":{}}]})</script></div>
+<div><script>stylemark.initSpecimen({"name":"one","blocks":[{"specimenName":"one","type":"html","content":"<b>One</b>","flags":[],"props":{}},{"specimenName":"one","type":"html","content":"<b>Two</b>","flags":[],"props":{}},{"specimenName":"one","type":"css","content":"b { color: blue }","flags":[],"props":{}}]})</script></div>
 <pre><code class="language-html">&#x3C;b>One&#x3C;/b>
 </code></pre>
 <pre><code class="language-html">&#x3C;b>Two&#x3C;/b>

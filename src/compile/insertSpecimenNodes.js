@@ -10,7 +10,7 @@ const insertNewNode = (nodes, index, nodeName, data) => {
     nodes.splice(index, 0, node)
 }
 
-module.exports = ({ component, nodeName }) => (tree, file) => {
+module.exports = component => (tree, file) => {
     const specimensInsertedSoFar = new Set()
 
     visit(tree, "code", (node, index, parent) => {
@@ -24,7 +24,7 @@ module.exports = ({ component, nodeName }) => (tree, file) => {
         }
 
         const specimen = _.find(component.specimens, { name: specimenName })
-        insertNewNode(parent.children, index, nodeName, { specimen })
+        insertNewNode(parent.children, index, "specimen", { specimen })
         specimensInsertedSoFar.add(specimenName)
         return index + 2
     })

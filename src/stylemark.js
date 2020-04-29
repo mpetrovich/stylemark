@@ -11,7 +11,7 @@ const extractCommentBlocks = require("./parse/extractCommentBlocks")
 const parseComponent = require("./parse/parseComponent")
 const defaultTheme = require("./themes/solo")
 
-const requiredHeadAssets = [path.resolve(__dirname, "assets/initializeSpecimenEmbed.js")]
+const requiredHeadAssets = [path.resolve(__dirname, "assets/bootstrap.js")]
 
 const stylemark = ({
     input,
