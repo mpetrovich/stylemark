@@ -24,7 +24,7 @@ const stylemark = ({
     body = [],
     assets = [],
     theme = defaultTheme,
-    themeOptions = {},
+    themeConfig = {},
 }) => {
     const config = new Config({
         input,
@@ -35,7 +35,7 @@ const stylemark = ({
         body,
         assets,
         theme,
-        themeOptions,
+        themeConfig,
     })
     debug("Using config", config)
     const library = parseLibrary(config)

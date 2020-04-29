@@ -22,7 +22,7 @@ module.exports = {
         "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.slim.min.js": "jquery.js",
     },
     theme: themes.solo,
-    themeOptions: {
+    themeConfig: {
         logo: "assets/stylemark.png",
     },
 }

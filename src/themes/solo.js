@@ -15,9 +15,9 @@ const generateStyleguide = (library, config) => {
 
 const copyThemeFiles = config => {
     const themeFiles = {
-        logo: path.resolve(config.output, path.basename(config.themeOptions.logo)),
+        logo: path.resolve(config.output, path.basename(config.themeConfig.logo)),
     }
-    copyMatchingFiles(config.cwd, config.themeOptions.logo, themeFiles.logo)
+    copyMatchingFiles(config.cwd, config.themeConfig.logo, themeFiles.logo)
     return themeFiles
 }
 
