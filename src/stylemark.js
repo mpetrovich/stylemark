@@ -100,3 +100,16 @@ const downloadFile = async (url, to) => {
 }
 
 module.exports = stylemark
+module.exports.Config = require("./models/Config")
+module.exports.Block = require("./models/Block")
+module.exports.Component = require("./models/Component")
+module.exports.Specimen = require("./models/Specimen")
+module.exports.Library = require("./models/Library")
+module.exports.parseComponent = require("./parse/parseComponent")
+module.exports.compileComponent = require("./compile/compileComponent")
+module.exports.getMatchingFiles = require("./utils/getMatchingFiles")
+module.exports.copyMatchingFiles = require("./utils/copyMatchingFiles")
+module.exports.getAssetTag = require("./utils/getAssetTag")
+module.exports.themes = {
+    solo: require("./themes/solo"),
+}
