@@ -131,6 +131,26 @@ stylemark(/* see configuration below */)
     themeConfig: {
         logo: "images/logo.png",
     },
+
+    /*
+        Custom specimen renderers.
+
+        See custom specimens below.
+    */
+    specimenRenderers: [
+        {
+            test: specimen => specimen.blocks[0].type === "color",
+            html: specimen => `<div>${specimen.blocks[0].content}</div>`,
+            css: specimen => `div {
+                width: 50px;
+                height: 50px;
+                background: ${specimen.blocks[0].content};
+            }`,
+            js: specimen => `
+                $document.addEventListener("click", e => navigator.clipboard.writeText("${specimen.blocks[0].content}"))
+            `,
+        },
+    ]
 }
 ```
 
@@ -249,3 +269,7 @@ And classes used to model data:
 -   `Component`
 -   `Specimen`
 -   `Library`
+
+### Custom specimens
+
+TBD

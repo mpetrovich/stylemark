@@ -3,8 +3,6 @@ const u = require("unist-builder")
 const _ = require("lodash")
 const parseBlockNameAndType = require("../parse/parseBlockNameAndType")
 
-const renderableBlockTypes = ["html"]
-
 const insertNewNode = (nodes, index, nodeName, data) => {
     const node = u(nodeName, data, "")
     nodes.splice(index, 0, node)
@@ -15,9 +13,8 @@ module.exports = component => (tree, file) => {
 
     visit(tree, "code", (node, index, parent) => {
         const [specimenName, blockType] = parseBlockNameAndType(node.lang)
-        const isRenderable = renderableBlockTypes.includes(blockType)
         const wasAlreadyInserted = specimensInsertedSoFar.has(specimenName)
-        const shouldBeInserted = specimenName && isRenderable && !wasAlreadyInserted
+        const shouldBeInserted = specimenName && !wasAlreadyInserted
 
         if (!shouldBeInserted) {
             return

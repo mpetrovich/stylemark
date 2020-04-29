@@ -1,5 +1,5 @@
 const debug = require("debug")("stylemark:processor")
-const fs = require("fs")
+const fs = require("fs-extra")
 const fetch = require("node-fetch")
 const path = require("path")
 const _ = require("lodash")
@@ -11,7 +11,8 @@ const extractCommentBlocks = require("./parse/extractCommentBlocks")
 const parseComponent = require("./parse/parseComponent")
 const defaultTheme = require("./themes/solo")
 
-const requiredHeadAssets = [path.resolve(__dirname, "assets/bootstrap.js")]
+const requiredHeadAssets = [path.resolve(__dirname, "assets/bootstrap.js"), `<script src="renderers.js"></script>`]
+const defaultRenderers = [require("./specimens/htmlDemo")]
 
 const stylemark = ({
     input,
@@ -23,6 +24,7 @@ const stylemark = ({
     assets = [],
     theme = defaultTheme,
     themeConfig = {},
+    specimenRenderers = [],
 }) => {
     const config = new Config({
         input,
@@ -34,11 +36,14 @@ const stylemark = ({
         assets,
         theme,
         themeConfig,
+        specimenRenderers: specimenRenderers.concat(defaultRenderers),
     })
     debug("Using config", config)
     const library = parseLibrary(config)
+    debug("Parsed library", JSON.stringify(library))
     theme(library, config)
     copyThemeFiles(config)
+    outputRenderers(config)
 }
 
 const parseLibrary = config => {
@@ -95,6 +100,21 @@ const downloadFile = async (url, to) => {
     } catch (error) {
         debug(`Error downloading URL "${url}" to file "${to}":`, error)
     }
+}
+
+const outputRenderers = config => {
+    const renderersFile = path.resolve(config.output, "renderers.js")
+    debug("Saving specimen renderers to:", renderersFile)
+    fs.outputFileSync(
+        renderersFile,
+        `window.stylemark.renderers = [${config.specimenRenderers
+            .map(
+                renderer => `{
+                    ${_.map(renderer, (fn, name) => `${name}: ${fn.toString()}`).join(",")}
+                }`
+            )
+            .join(",")}]`
+    )
 }
 
 module.exports = stylemark

@@ -25,4 +25,18 @@ module.exports = {
     themeConfig: {
         logo: "assets/stylemark.png",
     },
+    specimenRenderers: [
+        {
+            test: specimen => specimen.blocks[0].type === "color",
+            html: specimen => `<div>${specimen.blocks[0].content}</div>`,
+            css: specimen => `div {
+                width: 50px;
+                height: 50px;
+                background: ${specimen.blocks[0].content};
+            }`,
+            js: specimen => `
+                $document.addEventListener("click", e => navigator.clipboard.writeText("${specimen.blocks[0].content}"))
+            `,
+        },
+    ],
 }
