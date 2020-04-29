@@ -19,7 +19,7 @@
     "engines": {
         "node": ">=8.0"
     },
-    "main": "src/index.js",
+    "main": "src/stylemark.js",
     "dependencies": {
         "browser-sync": "^2.26.7",
         "cp-file": "^9.0.0",

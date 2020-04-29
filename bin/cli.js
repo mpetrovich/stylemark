@@ -10,7 +10,7 @@ const debug = require("debug")("stylemark:cli")
 const importFresh = require("import-fresh")
 const getMatchingFiles = require("../src/utils/getMatchingFiles")
 const Config = require("../src/models/Config")
-const stylemark = require("../src/index")
+const stylemark = require("../src/stylemark")
 
 const args = require("yargs")
     .command("$0 <config> [-w|--watch]", "", yargs => {
