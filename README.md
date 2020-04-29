@@ -8,6 +8,7 @@ Generate interactive style guides from Markdown.
 -   [Usage](#usage)
 -   [Configuration](#configuration)
 -   [Documenting components](#documenting-components)
+-   [Customization](#customization)
 
 ## Installation
 
@@ -27,7 +28,7 @@ npx stylemark <config> [-w|--watch]
 
 | Parameter       | Description                                      |
 | --------------- | ------------------------------------------------ |
-| `<config>`      | JS or JSON configuration filepath                |
+| `<config>`      | JS or JSON configuration file                    |
 | `-w`, `--watch` | Launches a hot-reloading styleguide in a browser |
 
 ### Node.js
@@ -99,10 +100,10 @@ stylemark(/* see configuration below */)
     /*
         Static assets to copy to the output directory.
 
-        Key = Source path relative to the `input` setting above.
+        Key:    Source path relative to the `input` setting above.
                 Remote URLs will be downloaded. Globs are supported.
 
-        Value = Destination path relative to the `output` setting above.
+        Value:  Destination path relative to the `output` setting above.
                 Passing `true` will use the same relative path as the key.
     */
     assets: {
@@ -110,7 +111,26 @@ stylemark(/* see configuration below */)
         "assets/*.png": "images/",
         "robots.txt": true,
         "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.slim.min.js": "jquery.js"
-    }
+    },
+
+    /*
+        Theme function.
+
+        Accepts a (library, config), compiles it to HTML, and saves the result
+        to the output directory. Defaults to a built-in theme.
+
+        See theming below.
+    */
+    theme: stylemark.themes.solo,
+
+    /*
+        Theme configuration passed to the theme function above.
+
+        See theming below.
+    */
+    themeConfig: {
+        logo: "images/logo.png",
+    },
 }
 ```
 
@@ -180,3 +200,52 @@ Button sizes:
 <Button size="l">Large</Button>
 ```
 ````
+
+## Customization
+
+### Theming
+
+A theme is a function that compiles a given `(library, config)` into HTML and saves the result to the output directory.
+
+The simplest theme:
+
+```js
+const path = require("path")
+const fs = require("fs-extra")
+const { compileComponent, getAssetTag } = require("stylemark")
+
+module.exports = (library, config) => {
+    const html = `<!doctype html>
+<html>
+<head>
+    <title>${library.name}</title>
+    ${config.head.map(getAssetTag).join("\n")}
+</head>
+<body>
+    ${library.components.map(compileComponent).join("\n")}
+    ${config.body.map(getAssetTag).join("\n")}
+</body>
+</html>
+`
+    fs.outputFileSync(path.resolve(config.output, "index.html"), html)
+}
+```
+
+A theme has full control over how it compiles and outputs the styleguide. See `src/themes/` for more examples.
+
+Stylemark exposes a number of helpful utilities:
+
+-   `parseComponent`: TBD
+-   `compileComponent`: TBD
+-   `getMatchingFiles`: TBD
+-   `copyMatchingFiles`: TBD
+-   `getAssetTag`: TBD
+-   `themes`: Set of built-in theme functions, eg. `themes.solo`
+
+And classes used to model data:
+
+-   `Config`
+-   `Block`
+-   `Component`
+-   `Specimen`
+-   `Library`
