@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-/* istanbul ignore file */
-
 const path = require("path")
 const _ = require("lodash")
 const browser = require("browser-sync")

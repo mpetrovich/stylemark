@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-
 const path = require("path")
 const fs = require("fs-extra")
 const getAssetTag = require("../utils/getAssetTag")

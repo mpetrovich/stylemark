@@ -1,5 +1,3 @@
-/* istanbul ignore file */
-
 const debug = require("debug")("stylemark:processor")
 const fs = require("fs")
 const fetch = require("node-fetch")
