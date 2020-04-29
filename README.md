@@ -46,8 +46,8 @@ stylemark(/* see configuration below */)
     /*
         Base path that all paths in this config are relative to.
 
-        When using Stylemark on the command line, this will be automatically
-        default to the directory containing the config file.
+        When using Stylemark on the command line, this will default to the
+        directory containing the config file.
     */
     cwd: "../",
 
@@ -124,7 +124,7 @@ stylemark(/* see configuration below */)
     theme: stylemark.themes.solo,
 
     /*
-        Theme configuration passed to the theme function above.
+        Theme configuration passed to the theme function.
 
         See theming below.
     */
