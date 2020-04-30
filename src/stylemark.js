@@ -103,18 +103,19 @@ const downloadFile = async (url, to) => {
 }
 
 const outputRenderers = (config) => {
-    const renderersFile = path.resolve(config.output, "renderers.js")
-    debug("Saving specimen renderers to:", renderersFile)
-    fs.outputFileSync(
-        renderersFile,
-        `window.stylemark.renderers = [${config.specimenRenderers
-            .map(
-                (renderer) => `{
-                    ${_.map(renderer, (fn, name) => `${name}: ${fn.toString()}`).join(",")}
-                }`
-            )
-            .join(",")}]`
-    )
+    const filepath = path.resolve(config.output, "renderers.js")
+    debug("Saving specimen renderers to:", filepath)
+
+    const serializeArray = (array) => `[
+        ${array.map((item) => (Array.isArray(item) ? serializeArray(item) : serializeObject(item))).join(",")}
+    ]`
+    const serializeObject = (object) => `{
+        ${_.map(object, (value, key) => `${key}: ${serializeValue(value)}`).join(",")}
+    }`
+    const serializeValue = (value) => (_.isFunction(value) ? value.toString() : JSON.stringify(value))
+
+    const serializedRenderers = serializeArray(config.specimenRenderers)
+    fs.outputFileSync(filepath, `window.stylemark.renderers = ${serializedRenderers}`)
 }
 
 module.exports = stylemark

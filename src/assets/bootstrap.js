@@ -1,28 +1,33 @@
 const stylemark = {}
 
 stylemark.findSpecimenRenderer = (specimen) => {
-    let match = null
-    for (const renderer of stylemark.renderers) {
-        if (renderer.test(specimen)) {
-            match = renderer
+    let rendererFound = null,
+        options = {}
+
+    for (let renderer of stylemark.renderers) {
+        if (Array.isArray(renderer)) {
+            ;[renderer, options] = renderer
+        }
+        if (renderer.test(specimen, options)) {
+            rendererFound = renderer
         }
     }
-    return match
+    return [rendererFound, options]
 }
 
 stylemark.renderSpecimen = (specimen) => {
     const host = document.currentScript.parentElement
     const shadowRoot = host.attachShadow({ mode: "open" })
-    const renderer = stylemark.findSpecimenRenderer(specimen)
+    const [renderer, options] = stylemark.findSpecimenRenderer(specimen)
 
     if (!renderer) {
         console.error("No renderer found for specimen", specimen)
         return
     }
 
-    const html = renderer.html ? renderer.html(specimen) : null
-    const css = renderer.css ? renderer.css(specimen) : null
-    const js = renderer.js ? renderer.js(specimen) : null
+    const html = renderer.html ? renderer.html(specimen, options) : null
+    const css = renderer.css ? renderer.css(specimen, options) : null
+    const js = renderer.js ? renderer.js(specimen, options) : null
 
     if (html) {
         shadowRoot.innerHTML += html

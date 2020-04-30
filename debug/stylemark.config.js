@@ -1,5 +1,18 @@
 const { themes } = require("../src/stylemark")
 
+const colorSpecimen = {
+    test: (specimen) => specimen.blocks[0].type === "color",
+    html: (specimen) => `<div>${specimen.blocks[0].content}</div>`,
+    css: (specimen, { width = "50px", height = "50px" } = {}) => `div {
+        width: ${width};
+        height: ${height};
+        background: ${specimen.blocks[0].content};
+    }`,
+    js: (specimen) => `
+        $document.addEventListener("click", e => navigator.clipboard.writeText("${specimen.blocks[0].content}"))
+    `,
+}
+
 module.exports = {
     input: "*.{js,md}",
     output: "../dist",
@@ -25,18 +38,5 @@ module.exports = {
     themeConfig: {
         logo: "assets/stylemark.png",
     },
-    specimenRenderers: [
-        {
-            test: specimen => specimen.blocks[0].type === "color",
-            html: specimen => `<div>${specimen.blocks[0].content}</div>`,
-            css: specimen => `div {
-                width: 50px;
-                height: 50px;
-                background: ${specimen.blocks[0].content};
-            }`,
-            js: specimen => `
-                $document.addEventListener("click", e => navigator.clipboard.writeText("${specimen.blocks[0].content}"))
-            `,
-        },
-    ],
+    specimenRenderers: [[colorSpecimen, { width: "100px", height: "50px" }]],
 }
