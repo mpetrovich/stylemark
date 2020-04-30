@@ -1,9 +1,9 @@
-import test from "ava"
-import { readFileSync } from "fs"
-import parseComponent from "../parse/parseComponent"
-import compileComponent from "./compileComponent"
+const test = require("ava")
+const { readFileSync } = require("fs")
+const parseComponent = require("../parse/parseComponent")
+const compileComponent = require("./compileComponent")
 
-test("A component without specimens can be compiled", async t => {
+test("A component without specimens can be compiled", async (t) => {
     const markdown = `
 ---
 name: Component Name
@@ -20,7 +20,7 @@ This is a paragraph.
     )
 })
 
-test("A component with specimens can be compiled", async t => {
+test("A component with specimens can be compiled", async (t) => {
     const markdown = readFileSync(`${__dirname}/compileComponent.test/with-specimens.input.md`, { encoding: "utf8" })
     const component = parseComponent(markdown)
 
@@ -45,7 +45,7 @@ test("A component with specimens can be compiled", async t => {
     )
 })
 
-test("Hidden specimen blocks are not compiled", async t => {
+test("Hidden specimen blocks are not compiled", async (t) => {
     const markdown = readFileSync(`${__dirname}/compileComponent.test/with-hidden-blocks.input.md`, {
         encoding: "utf8",
     })
@@ -68,7 +68,7 @@ test("Hidden specimen blocks are not compiled", async t => {
     )
 })
 
-test("Block names are stripped when compiled", async t => {
+test("Block names are stripped when compiled", async (t) => {
     const markdown = readFileSync(`${__dirname}/compileComponent.test/with-named-and-unnamed-blocks.input.md`, {
         encoding: "utf8",
     })
@@ -91,7 +91,7 @@ test("Block names are stripped when compiled", async t => {
     )
 })
 
-test("A single embed is inserted for specimens with multiple renderable blocks", async t => {
+test("A single embed is inserted for specimens with multiple renderable blocks", async (t) => {
     const markdown = readFileSync(`${__dirname}/compileComponent.test/with-multiple-renderable-blocks.input.md`, {
         encoding: "utf8",
     })

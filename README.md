@@ -12,7 +12,7 @@ Generate interactive style guides from Markdown.
 
 ## Installation
 
-Requires Node.js v8+
+Requires Node.js v10.20+
 
 ```sh
 npm install stylemark

@@ -1,10 +1,10 @@
-import test from "ava"
-import { readFileSync } from "fs"
-import parseComponent from "./parseComponent"
-import Block from "../models/Block"
-import Specimen from "../models/Specimen"
+const test = require("ava")
+const { readFileSync } = require("fs")
+const parseComponent = require("./parseComponent")
+const Block = require("../models/Block")
+const Specimen = require("../models/Specimen")
 
-test("No component is parsed from markdown that does not have frontmatter", async t => {
+test("No component is parsed from markdown that does not have frontmatter", async (t) => {
     const markdown = `
 # This is a heading
 
@@ -15,7 +15,7 @@ This is a paragraph.
     t.is(component, null)
 })
 
-test("No component is parsed from markdown that has frontmatter but no name property", async t => {
+test("No component is parsed from markdown that has frontmatter but no name property", async (t) => {
     const markdown = `
 ---
 category: Component Category
@@ -30,7 +30,7 @@ This is a paragraph.
     t.is(component, null)
 })
 
-test("A component is parsed from markdown that has frontmatter with a name property", async t => {
+test("A component is parsed from markdown that has frontmatter with a name property", async (t) => {
     const markdown = `
 ---
 name: Component Name
@@ -55,7 +55,7 @@ This is a paragraph.
     })
 })
 
-test("Specimens are parsed from named code blocks", async t => {
+test("Specimens are parsed from named code blocks", async (t) => {
     const markdown = readFileSync(`${__dirname}/parseComponent.test/specimens.input.md`, { encoding: "utf8" })
     const component = parseComponent(markdown)
 
@@ -101,7 +101,7 @@ test("Specimens are parsed from named code blocks", async t => {
     ])
 })
 
-test("Specimen blocks can have arbitrary inline flags", async t => {
+test("Specimen blocks can have arbitrary inline flags", async (t) => {
     const markdown = readFileSync(`${__dirname}/parseComponent.test/specimen-flags.input.md`, { encoding: "utf8" })
     const component = parseComponent(markdown)
 
@@ -142,7 +142,7 @@ test("Specimen blocks can have arbitrary inline flags", async t => {
     ])
 })
 
-test("Specimen blocks can have arbitrary frontmatter props", async t => {
+test("Specimen blocks can have arbitrary frontmatter props", async (t) => {
     const markdown = readFileSync(`${__dirname}/parseComponent.test/specimen-props.input.md`, { encoding: "utf8" })
     const component = parseComponent(markdown)
 
