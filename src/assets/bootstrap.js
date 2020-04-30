@@ -40,10 +40,10 @@ stylemark.renderSpecimen = (specimen) => {
         const script = document.createElement("script")
         script.type = "text/javascript"
         script.textContent = `(function() {
-    const scripts = document.getElementsByTagName("script");
-    const $document = scripts[scripts.length - 1].parentNode.shadowRoot;
-    ${js}
-})()`
+            const scripts = window.document.getElementsByTagName("script");
+            const document = scripts[scripts.length - 1].parentNode.shadowRoot;
+            ${js}
+        })()`
         shadowRoot.appendChild(script)
     }
 }

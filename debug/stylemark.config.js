@@ -13,7 +13,7 @@ const colorSpecimen = {
         background: ${specimen.blocks[0].content};
     }`,
     js: (specimen) => `
-        $document.addEventListener("click", e => navigator.clipboard.writeText("${specimen.blocks[0].content}"))
+        document.addEventListener("click", e => navigator.clipboard.writeText("${specimen.blocks[0].content}"))
     `,
 }
 

@@ -146,8 +146,8 @@ stylemark(/* see configuration below */)
                 height: 50px;
                 background: ${specimen.blocks[0].content};
             }`,
-            js: specimen => `
-                $document.addEventListener("click", e => navigator.clipboard.writeText("${specimen.blocks[0].content}"))
+            js: (specimen) => `
+                document.addEventListener("click", e => navigator.clipboard.writeText("${specimen.blocks[0].content}"))
             `,
         },
     ]

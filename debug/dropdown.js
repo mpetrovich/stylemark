@@ -24,7 +24,7 @@ select {
 ```
 
 ```basic-dropdown.js
-$document.querySelector("select").addEventListener("change", e => alert(`Selected ${e.target.value}`))
+document.querySelector("select").addEventListener("change", e => alert(`Selected ${e.target.value}`))
 ```
 
 ## Fancy dropdown
@@ -46,7 +46,7 @@ select {
 ```
 
 ```fancy-dropdown.js
-$document.querySelector("select").addEventListener("change", e => alert(`Selected fancy ${e.target.value}`))
+document.querySelector("select").addEventListener("change", e => alert(`Selected fancy ${e.target.value}`))
 ```
 */
 export class dropdown {
