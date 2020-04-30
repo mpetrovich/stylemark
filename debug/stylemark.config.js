@@ -43,8 +43,5 @@ module.exports = {
     themeConfig: {
         logo: "assets/stylemark.png",
     },
-    specimenTypes: [
-        [colorSpecimen, { width: "100px" }],
-        [htmlSpecimen, { prefix: "FOO: " }],
-    ],
+    specimenTypes: [[colorSpecimen, { width: "100px" }], htmlSpecimen],
 }
