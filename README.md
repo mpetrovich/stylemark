@@ -1,6 +1,6 @@
 # Stylemark &nbsp; [![npm version](https://badge.fury.io/js/stylemark.svg)](https://badge.fury.io/js/stylemark) [![Build Status](https://travis-ci.org/nextbigsoundinc/stylemark.svg?branch=master)](https://travis-ci.org/nextbigsoundinc/stylemark)
 
-**A living style guide generator for everything.** CSS, LESS, SASS, JS, React, Angular, Ember&mdash;you name it.
+**Generate interactive style guides from Markdown.**
 
 Document your style guide components in code comments or Markdown files, and Stylemark will generate a static HTML site with live, interactive components.
 

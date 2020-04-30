@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+    <title>Test Styleguide</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500&display=swap">
+<style>body { background: #f0f0f0; }</style>
+<script>console.log('inline head script')</script>
+<script src="external-head.js"></script>
+<script src="bootstrap.js"></script>
+<script src="specimen-types.js"></script>
+</head>
+<body>
+    <img src="/Users/mpetrovich/Code/stylemark/stylemark/dist/stylemark.png">
+    <nav>
+        <a href="#">Button</a><a href="#">Color</a><a href="#">Dropdown</a>
+    </nav>
+    <main>
+        <p>This is a button component.</p>
+<h2>Basic button</h2>
+<div><script>stylemark.renderSpecimen({"name":"basic-button","blocks":[{"specimenName":"basic-button","type":"html","content":"<button>Click me</button>","flags":[],"props":{}},{"specimenName":"basic-button","type":"css","content":"button {\n\tcolor: white;\n\tbackground-color: green;\n}","flags":[],"props":{}},{"specimenName":"basic-button","type":"js","content":"document.querySelector(\"button\").addEventListener(\"click\", e => alert(\"Clicked button\"))","flags":[],"props":{}}]})</script></div>
+<pre><code class="language-html">&#x3C;button>Click me&#x3C;/button>
+</code></pre>
+<pre><code class="language-css">button {
+    color: white;
+    background-color: green;
+}
+</code></pre>
+<pre><code class="language-js">document.querySelector("button").addEventListener("click", e => alert("Clicked button"))
+</code></pre>
+<h2>Fancy button</h2>
+<div><script>stylemark.renderSpecimen({"name":"fancy-button","blocks":[{"specimenName":"fancy-button","type":"html","content":"<button>Fancy button</button>","flags":[],"props":{}},{"specimenName":"fancy-button","type":"css","content":"button {\n\tcolor: white;\n\tbackground-color: red;\n}","flags":[],"props":{}},{"specimenName":"fancy-button","type":"js","content":"document.querySelector(\"button\").addEventListener(\"click\", e => alert(\"Clicked fancy button\"))","flags":[],"props":{}}]})</script></div>
+<pre><code class="language-html">&#x3C;button>Fancy button&#x3C;/button>
+</code></pre>
+<pre><code class="language-css">button {
+    color: white;
+    background-color: red;
+}
+</code></pre>
+<pre><code class="language-js">document.querySelector("button").addEventListener("click", e => alert("Clicked fancy button"))
+</code></pre>
+<p>This is a color component.</p>
+<h2>Primary colors</h2>
+<div><script>stylemark.renderSpecimen({"name":"primary","blocks":[{"specimenName":"primary","type":"color","content":"#f00","flags":[],"props":{}}]})</script></div>
+<pre><code class="language-color">#f00
+</code></pre>
+<p>This is a dropdown component.</p>
+<h2>Basic dropdown</h2>
+<div><script>stylemark.renderSpecimen({"name":"basic-dropdown","blocks":[{"specimenName":"basic-dropdown","type":"html","content":"<select name=\"dropdown\">\n\t<option>Select</option>\n\t<option>Option A</option>\n\t<option>Option B</option>\n\t<option>Option C</option>\n</select>","flags":[],"props":{}},{"specimenName":"basic-dropdown","type":"css","content":"select {\n\tfont-size: 1.5em;\n}","flags":[],"props":{}},{"specimenName":"basic-dropdown","type":"js","content":"document.querySelector(\"select\").addEventListener(\"change\", e => alert(`Selected ${e.target.value}`))","flags":[],"props":{}}]})</script></div>
+<pre><code class="language-html">&#x3C;select name="dropdown">
+    &#x3C;option>Select&#x3C;/option>
+    &#x3C;option>Option A&#x3C;/option>
+    &#x3C;option>Option B&#x3C;/option>
+    &#x3C;option>Option C&#x3C;/option>
+&#x3C;/select>
+</code></pre>
+<pre><code class="language-css">select {
+    font-size: 1.5em;
+}
+</code></pre>
+<pre><code class="language-js">document.querySelector("select").addEventListener("change", e => alert(`Selected ${e.target.value}`))
+</code></pre>
+<h2>Fancy dropdown</h2>
+<div><script>stylemark.renderSpecimen({"name":"fancy-dropdown","blocks":[{"specimenName":"fancy-dropdown","type":"html","content":"<select name=\"dropdown\">\n\t<option>Select</option>\n\t<option>Option A</option>\n\t<option>Option B</option>\n\t<option>Option C</option>\n</select>","flags":[],"props":{}},{"specimenName":"fancy-dropdown","type":"css","content":"select {\n\tfont-size: 1.5em;\n\tbackground-color: red;\n}","flags":[],"props":{}},{"specimenName":"fancy-dropdown","type":"js","content":"document.querySelector(\"select\").addEventListener(\"change\", e => alert(`Selected fancy ${e.target.value}`))","flags":[],"props":{}}]})</script></div>
+<pre><code class="language-html">&#x3C;select name="dropdown">
+    &#x3C;option>Select&#x3C;/option>
+    &#x3C;option>Option A&#x3C;/option>
+    &#x3C;option>Option B&#x3C;/option>
+    &#x3C;option>Option C&#x3C;/option>
+&#x3C;/select>
+</code></pre>
+<pre><code class="language-css">select {
+    font-size: 1.5em;
+    background-color: red;
+}
+</code></pre>
+<pre><code class="language-js">document.querySelector("select").addEventListener("change", e => alert(`Selected fancy ${e.target.value}`))
+</code></pre>
+    </main>
+    <script>console.log('inline body script')</script>
+<script src="external-body.js"></script>
+<script src="jquery.js"></script>
+<script>$("body").css({background: "green"})</script>
+</body>
+</html>
