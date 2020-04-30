@@ -1,29 +1,29 @@
 const stylemark = {}
 
-stylemark.findSpecimenRenderer = (specimen) => {
-    const normalizedRenderers = stylemark.renderers.map((item) => (Array.isArray(item) ? item : [item, {}]))
-    const match = normalizedRenderers.find(([renderer, options]) => renderer.test(specimen, options))
+stylemark.findSpecimenType = (specimen) => {
+    const normalizedTypes = stylemark.specimenTypes.map((item) => (Array.isArray(item) ? item : [item, {}]))
+    const match = normalizedTypes.find(([typeConfig, options]) => typeConfig.test(specimen, options))
     if (!match) {
         return null
     }
-    const [renderer, options] = match
-    const resolvedOptions = Object.assign({}, renderer.defaultOptions, options)
-    return [renderer, resolvedOptions]
+    const [typeConfig, options] = match
+    const resolvedOptions = Object.assign({}, typeConfig.defaultOptions, options)
+    return [typeConfig, resolvedOptions]
 }
 
 stylemark.renderSpecimen = (specimen) => {
     const host = document.currentScript.parentElement
     const shadowRoot = host.attachShadow({ mode: "open" })
-    const [renderer, options] = stylemark.findSpecimenRenderer(specimen)
+    const [typeConfig, options] = stylemark.findSpecimenType(specimen)
 
-    if (!renderer) {
-        console.error("No renderer found for specimen", specimen)
+    if (!typeConfig) {
+        console.error("No typeConfig found for specimen", specimen)
         return
     }
 
-    const html = renderer.html ? renderer.html(specimen, options) : null
-    const css = renderer.css ? renderer.css(specimen, options) : null
-    const js = renderer.js ? renderer.js(specimen, options) : null
+    const html = typeConfig.html ? typeConfig.html(specimen, options) : null
+    const css = typeConfig.css ? typeConfig.css(specimen, options) : null
+    const js = typeConfig.js ? typeConfig.js(specimen, options) : null
 
     if (html) {
         shadowRoot.innerHTML += html

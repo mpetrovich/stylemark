@@ -1,4 +1,5 @@
-const { themes } = require("../src/stylemark")
+const themes = require("../src/themes/all")
+const htmlSpecimen = require("../src/specimens/html")
 
 const colorSpecimen = {
     defaultOptions: {
@@ -42,5 +43,8 @@ module.exports = {
     themeConfig: {
         logo: "assets/stylemark.png",
     },
-    specimenRenderers: [[colorSpecimen, { width: "100px" }]],
+    specimenTypes: [
+        [colorSpecimen, { width: "100px" }],
+        [htmlSpecimen, { prefix: "FOO: " }],
+    ],
 }

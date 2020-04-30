@@ -6,7 +6,7 @@ const compileComponent = require("../compile/compileComponent")
 
 module.exports = (library, config) => {
     const logo = path.resolve(config.output, path.basename(config.themeConfig.logo))
-    copyMatchingFiles(config.cwd, config.themeConfig.logo, logo)
+    copyMatchingFiles(config.themeConfig.logo, logo, config.cwd)
 
     const html = `<!doctype html>
 <html>

@@ -10,9 +10,8 @@ const copyMatchingFiles = require("./utils/copyMatchingFiles")
 const extractCommentBlocks = require("./parse/extractCommentBlocks")
 const parseComponent = require("./parse/parseComponent")
 const defaultTheme = require("./themes/solo")
-
-const requiredHeadAssets = [path.resolve(__dirname, "assets/bootstrap.js"), `<script src="renderers.js"></script>`]
-const defaultSpecimenRenderers = [require("./specimens/html")]
+const defaultSpecimenTypes = require("./specimens/all")
+const requiredHeadAssets = [path.resolve(__dirname, "assets/bootstrap.js"), `<script src="specimen-types.js"></script>`]
 
 const stylemark = ({
     input,
@@ -24,7 +23,7 @@ const stylemark = ({
     assets = [],
     theme = defaultTheme,
     themeConfig = {},
-    specimenRenderers = [],
+    specimenTypes = [],
 }) => {
     const config = new Config({
         input,
@@ -36,14 +35,14 @@ const stylemark = ({
         assets,
         theme,
         themeConfig,
-        specimenRenderers: specimenRenderers.concat(defaultSpecimenRenderers),
+        specimenTypes: specimenTypes.concat(defaultSpecimenTypes),
     })
     debug("Using config", config)
     const library = parseLibrary(config)
     debug("Parsed library", JSON.stringify(library))
     theme(library, config)
     copyThemeFiles(config)
-    outputRenderers(config)
+    outputSpecimenTypes(config)
 }
 
 const parseLibrary = (config) => {
@@ -77,7 +76,7 @@ const copyLocalFiles = (config) => {
     const localFiles = _.pickBy(config.assets, (to, from) => isLocalFile(from))
     _.forEach(localFiles, async (to, from) => {
         to = path.resolve(config.output, to === true ? from : to)
-        copyMatchingFiles(config.cwd, from, to)
+        copyMatchingFiles(from, to, config.cwd)
     })
 }
 
@@ -85,7 +84,7 @@ const copyLocalHeadAndBodyFiles = (config) => {
     const localHeadBodyFiles = [].concat(config.head, config.body).filter(isLocalFile)
     localHeadBodyFiles.forEach((file) => {
         const to = path.resolve(config.output, path.basename(file))
-        copyMatchingFiles(config.cwd, file, to)
+        copyMatchingFiles(file, to, config.cwd)
     })
 }
 
@@ -102,9 +101,9 @@ const downloadFile = async (url, to) => {
     }
 }
 
-const outputRenderers = (config) => {
-    const filepath = path.resolve(config.output, "renderers.js")
-    debug("Saving specimen renderers to:", filepath)
+const outputSpecimenTypes = (config) => {
+    const filepath = path.resolve(config.output, "specimen-types.js")
+    debug("Saving specimen specimenTypes to:", filepath)
 
     const serializeArray = (array) => `[
         ${array.map((item) => (Array.isArray(item) ? serializeArray(item) : serializeObject(item))).join(",")}
@@ -114,22 +113,8 @@ const outputRenderers = (config) => {
     }`
     const serializeValue = (value) => (_.isFunction(value) ? value.toString() : JSON.stringify(value))
 
-    const serializedRenderers = serializeArray(config.specimenRenderers)
-    fs.outputFileSync(filepath, `window.stylemark.renderers = ${serializedRenderers}`)
+    const specimenTypesSerialized = serializeArray(config.specimenTypes)
+    fs.outputFileSync(filepath, `window.stylemark.specimenTypes = ${specimenTypesSerialized}`)
 }
 
 module.exports = stylemark
-module.exports.Config = require("./models/Config")
-module.exports.Block = require("./models/Block")
-module.exports.Component = require("./models/Component")
-module.exports.Specimen = require("./models/Specimen")
-module.exports.Library = require("./models/Library")
-module.exports.parseComponent = require("./parse/parseComponent")
-module.exports.compileComponent = require("./compile/compileComponent")
-module.exports.getMatchingFiles = require("./utils/getMatchingFiles")
-module.exports.copyMatchingFiles = require("./utils/copyMatchingFiles")
-module.exports.getAssetTag = require("./utils/getAssetTag")
-module.exports.themes = {
-    solo: require("./themes/solo"),
-}
-module.exports.specimenRenderers = defaultSpecimenRenderers

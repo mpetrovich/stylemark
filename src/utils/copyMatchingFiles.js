@@ -4,7 +4,7 @@ const cpy = require("cpy")
 const cpFile = require("cp-file")
 const isGlob = require("is-glob")
 
-module.exports = async (cwd, from, to) => {
+module.exports = async (from, to, cwd) => {
     try {
         if (isGlob(from)) {
             debug(`Copying files from "${from}" to "${to}"`)

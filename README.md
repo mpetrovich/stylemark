@@ -7,6 +7,7 @@ Generate interactive style guides from Markdown.
 -   [Installation](#installation)
 -   [Usage](#usage)
 -   [Configuration](#configuration)
+-   [Concepts](#concepts)
 -   [Documenting components](#documenting-components)
 -   [Customization](#customization)
 
@@ -35,14 +36,13 @@ npx stylemark <config> [-w|--watch]
 
 ```js
 const stylemark = require("stylemark")
-
-stylemark(/* see configuration below */)
+stylemark(/* configuration object */)
 ```
 
 ## Configuration
 
 ```js
-{
+module.exports = {
     /*
         Base path that all paths in this config are relative to.
 
@@ -54,7 +54,7 @@ stylemark(/* see configuration below */)
     /*
         String or array of filepath globs.
 
-        See globbing patterns below.
+        See Globbing Patterns section.
     */
     input: ["src/**/*.{js,md}", "!*.test.js"],
 
@@ -119,38 +119,25 @@ stylemark(/* see configuration below */)
         Accepts a (library, config), compiles it to HTML, and saves the result
         to the output directory. Defaults to a built-in theme.
 
-        See theming below.
+        See Theming section.
     */
     theme: stylemark.themes.solo,
 
     /*
         Theme configuration passed to the theme function.
 
-        See theming below.
+        See Theming section.
     */
     themeConfig: {
         logo: "images/logo.png",
     },
 
     /*
-        Custom specimen renderers.
+        Custom specimen types.
 
-        See custom specimens below.
+        See Custom Specimens section.
     */
-    specimenRenderers: [
-        {
-            test: specimen => specimen.blocks[0].type === "color",
-            html: specimen => `<div>${specimen.blocks[0].content}</div>`,
-            css: specimen => `div {
-                width: 50px;
-                height: 50px;
-                background: ${specimen.blocks[0].content};
-            }`,
-            js: (specimen) => `
-                document.addEventListener("click", e => navigator.clipboard.writeText("${specimen.blocks[0].content}"))
-            `,
-        },
-    ]
+    specimenTypes: […]
 }
 ```
 
@@ -162,9 +149,123 @@ stylemark(/* see configuration below */)
 -   `{}` allows for a comma-separated list of "or" expressions
 -   `!` at the beginning of a pattern will negate the match
 
+## Concepts
+
+### Block
+
+A _block_ is a named Markdown code block.
+
+This is a block with `button` as its name:
+
+````md
+```button.html
+<button>Click me</button>
+```
+````
+
+This is NOT a block because it doesn't have a name:
+
+````md
+```html
+<button>Click me</button>
+```
+````
+
+#### Block flags & props
+
+A block can also have _flags_ and _props_.
+
+For example, this block:
+
+````md
+```button.html first another-flag
+---
+foo: bar
+another prop: some value
+a list:
+    - one
+    - two
+    - three
+---
+<button>Click me</button>
+```
+````
+
+has these flags:
+
+```json
+["first", "another-flag"]
+```
+
+and these props:
+
+```json
+{
+    "foo": "bar",
+    "another prop": "some value",
+    "a list": ["one", "two", "three"]
+}
+```
+
+### Specimens
+
+A _specimen_ is a set of blocks that share the same name.
+
+This is a specimen named `button` with HTML, CSS, and JS blocks:
+
+````md
+```button.html
+<button>Click me</button>
+```
+
+```button.css
+button { background: green }
+```
+
+```button.js
+document.querySelector("button").addEventListener("click", e => alert("You clicked me!"))
+```
+````
+
+### Components
+
+A _component_ is a set of specimens documented in the same Markdown file or code comment block.
+
+This is a component named `Button` with `hero` and `danger` specimens:
+
+````md
+---
+name: Button
+---
+
+## Hero button
+
+```hero.html
+<button>Hero button</button>
+```
+
+```hero.css
+button { font-size: 20px }
+```
+
+## Danger button
+
+```danger.html
+<button>Danger button</button>
+```
+
+```danger.css
+button { background: red }
+```
+````
+
+### Library
+
+A _library_ is a collection of components extracted from a set of source files.
+
 ## Documenting components
 
-Components are documented using markdown in code comments or in separate markdown files. [See the docs](docs/components.md) for details.
+Components are documented using markdown in code comments or in separate markdown files.
 
 ### In a source code comment
 
@@ -232,44 +333,120 @@ The simplest theme:
 ```js
 const path = require("path")
 const fs = require("fs-extra")
-const { compileComponent, getAssetTag } = require("stylemark")
+const compileComponent = require("stylemark/compile/compileComponent")
+const getAssetTag = require("stylemark/utils/getAssetTag")
 
 module.exports = (library, config) => {
-    const html = `<!doctype html>
-<html>
-<head>
-    <title>${library.name}</title>
-    ${config.head.map(getAssetTag).join("\n")}
-</head>
-<body>
-    ${library.components.map(compileComponent).join("\n")}
-    ${config.body.map(getAssetTag).join("\n")}
-</body>
-</html>
-`
+    const html = `
+        <!doctype html>
+        <html>
+        <head>
+            <title>${library.name}</title>
+            ${config.head.map(getAssetTag).join("\n")}
+        </head>
+        <body>
+            ${library.components.map(compileComponent).join("\n")}
+            ${config.body.map(getAssetTag).join("\n")}
+        </body>
+        </html>
+    `
     fs.outputFileSync(path.resolve(config.output, "index.html"), html)
 }
 ```
 
 A theme has full control over how it compiles and outputs the styleguide. See `src/themes/` for more examples.
 
-Stylemark exposes a number of helpful utilities:
-
--   `parseComponent`: TBD
--   `compileComponent`: TBD
--   `getMatchingFiles`: TBD
--   `copyMatchingFiles`: TBD
--   `getAssetTag`: TBD
--   `themes`: Set of built-in theme functions, eg. `themes.solo`
-
-And classes used to model data:
-
--   `Config`
--   `Block`
--   `Component`
--   `Specimen`
--   `Library`
-
 ### Custom specimens
 
-TBD
+New specimen types can be added via the `specimenTypes` [configuration](#configuration) property.
+
+For example, let's say we want to add a new color specimen that's rendered as a color palette. We'd like to be able to document it using a new `.color` Markdown code block type like this:
+
+````md
+# Accent colors
+
+```primary.color
+#f00
+```
+
+```secondary.color
+#00f
+```
+````
+
+Here's how we could implement it:
+
+```js
+module.exports = {
+    …
+    specimenTypes: [
+        {
+            /*
+                Default options used for unspecified options.
+            */
+            defaultOptions: {
+                width: "50px",
+                height: "50px",
+            },
+
+            /*
+                Returns whether this specimen type can display the given specimen.
+            */
+            test: (specimen) => specimen.blocks[0].type === "color",
+
+            /*
+                Returns the rendered HTML for the given specimen.
+            */
+            html: (specimen) => `<div>${specimen.blocks[0].content}</div>`,
+
+            /*
+                Returns the rendered CSS for the given specimen.
+
+                This will be automatically wrapped in a <style> tag. All styles are
+                strictly quarantined to the local HTML, so global page styles won't
+                be unaffected.
+            */
+            css: (specimen, options) => `div {
+                width: ${options.width};
+                height: ${options.height};
+                background: ${specimen.blocks[0].content};
+            }`,
+
+            /*
+                Returns the rendered JavaScript for the given specimen.
+
+                This will be automatically wrapped in a <script> tag. Unlike CSS
+                styles this JavaScript will NOT be strictly quarantined to the
+                local HTML, so it is possible to affect the global page state.
+
+                To prevent accidental global page modifications, `document` used
+                here has been overwritten to refer to the local HTML root. If for
+                whatever reason you still need to access the global page document,
+                use `window.document`.
+            */
+            js: (specimen) => `
+                document.addEventListener("click", e => navigator.clipboard.writeText("${specimen.blocks[0].content}"))
+            `,
+        },
+    ]
+})
+```
+
+Custom specimen types are chosen in array order and are evaluated before Stylemark's built-in ones.
+
+### Customizing specimens
+
+To pass options to a custom or built-in specimen type, wrap the specimen in a sub-array alongside its options object:
+
+```js
+const htmlSpecimen = require("stylemark/specimens/html")
+const colorSpecimen = { defaultOptions: …, test: …, html: …, css: …, js: … }
+
+module.exports = {
+    …
+    specimenTypes: [
+        [colorSpecimen, { width: "100px", height: "100px" }],
+        [htmlSpecimen, { /* any custom options */ }],
+    ],
+}
+```

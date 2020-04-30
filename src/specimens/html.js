@@ -1,10 +1,14 @@
 module.exports = {
+    defaultOptions: {
+        prefix: "",
+    },
+
     test: (specimen) => specimen.blocks[0].type === "html",
 
-    html: (specimen) =>
+    html: (specimen, options) =>
         specimen.blocks
             .filter((block) => block.type === "html")
-            .map((block) => block.content)
+            .map((block) => options.prefix + block.content)
             .join("\n"),
 
     css: (specimen) =>
