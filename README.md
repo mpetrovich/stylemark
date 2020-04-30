@@ -41,6 +41,8 @@ stylemark(/* a configuration object */)
 
 ## Configuration
 
+The configuration can be passed directly into Stylemark as an inline object or saved to a dedicated `.js` (recommended) or `.json` file.
+
 ```js
 module.exports = {
     /*
@@ -174,6 +176,10 @@ This is NOT a block because it doesn't have a name:
 #### Block flags & props
 
 A block can also have _flags_ and _props_.
+
+Flags are listed alongside the block name. Each space-separated word is its own flag.
+
+Props are written as a frontmatter block at the top of the Markdown code block. Note the delimiting `---` that's required before and after the props.
 
 For example, this block:
 
@@ -354,11 +360,11 @@ module.exports = (library, config) => {
 }
 ```
 
-A theme has full control over how it compiles and outputs the styleguide. See `src/themes/` for more examples.
+A theme has full control over how it compiles and outputs the styleguide. See [`src/themes/`](src/themes) for more examples.
 
 ### Custom specimens
 
-New specimen types can be added via the `specimenTypes` [configuration](#configuration) property.
+New specimen types can be added via the `specimenTypes` [configuration](#configuration) property. Custom specimen types are chosen in array order and are evaluated before Stylemark's built-in ones.
 
 For example, let's say we want to add a new color specimen that's rendered as a color palette. We'd like to be able to document it using a new `.color` Markdown code block type like this:
 
@@ -431,8 +437,6 @@ module.exports = {
     ]
 })
 ```
-
-Custom specimen types are chosen in array order and are evaluated before Stylemark's built-in ones.
 
 ### Customizing specimens
 
