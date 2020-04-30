@@ -12,7 +12,7 @@ const parseComponent = require("./parse/parseComponent")
 const defaultTheme = require("./themes/solo")
 
 const requiredHeadAssets = [path.resolve(__dirname, "assets/bootstrap.js"), `<script src="renderers.js"></script>`]
-const defaultRenderers = [require("./specimens/htmlDemo")]
+const defaultSpecimenRenderers = [require("./specimens/html")]
 
 const stylemark = ({
     input,
@@ -36,7 +36,7 @@ const stylemark = ({
         assets,
         theme,
         themeConfig,
-        specimenRenderers: specimenRenderers.concat(defaultRenderers),
+        specimenRenderers: specimenRenderers.concat(defaultSpecimenRenderers),
     })
     debug("Using config", config)
     const library = parseLibrary(config)
@@ -46,15 +46,15 @@ const stylemark = ({
     outputRenderers(config)
 }
 
-const parseLibrary = config => {
+const parseLibrary = (config) => {
     const files = getMatchingFiles(config.input, config.cwd)
     const components = parseComponents(files)
     const library = new Library({ name: config.name, components })
     return library
 }
 
-const parseComponents = files => {
-    const components = _.flatMap(files, file => {
+const parseComponents = (files) => {
+    const components = _.flatMap(files, (file) => {
         const content = fs.readFileSync(file, { encoding: "utf8" })
         const isMarkdownFile = file.endsWith(".md") || file.endsWith(".markdown")
         return isMarkdownFile ? parseComponent(content) : extractCommentBlocks(content).map(parseComponent)
@@ -62,18 +62,18 @@ const parseComponents = files => {
     return components
 }
 
-const copyThemeFiles = config => {
+const copyThemeFiles = (config) => {
     downloadRemoteUrls(config)
     copyLocalFiles(config)
     copyLocalHeadAndBodyFiles(config)
 }
 
-const downloadRemoteUrls = config => {
+const downloadRemoteUrls = (config) => {
     const urls = _.pickBy(config.assets, (to, from) => isUrl(from))
     _.forEach(urls, (local, url) => downloadFile(url, path.resolve(config.output, local)))
 }
 
-const copyLocalFiles = config => {
+const copyLocalFiles = (config) => {
     const localFiles = _.pickBy(config.assets, (to, from) => isLocalFile(from))
     _.forEach(localFiles, async (to, from) => {
         to = path.resolve(config.output, to === true ? from : to)
@@ -81,16 +81,16 @@ const copyLocalFiles = config => {
     })
 }
 
-const copyLocalHeadAndBodyFiles = config => {
+const copyLocalHeadAndBodyFiles = (config) => {
     const localHeadBodyFiles = [].concat(config.head, config.body).filter(isLocalFile)
-    localHeadBodyFiles.forEach(file => {
+    localHeadBodyFiles.forEach((file) => {
         const to = path.resolve(config.output, path.basename(file))
         copyMatchingFiles(config.cwd, file, to)
     })
 }
 
-const isLocalFile = str => str && /^(<|https?:|:\/\/)/.test(str) === false
-const isUrl = str => /^https?:\/\//.test(str)
+const isLocalFile = (str) => str && /^(<|https?:|:\/\/)/.test(str) === false
+const isUrl = (str) => /^https?:\/\//.test(str)
 
 const downloadFile = async (url, to) => {
     try {
@@ -102,14 +102,14 @@ const downloadFile = async (url, to) => {
     }
 }
 
-const outputRenderers = config => {
+const outputRenderers = (config) => {
     const renderersFile = path.resolve(config.output, "renderers.js")
     debug("Saving specimen renderers to:", renderersFile)
     fs.outputFileSync(
         renderersFile,
         `window.stylemark.renderers = [${config.specimenRenderers
             .map(
-                renderer => `{
+                (renderer) => `{
                     ${_.map(renderer, (fn, name) => `${name}: ${fn.toString()}`).join(",")}
                 }`
             )
@@ -131,3 +131,4 @@ module.exports.getAssetTag = require("./utils/getAssetTag")
 module.exports.themes = {
     solo: require("./themes/solo"),
 }
+module.exports.specimenRenderers = defaultSpecimenRenderers
