@@ -36,7 +36,7 @@ npx stylemark <config> [-w|--watch]
 
 ```js
 const stylemark = require("stylemark")
-stylemark(/* configuration object */)
+stylemark(/* a configuration object */)
 ```
 
 ## Configuration
