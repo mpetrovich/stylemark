@@ -1,11 +1,15 @@
 const { themes } = require("../src/stylemark")
 
 const colorSpecimen = {
+    defaultOptions: {
+        width: "50px",
+        height: "50px",
+    },
     test: (specimen) => specimen.blocks[0].type === "color",
     html: (specimen) => `<div>${specimen.blocks[0].content}</div>`,
-    css: (specimen, { width = "50px", height = "50px" } = {}) => `div {
-        width: ${width};
-        height: ${height};
+    css: (specimen, options) => `div {
+        width: ${options.width};
+        height: ${options.height};
         background: ${specimen.blocks[0].content};
     }`,
     js: (specimen) => `
@@ -38,5 +42,5 @@ module.exports = {
     themeConfig: {
         logo: "assets/stylemark.png",
     },
-    specimenRenderers: [[colorSpecimen, { width: "100px", height: "50px" }]],
+    specimenRenderers: [[colorSpecimen, { width: "100px" }]],
 }

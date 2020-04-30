@@ -1,18 +1,14 @@
 const stylemark = {}
 
 stylemark.findSpecimenRenderer = (specimen) => {
-    let rendererFound = null,
-        options = {}
-
-    for (let renderer of stylemark.renderers) {
-        if (Array.isArray(renderer)) {
-            ;[renderer, options] = renderer
-        }
-        if (renderer.test(specimen, options)) {
-            rendererFound = renderer
-        }
+    const normalizedRenderers = stylemark.renderers.map((item) => (Array.isArray(item) ? item : [item, {}]))
+    const match = normalizedRenderers.find(([renderer, options]) => renderer.test(specimen, options))
+    if (!match) {
+        return null
     }
-    return [rendererFound, options]
+    const [renderer, options] = match
+    const resolvedOptions = Object.assign({}, renderer.defaultOptions, options)
+    return [renderer, resolvedOptions]
 }
 
 stylemark.renderSpecimen = (specimen) => {
