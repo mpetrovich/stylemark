@@ -8,7 +8,7 @@ const insertNewNode = (nodes, index, nodeName, data) => {
     nodes.splice(index, 0, node)
 }
 
-module.exports = component => (tree, file) => {
+module.exports = (component) => (tree, file) => {
     const specimensInsertedSoFar = new Set()
 
     visit(tree, "code", (node, index, parent) => {

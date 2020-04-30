@@ -8,7 +8,7 @@ const _ = require("lodash")
 const parseSpecimens = require("./parseSpecimens")
 const Component = require("../models/Component")
 
-module.exports = markdown => {
+module.exports = (markdown) => {
     const file = vfile(markdown)
 
     const markdownTree = unified()
@@ -18,9 +18,7 @@ module.exports = markdown => {
         .parse(file)
     const metadata = _.get(file, "data.frontmatter", {})
 
-    unified()
-        .use(parseSpecimens)
-        .runSync(markdownTree, file)
+    unified().use(parseSpecimens).runSync(markdownTree, file)
     const specimens = file.data.specimens
 
     if (!metadata.name) {

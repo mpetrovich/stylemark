@@ -17,7 +17,7 @@ module.exports = (library, config) => {
 <body>
     <img src="${logo}">
     <nav>
-        ${library.components.map(component => `<a href="#">${component.metadata.name}</a>`).join("")}
+        ${library.components.map((component) => `<a href="#">${component.metadata.name}</a>`).join("")}
     </nav>
     <main>
         ${library.components.map(compileComponent).join("\n")}

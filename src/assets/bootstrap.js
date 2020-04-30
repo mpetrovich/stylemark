@@ -1,6 +1,6 @@
 const stylemark = {}
 
-stylemark.findSpecimenRenderer = specimen => {
+stylemark.findSpecimenRenderer = (specimen) => {
     let match = null
     for (const renderer of stylemark.renderers) {
         if (renderer.test(specimen)) {
@@ -10,7 +10,7 @@ stylemark.findSpecimenRenderer = specimen => {
     return match
 }
 
-stylemark.renderSpecimen = specimen => {
+stylemark.renderSpecimen = (specimen) => {
     const host = document.currentScript.parentElement
     const shadowRoot = host.attachShadow({ mode: "open" })
     const renderer = stylemark.findSpecimenRenderer(specimen)

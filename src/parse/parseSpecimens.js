@@ -9,7 +9,7 @@ const Specimen = require("../models/Specimen")
 module.exports = () => (tree, file) => {
     const specimenBlocks = []
 
-    visit(tree, "code", node => {
+    visit(tree, "code", (node) => {
         const [specimenName, type] = parseBlockNameAndType(node.lang)
 
         if (!specimenName) {

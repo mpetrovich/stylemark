@@ -6,7 +6,7 @@ const removeBlockNames = require("./removeBlockNames")
 const insertSpecimenNodes = require("./insertSpecimenNodes")
 const specimenNodeToHtmlTree = require("./specimenNodeToHtmlTree")
 
-module.exports = component => {
+module.exports = (component) => {
     const htmlTree = unified()
         .use(insertSpecimenNodes, component)
         .use(removeHiddenBlocks)
@@ -16,9 +16,7 @@ module.exports = component => {
         })
         .runSync(component.markdownTree)
 
-    const html = unified()
-        .use(toHtmlString)
-        .stringify(htmlTree)
+    const html = unified().use(toHtmlString).stringify(htmlTree)
 
     return html
 }

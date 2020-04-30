@@ -1,8 +1,8 @@
 const path = require("path")
 
-const isLocalFile = str => /^(<|https?:|:\/\/)/.test(str) === false
+const isLocalFile = (str) => /^(<|https?:|:\/\/)/.test(str) === false
 
-const getAssetTag = asset => {
+const getAssetTag = (asset) => {
     if (isLocalFile(asset)) {
         asset = path.basename(asset)
     }
