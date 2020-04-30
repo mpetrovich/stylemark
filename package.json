@@ -1,6 +1,6 @@
 {
     "name": "stylemark",
-    "version": "4.0.0-alpha.2",
+    "version": "4.0.0-alpha.3",
     "license": "MIT",
     "author": "Mike Petrovich <michael.c.petrovich@gmail.com>",
     "description": "Generate interactive style guides from Markdown.",
