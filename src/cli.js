@@ -6,12 +6,12 @@ const browser = require("browser-sync")
 const chokidar = require("chokidar")
 const debug = require("debug")("stylemark:cli")
 const importFresh = require("import-fresh")
-const getMatchingFiles = require("../src/utils/getMatchingFiles")
-const Config = require("../src/models/Config")
-const stylemark = require("../src/stylemark")
+const getMatchingFiles = require("./utils/getMatchingFiles")
+const Config = require("./models/Config")
+const stylemark = require("./stylemark")
 
 const args = require("yargs")
-    .command("$0 <config> [-w|--watch]", "", yargs => {
+    .command("$0 <config> [-w|--watch]", "", (yargs) => {
         yargs.positional("config", {
             description: "JS or JSON config filepath",
             type: "string",
@@ -24,7 +24,7 @@ const args = require("yargs")
         description: "Open in a browser and reload on changes",
     }).argv
 
-const loadConfig = configPath => {
+const loadConfig = (configPath) => {
     debug("Loading config from:", configPath)
     const raw = importFresh(configPath)
     raw.cwd = path.dirname(configPath)
@@ -38,8 +38,8 @@ const loadConfig = configPath => {
     return config
 }
 
-const watchLocalFiles = config => {
-    const isLocalFile = str => str && /^(<|https?:|:\/\/)/.test(str) === false
+const watchLocalFiles = (config) => {
+    const isLocalFile = (str) => str && /^(<|https?:|:\/\/)/.test(str) === false
     const localFiles = [].concat(config.input, config.head, config.body, Object.keys(config.assets)).filter(isLocalFile)
 
     debug("Watching for changes in:", localFiles)
@@ -65,7 +65,7 @@ const watchConfig = (configPath, initialConfig) => {
     watchConfig.localFileWatcher = watchLocalFiles(initialConfig)
 }
 
-const launchBrowser = config => {
+const launchBrowser = (config) => {
     browser.create().init({
         ui: false,
         files: path.resolve(config.output, "**", "*.*"),
@@ -75,7 +75,7 @@ const launchBrowser = config => {
     })
 }
 
-const run = args => {
+const run = (args) => {
     const configPath = path.resolve(args.config)
     const config = loadConfig(configPath)
     stylemark(config)
