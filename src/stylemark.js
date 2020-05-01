@@ -35,7 +35,7 @@ const stylemark = ({
         assets,
         theme,
         themeConfig,
-        specimenTypes: specimenTypes.concat(defaultSpecimenTypes),
+        specimenTypes: specimenTypes.concat(Object.values(defaultSpecimenTypes)),
     })
     debug("Using config", config)
     const library = parseLibrary(config)
