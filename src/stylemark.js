@@ -103,7 +103,7 @@ const downloadFile = async (url, to) => {
 
 const outputSpecimenTypes = (config) => {
     const filepath = path.resolve(config.output, "specimen-types.js")
-    debug("Saving specimen specimenTypes to:", filepath)
+    debug("Saving specimen types to:", filepath)
 
     const serializeArray = (array) => `[
         ${array.map((item) => (Array.isArray(item) ? serializeArray(item) : serializeObject(item))).join(",")}
