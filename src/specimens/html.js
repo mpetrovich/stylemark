@@ -1,7 +1,7 @@
 module.exports = {
     test: (specimen) => specimen.blocks[0].type === "html",
 
-    html: (specimen, options) =>
+    html: (specimen) =>
         specimen.blocks
             .filter((block) => block.type === "html")
             .map((block) => block.content)
