@@ -27,7 +27,7 @@ const args = require("yargs")
 const loadConfig = (configPath) => {
     debug("Loading config from:", configPath)
     const raw = importFresh(configPath)
-    raw.cwd = path.dirname(configPath)
+    raw.cwd = raw.cwd || path.dirname(configPath)
     debug("Loaded config", raw)
 
     raw.input = getMatchingFiles(raw.input, raw.cwd)
