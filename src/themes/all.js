@@ -1,3 +1,3 @@
 module.exports = {
-    solo: require("./solo"),
+    solo: require("./solo/index"),
 }

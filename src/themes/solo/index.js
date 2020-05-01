@@ -1,12 +1,12 @@
 const path = require("path")
 const fs = require("fs-extra")
-const getAssetTag = require("../utils/getAssetTag")
-const copyMatchingFiles = require("../utils/copyMatchingFiles")
-const compileComponent = require("../compile/compileComponent")
+const getAssetTag = require("../../utils/getAssetTag")
+const copyMatchingFiles = require("../../utils/copyMatchingFiles")
+const compileComponent = require("../../compile/compileComponent")
 
 module.exports = (library, config) => {
-    const logo = path.resolve(config.output, path.basename(config.themeConfig.logo))
-    copyMatchingFiles(config.themeConfig.logo, logo, config.cwd)
+    const logoPath = path.resolve(config.output, path.basename(config.themeConfig.logo))
+    copyMatchingFiles(config.themeConfig.logo, logoPath, config.cwd)
 
     const html = `<!doctype html>
 <html>
@@ -15,7 +15,7 @@ module.exports = (library, config) => {
     ${config.head.map(getAssetTag).join("\n")}
 </head>
 <body>
-    <img src="${logo}">
+    <img src="${path.relative(config.output, logoPath)}">
     <nav>
         ${library.components.map((component) => `<a href="#">${component.metadata.name}</a>`).join("")}
     </nav>
