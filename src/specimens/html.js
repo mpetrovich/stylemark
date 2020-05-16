@@ -10,43 +10,30 @@ module.exports = (userOptions = {}) => {
     return {
         name: "html",
         options,
+
         test: (specimen) => specimen.blocks[0].type === "html",
 
-        render: (specimen, shadowRoot, options) => {
-            const isCssAsset = (asset) => /\.css$/.test(asset)
-            const isJsAsset = (asset) => /\.js$/.test(asset)
+        renderHtml: (specimen) =>
+            specimen.blocks
+                .filter((block) => block.type === "html")
+                .map((block) => block.content)
+                .join("\n"),
 
-            options.assets.filter(isCssAsset).forEach((asset) => {
+        renderCss: (specimen, shadowRoot, options) => {
+            const isCssAsset = (asset) => /\.css$/.test(asset)
+            const addLinkTag = (asset) => {
                 const link = document.createElement("link")
                 link.rel = "stylesheet"
                 link.href = asset
                 shadowRoot.appendChild(link)
-            })
+            }
 
-            options.assets.filter(isJsAsset).forEach((asset) => {
-                const script = document.createElement("script")
-                script.src = asset
-                shadowRoot.appendChild(script)
-            })
-
-            const html = specimen.blocks
-                .filter((block) => block.type === "html")
-                .map((block) => block.content)
-                .join("\n")
+            options.assets.filter(isCssAsset).forEach(addLinkTag)
 
             const css = specimen.blocks
                 .filter((block) => block.type === "css")
                 .map((block) => block.content)
                 .join("\n")
-
-            const js = specimen.blocks
-                .filter((block) => block.type === "js")
-                .map((block) => block.content)
-                .join("\n")
-
-            if (html) {
-                shadowRoot.innerHTML += `<slot></slot>`
-            }
 
             if (css) {
                 const style = document.createElement("style")
@@ -54,6 +41,22 @@ module.exports = (userOptions = {}) => {
                 style.textContent = css
                 shadowRoot.appendChild(style)
             }
+        },
+
+        renderJs: (specimen, shadowRoot, options) => {
+            const isJsAsset = (asset) => /\.js$/.test(asset)
+            const addExternalScriptTag = (asset) => {
+                const script = document.createElement("script")
+                script.src = asset
+                shadowRoot.appendChild(script)
+            }
+
+            options.assets.filter(isJsAsset).forEach(addExternalScriptTag)
+
+            const js = specimen.blocks
+                .filter((block) => block.type === "js")
+                .map((block) => block.content)
+                .join("\n")
 
             if (js) {
                 const specimenId = shadowRoot.host.getAttribute("id")

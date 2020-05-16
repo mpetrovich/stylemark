@@ -13,7 +13,14 @@
                 connectedCallback() {
                     const specimen = JSON.parse(this.getAttribute("specimen"))
                     const shadowRoot = this.attachShadow({ mode: "open" })
-                    handler.render(specimen, shadowRoot, handler.options)
+                    shadowRoot.innerHTML = "<slot></slot>"
+
+                    if (handler.renderCss) {
+                        handler.renderCss(specimen, shadowRoot, handler.options)
+                    }
+                    if (handler.renderJs) {
+                        handler.renderJs(specimen, shadowRoot, handler.options)
+                    }
                 }
             }
         )
