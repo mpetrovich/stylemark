@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
-rm -rf debug/dist
-DEBUG=stylemark:* nodemon --watch src/ src/cli.js debug/stylemark.config.js
+DEBUG=stylemark:* nodemon --ext js,md --watch src/ --watch debug/ --ignore debug/dist/ src/cli.js debug/stylemark.config.js

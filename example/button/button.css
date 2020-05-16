@@ -1,0 +1,26 @@
+button {
+    padding: 0.5em 0.8em;
+    color: #000;
+    background: #ccc;
+    border: none;
+}
+
+button.primary {
+    background: #88f;
+}
+button.success {
+    background: #8f8;
+}
+button.danger {
+    background: #f88;
+}
+
+button.l {
+    font-size: 2rem;
+}
+button.m {
+    font-size: 1rem;
+}
+button.s {
+    font-size: 0.8rem;
+}

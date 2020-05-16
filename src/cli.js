@@ -1,13 +1,10 @@
 #!/usr/bin/env node
 
+const debug = require("debug")("stylemark:cli")
 const path = require("path")
 const _ = require("lodash")
 const browser = require("browser-sync")
 const chokidar = require("chokidar")
-const debug = require("debug")("stylemark:cli")
-const importFresh = require("import-fresh")
-const getMatchingFiles = require("./utils/getMatchingFiles")
-const Config = require("./models/Config")
 const stylemark = require("./stylemark")
 
 const args = require("yargs")
@@ -24,23 +21,15 @@ const args = require("yargs")
         description: "Open in a browser and reload on changes",
     }).argv
 
-const loadConfig = (configPath) => {
-    debug("Loading config from:", configPath)
-    const raw = importFresh(configPath)
-    raw.cwd = raw.cwd || path.dirname(configPath)
-    debug("Loaded config", raw)
-
-    raw.input = getMatchingFiles(raw.input, raw.cwd)
-    raw.output = path.isAbsolute(raw.output) ? raw.output : path.resolve(raw.cwd, raw.output)
-    const config = new Config(raw)
-    debug("Parsed config", config)
-
-    return config
-}
-
 const watchLocalFiles = (config) => {
-    const isLocalFile = (str) => str && /^(<|https?:|:\/\/)/.test(str) === false
-    const localFiles = [].concat(config.input, config.head, config.body, Object.keys(config.assets)).filter(isLocalFile)
+    const isUrl = (asset) => /^https?:\/\//.test(asset)
+    const isHtmlElement = (asset) => /^</.test(asset)
+    const isLocalFile = (asset) => !isUrl(asset) && !isHtmlElement(asset)
+
+    const inputFiles = config.inputFiles || []
+    const assets = Object.values(config.assets) || []
+    const themeAssets = Object.values((config.themeConfig && config.themeConfig.assets) || [])
+    const localFiles = [].concat(inputFiles, assets, themeAssets).filter(isLocalFile)
 
     debug("Watching for changes in:", localFiles)
     const watcher = chokidar
@@ -55,13 +44,11 @@ const watchLocalFiles = (config) => {
 const watchConfig = (configPath, initialConfig) => {
     chokidar.watch(configPath, { ignoreInitial: true, persistent: true }).on("all", async () => {
         debug("Change detected in:", configPath)
-        const config = loadConfig(configPath)
-        stylemark(config)
+        stylemark(configPath)
 
         await watchConfig.localFileWatcher.close()
-        watchConfig.localFileWatcher = watchLocalFiles(config)
+        watchConfig.localFileWatcher = watchLocalFiles(initialConfig)
     })
-
     watchConfig.localFileWatcher = watchLocalFiles(initialConfig)
 }
 
@@ -77,11 +64,10 @@ const launchBrowser = (config) => {
 
 const run = (args) => {
     const configPath = path.resolve(args.config)
-    const config = loadConfig(configPath)
-    stylemark(config)
+    const config = stylemark(configPath)
 
     if (args.watch) {
-        watchConfig(configPath, config)
+        watchConfig(configPath)
         launchBrowser(config)
     }
 }

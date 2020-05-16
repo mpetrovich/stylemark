@@ -2,7 +2,7 @@ const themes = require("../src/themes/all")
 const htmlSpecimen = require("../src/specimens/html")
 
 const colorSpecimen = {
-    defaultOptions: {
+    defaults: {
         width: "50px",
         height: "50px",
     },
@@ -43,5 +43,5 @@ module.exports = {
     themeConfig: {
         logo: "assets/stylemark.png",
     },
-    specimenTypes: [[colorSpecimen, { width: "100px" }], htmlSpecimen],
+    specimenHandlers: [[colorSpecimen, { width: "100px" }], htmlSpecimen],
 }

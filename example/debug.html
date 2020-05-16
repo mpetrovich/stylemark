@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <stylemark-specimen>
+            <button>one</button>
+        </stylemark-specimen>
+
+        <stylemark-specimen>
+            <button>two</button>
+        </stylemark-specimen>
+
+        <script>
+            customElements.define(
+                "stylemark-specimen",
+                class extends HTMLElement {
+                    constructor() {
+                        super()
+                    }
+
+                    connectedCallback() {
+                        const shadowRoot = this.attachShadow({ mode: "open" })
+                        const template = document.createElement("template")
+                        template.innerHTML = "<slot></slot>"
+                        shadowRoot.appendChild(template.content)
+
+                        const script = document.createElement("script")
+                        script.src = "dist/assets/button.js"
+                        shadowRoot.appendChild(script)
+                    }
+                }
+            )
+        </script>
+    </body>
+</html>

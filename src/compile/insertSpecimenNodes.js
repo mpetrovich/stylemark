@@ -21,7 +21,7 @@ module.exports = (component) => (tree, file) => {
         }
 
         const specimen = _.find(component.specimens, { name: specimenName })
-        insertNewNode(parent.children, index, "specimen", { specimen })
+        insertNewNode(parent.children, index, "stylemark-specimen", { specimen })
         specimensInsertedSoFar.add(specimenName)
         return index + 2
     })

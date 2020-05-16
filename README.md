@@ -51,26 +51,21 @@ module.exports = {
         When using Stylemark on the command line, this will default to the
         directory containing the config file.
     */
-    cwd: "../",
+    basePath: "../",
 
     /*
-        String or array of filepath globs.
+        String or array of filepaths relative to `basePath` to search for component documentation.
 
-        See Globbing Patterns section.
+        Globs supported, see Globbing Patterns section.
     */
-    input: ["src/**/*.{js,md}", "!*.test.js"],
+    inputFiles: ["src/**/*.{js,md}", "!*.test.js"],
 
     /*
-        Output directory path.
+        Directory path relative to `basePath` the style guide will be output.
 
         Directories will be automatically created if they don't exist.
     */
-    output: "dist/styleguide",
-
-    /*
-        Display name of the generated styleguide.
-    */
-    name: "ACME Styleguide",
+    outputDir: "dist/styleguide",
 
     /*
         Elements and assets to append to the <head> tag.
@@ -139,7 +134,7 @@ module.exports = {
 
         See Custom Specimens section.
     */
-    specimenTypes: […]
+    specimenHandlers: […]
 }
 ```
 
@@ -364,7 +359,7 @@ A theme has full control over how it compiles and outputs the styleguide. See [`
 
 ### Custom specimens
 
-New specimen types can be added via the `specimenTypes` [configuration](#configuration) property. Custom specimen types are chosen in array order and are evaluated before Stylemark's built-in ones.
+New specimen types can be added via the `specimenHandlers` [configuration](#configuration) property. Custom specimen types are chosen in array order and are evaluated before Stylemark's built-in ones.
 
 For example, let's say we want to add a new color specimen that's rendered as a color palette. We'd like to be able to document it using a new `.color` Markdown code block type like this:
 
@@ -385,12 +380,12 @@ Here's how we could implement it:
 ```js
 module.exports = {
     …
-    specimenTypes: [
+    specimenHandlers: [
         {
             /*
                 Default options used for unspecified options.
             */
-            defaultOptions: {
+            defaults: {
                 width: "50px",
                 height: "50px",
             },
@@ -403,7 +398,7 @@ module.exports = {
             /*
                 Returns the rendered HTML for the given specimen.
             */
-            html: (specimen) => `<div>${specimen.blocks[0].content}</div>`,
+            renderHtml: (specimen) => `<div>${specimen.blocks[0].content}</div>`,
 
             /*
                 Returns the rendered CSS for the given specimen.
@@ -412,7 +407,7 @@ module.exports = {
                 strictly quarantined to the local HTML, so global page styles won't
                 be unaffected.
             */
-            css: (specimen, options) => `div {
+            renderCss: (specimen, options) => `div {
                 width: ${options.width};
                 height: ${options.height};
                 background: ${specimen.blocks[0].content};
@@ -426,11 +421,11 @@ module.exports = {
                 local HTML, so it is possible to affect the global page state.
 
                 To prevent accidental global page modifications, `document` used
-                here has been overwritten to refer to the local HTML root. If for
-                whatever reason you still need to access the global page document,
+                here has been overwritten to refer to the local HTML root.
+                If you still need to access the global page document,
                 use `window.document`.
             */
-            js: (specimen) => `
+            renderJs: (specimen) => `
                 document.addEventListener("click", e => navigator.clipboard.writeText("${specimen.blocks[0].content}"))
             `,
         },
@@ -444,11 +439,11 @@ To pass options to a custom or built-in specimen type, wrap the specimen in a su
 
 ```js
 const htmlSpecimen = require("stylemark/specimens/html")
-const colorSpecimen = { defaultOptions: …, test: …, html: …, css: …, js: … }
+const colorSpecimen = { defaults: …, test: …, html: …, css: …, js: … }
 
 module.exports = {
     …
-    specimenTypes: [
+    specimenHandlers: [
         [colorSpecimen, { width: "100px", height: "100px" }],
         [htmlSpecimen, { /* any custom options */ }],
     ],

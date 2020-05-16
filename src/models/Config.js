@@ -1,5 +1,25 @@
 module.exports = class {
-    constructor({ input, output, cwd, name, head, body, assets, theme, themeConfig, specimenTypes }) {
-        Object.assign(this, { input, output, cwd, name, head, body, assets, theme, themeConfig, specimenTypes })
+    constructor({
+        inputFiles,
+        outputDir,
+        basePath,
+        assets,
+        themeHandler,
+        themeConfig,
+        specimenHandlers,
+        libraryParser,
+        bootstrap,
+    }) {
+        Object.assign(this, {
+            inputFiles,
+            outputDir,
+            basePath,
+            assets,
+            themeHandler,
+            themeConfig,
+            specimenHandlers,
+            libraryParser,
+            bootstrap,
+        })
     }
 }
