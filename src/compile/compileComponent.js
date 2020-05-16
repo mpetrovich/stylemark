@@ -4,17 +4,15 @@ const toHtmlString = require("rehype-stringify")
 const removeHiddenBlocks = require("./removeHiddenBlocks")
 const removeBlockNames = require("./removeBlockNames")
 const insertSpecimenNodes = require("./insertSpecimenNodes")
-const resolveSpecimenHandlerOptions = require("./resolveSpecimenHandlerOptions")
-const specimenNodeToHtmlTree = require("./specimenNodeToHtmlTree")
+const transformSpecimenNodeToHtmlTree = require("./transformSpecimenNodeToHtmlTree")
 
 module.exports = (component, config) => {
     const htmlTree = unified()
         .use(insertSpecimenNodes, component)
-        .use(resolveSpecimenHandlerOptions, config)
         .use(removeHiddenBlocks)
         .use(removeBlockNames)
         .use(toHtmlTree, {
-            handlers: { "stylemark-specimen": specimenNodeToHtmlTree(config) },
+            handlers: { "stylemark-specimen": transformSpecimenNodeToHtmlTree(config) },
         })
         .runSync(component.markdownTree)
 

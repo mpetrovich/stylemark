@@ -40,7 +40,7 @@ module.exports = {
         "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.slim.min.js": "jquery.js",
     },
     theme: themes.solo,
-    themeConfig: {
+    themeOptions: {
         logo: "assets/stylemark.png",
     },
     specimenHandlers: [[colorSpecimen, { width: "100px" }], htmlSpecimen],

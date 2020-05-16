@@ -5,10 +5,9 @@ module.exports = class {
         basePath,
         assets,
         themeHandler,
-        themeConfig,
+        themeOptions,
         specimenHandlers,
         libraryParser,
-        bootstrap,
     }) {
         Object.assign(this, {
             inputFiles,
@@ -16,10 +15,9 @@ module.exports = class {
             basePath,
             assets,
             themeHandler,
-            themeConfig,
+            themeOptions,
             specimenHandlers,
             libraryParser,
-            bootstrap,
         })
     }
 }

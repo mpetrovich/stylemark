@@ -28,7 +28,7 @@ const watchLocalFiles = (config) => {
 
     const inputFiles = config.inputFiles || []
     const assets = Object.values(config.assets) || []
-    const themeAssets = Object.values((config.themeConfig && config.themeConfig.assets) || [])
+    const themeAssets = Object.values((config.themeOptions && config.themeOptions.assets) || [])
     const localFiles = [].concat(inputFiles, assets, themeAssets).filter(isLocalFile)
 
     debug("Watching for changes in:", localFiles)

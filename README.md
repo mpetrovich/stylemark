@@ -125,7 +125,7 @@ module.exports = {
 
         See Theming section.
     */
-    themeConfig: {
+    themeOptions: {
         logo: "images/logo.png",
     },
 

@@ -11,7 +11,8 @@ name: Button
 ```
 
 ```types.css
-:host {
+div {
+    padding: 10px;
     background: green;
 }
 button {

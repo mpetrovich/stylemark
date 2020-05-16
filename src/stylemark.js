@@ -11,7 +11,6 @@ module.exports = (configPathOrObject) => {
     const library = config.libraryParser(config.inputFiles)
     debug("Parsed library:", JSON.stringify(library))
 
-    fs.removeSync(config.outputDir)
     config.themeHandler(library, config)
 
     return config

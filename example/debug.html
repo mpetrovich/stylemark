@@ -26,6 +26,11 @@
                         const script = document.createElement("script")
                         script.src = "dist/assets/button.js"
                         shadowRoot.appendChild(script)
+
+                        const link = document.createElement("link")
+                        link.rel = "stylesheet"
+                        link.href = "dist/assets/button.css"
+                        shadowRoot.appendChild(link)
                     }
                 }
             )
