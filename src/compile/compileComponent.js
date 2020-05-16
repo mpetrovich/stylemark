@@ -4,13 +4,13 @@ const toHtmlString = require("rehype-stringify")
 const removeHiddenBlocks = require("./removeHiddenBlocks")
 const removeBlockNames = require("./removeBlockNames")
 const insertSpecimenNodes = require("./insertSpecimenNodes")
-const runSpecimenCompileHook = require("./runSpecimenCompileHook")
+const resolveSpecimenHandlerOptions = require("./resolveSpecimenHandlerOptions")
 const specimenNodeToHtmlTree = require("./specimenNodeToHtmlTree")
 
 module.exports = (component, config) => {
     const htmlTree = unified()
         .use(insertSpecimenNodes, component)
-        // .use(runSpecimenCompileHook, config)
+        .use(resolveSpecimenHandlerOptions, config)
         .use(removeHiddenBlocks)
         .use(removeBlockNames)
         .use(toHtmlTree, {

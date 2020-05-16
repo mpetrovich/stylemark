@@ -13,6 +13,13 @@ module.exports = (userOptions = {}) => {
 
         test: (specimen) => specimen.blocks[0].type === "html",
 
+        resolveOptions: (config) => {
+            return {
+                ...options,
+                assets: [].concat(config.assets, options.assets),
+            }
+        },
+
         renderHtml: (specimen) =>
             specimen.blocks
                 .filter((block) => block.type === "html")
@@ -61,7 +68,6 @@ module.exports = (userOptions = {}) => {
             if (js) {
                 const specimenId = shadowRoot.host.getAttribute("id")
                 const script = document.createElement("script")
-                script.type = "text/javascript"
                 script.textContent = `(function() {
                     const document = window.document.getElementById("${specimenId}").shadowRoot.querySelector("slot").assignedNodes()[0];
                     ${js}

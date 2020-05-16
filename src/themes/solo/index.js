@@ -3,6 +3,7 @@ const path = require("path")
 const fs = require("fs-extra")
 const compileComponent = require("../../compile/compileComponent")
 const Config = require("../../models/Config")
+const serialize = require("../../utils/serialize")
 
 const theme = (library, userConfig) => {
     const config = resolveConfig(userConfig)
@@ -11,7 +12,7 @@ const theme = (library, userConfig) => {
 }
 
 const resolveConfig = (config) => {
-    const defaultThemeConfig = { assetDir: "assets", title: "Stylemark" }
+    const defaultThemeConfig = { assets: [], assetDir: "assets", title: "Stylemark" }
     const themeConfig = Object.assign({}, defaultThemeConfig, config.themeConfig)
     return new Config({ ...config, themeConfig })
 }
@@ -34,7 +35,8 @@ const saveAssets = (config) => {
             debug(`Error copying asset "${localAsset}": ${error.message}`)
         }
     }
-    config.assets.filter(isLocalAsset).forEach(saveLocalAsset)
+    const allAssets = [].concat(config.assets, config.themeConfig.assets)
+    allAssets.filter(isLocalAsset).forEach(saveLocalAsset)
 }
 
 const renderHtml = (library, config) => {
@@ -44,18 +46,19 @@ const renderHtml = (library, config) => {
     const getJsTag = (asset) => `<script src="${asset}"></script>`
 
     const getLocalAssetPath = (asset) => path.join(config.themeConfig.assetDir, path.basename(asset))
-    const getAssetUri = (asset) => (isLocalAsset(asset) ? getLocalAssetPath(asset) : asset)
-    const assets = config.assets.map(getAssetUri)
+    const resolveAsset = (asset) => (isLocalAsset(asset) ? getLocalAssetPath(asset) : asset)
+    const allAssets = [].concat(config.assets, config.themeConfig.assets)
+    const resolvedAssets = allAssets.map(resolveAsset)
 
-    debug("Using config:", config)
-    debug("Input assets:", config.assets)
-    debug("Output assets:", assets)
+    debug("Using config:", serialize(config))
+    debug("Input assets:", config.themeConfig.assets)
+    debug("Resolved assets:", resolvedAssets)
 
     return `<!doctype html>
 <html>
 <head>
     <title>${config.themeConfig.title}</title>
-    ${assets.filter(isCssAsset).map(getCssTag).join("\n")}
+    ${resolvedAssets.filter(isCssAsset).map(getCssTag).join("\n")}
     <script>${config.bootstrap}</script>
 </head>
 <body>
@@ -65,7 +68,7 @@ const renderHtml = (library, config) => {
     <main>
         ${library.components.map((component) => compileComponent(component, config)).join("\n")}
     </main>
-    ${assets.filter(isJsAsset).map(getJsTag).join("\n")}
+    ${resolvedAssets.filter(isJsAsset).map(getJsTag).join("\n")}
 </body>
 </html>
 `

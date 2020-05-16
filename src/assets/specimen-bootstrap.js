@@ -1,6 +1,8 @@
 ;(() => {
     const handlers = new Map()
-    window.stylemarkSpecimenHandlers.forEach((handler) => handlers.set(handler.name, handler))
+    window.stylemarkSpecimenHandlers.forEach(
+        (handler) => !handlers.has(handler.name) && handlers.set(handler.name, handler)
+    )
 
     handlers.forEach((handler) => {
         customElements.define(
