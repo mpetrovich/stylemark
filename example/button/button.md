@@ -2,6 +2,28 @@
 name: Button
 ---
 
+## Dynamic button
+
+```dynamic.html
+<button>Button</button>
+```
+
+```dynamic.html
+<label class="label">Button text:</label>
+<input type="text">
+```
+
+```dynamic.css
+::slotted(.label) { color: red !important; }
+```
+
+```dynamic.js
+const button = document.querySelector("button")
+const input = document.querySelector("input")
+input.value = button.innerText = "Button"
+input.addEventListener("keydown", event => button.innerText = event.target.value)
+```
+
 ## Button types
 
 ```types.html
@@ -11,11 +33,11 @@ name: Button
 ```
 
 ```types.css
-div {
+::slotted(div) {
     padding: 10px;
     background: green;
 }
-button {
+::slotted(button) {
     background: #ccf;
 }
 ```

@@ -56,6 +56,7 @@ const renderHtml = (library, config) => {
     <main>
         ${library.components.map((component) => compileComponent(component, config)).join("\n")}
     </main>
+    ${config.assets.filter(isJsAsset).map(getJsTag).join("\n")}
     ${themeAssets.filter(isJsAsset).map(getJsTag).join("\n")}
 </body>
 </html>

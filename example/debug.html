@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+    <link rel="stylesheet" href="dist/assets/button.css" />
     <body>
         <stylemark-specimen>
             <button>one</button>
+            <span class="foo">foo</span>
         </stylemark-specimen>
 
         <stylemark-specimen>
@@ -23,17 +25,13 @@
                         template.innerHTML = "<slot></slot>"
                         shadowRoot.appendChild(template.content)
 
-                        const script = document.createElement("script")
-                        script.src = "dist/assets/button.js"
-                        shadowRoot.appendChild(script)
-
-                        const link = document.createElement("link")
-                        link.rel = "stylesheet"
-                        link.href = "dist/assets/button.css"
-                        shadowRoot.appendChild(link)
+                        const style = document.createElement("style")
+                        style.textContent = "::slotted(button) { background: red !important; }"
+                        shadowRoot.appendChild(style)
                     }
                 }
             )
         </script>
+        <script src="dist/assets/button.js"></script>
     </body>
 </html>
