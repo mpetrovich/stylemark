@@ -13,10 +13,11 @@ const theme = (library, config) => {
     copyAssets(config)
 }
 
+theme.assets = []
+
 theme.defaultOptions = {
     title: "Stylemark",
     assetDir: "assets",
-    assets: [],
     headHtml: "",
     bodyHtml: "",
     htmlTag: "<html>",
@@ -33,24 +34,15 @@ const renderHtml = (library, config) => {
     const isJsAsset = (asset) => /\.js$/.test(asset)
     const getCssTag = (asset) => `<link rel="stylesheet" href="${asset}">`
     const getJsTag = (asset) => `<script src="${asset}"></script>`
-
-    const isLocalAsset = (asset) => /^https?:\/\//.test(asset) === false
-    const getLocalAssetPath = (asset) => path.join(config.themeOptions.assetDir, path.basename(asset))
-    const resolveAsset = (asset) => (isLocalAsset(asset) ? getLocalAssetPath(asset) : asset)
-    const resolvedThemeAssets = config.themeOptions.assets.map(resolveAsset)
-
     const bootstrap = getBootstrap(config)
 
     debug("Using config:", serialize(config))
-    debug("User theme assets:", config.themeOptions.assets)
-    debug("Resolved theme assets:", resolvedThemeAssets)
 
     return `<!doctype html>
 ${config.themeOptions.htmlTag}
 <head>
     <title>${config.themeOptions.title}</title>
     ${config.assets.filter(isCssAsset).map(getCssTag).join("\n")}
-    ${resolvedThemeAssets.filter(isCssAsset).map(getCssTag).join("\n")}
     <script>${bootstrap}</script>
     ${config.themeOptions.headHtml}
 </head>
@@ -62,7 +54,6 @@ ${config.themeOptions.bodyTag}
         ${library.components.map((component) => compileComponent(component, config)).join("\n")}
     </main>
     ${config.assets.filter(isJsAsset).map(getJsTag).join("\n")}
-    ${resolvedThemeAssets.filter(isJsAsset).map(getJsTag).join("\n")}
     ${config.themeOptions.bodyHtml}
 </body>
 </html>

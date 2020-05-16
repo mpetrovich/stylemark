@@ -4,15 +4,15 @@ const fs = require("fs-extra")
 
 module.exports = (config) => {
     const isLocalAsset = (asset) => /^https?:\/\//.test(asset) === false
-    const saveLocalAsset = (localAsset) => {
+    const copyLocalAsset = (srcPath) => {
         try {
-            const assetDest = path.resolve(config.outputDir, config.themeOptions.assetDir, path.basename(localAsset))
-            debug(`Copying local asset from "${localAsset}" to "${assetDest}"`)
-            fs.copySync(localAsset, assetDest)
+            const destPath = path.resolve(config.outputDir, config.themeOptions.assetDir, path.basename(srcPath))
+            debug(`Copying local asset from "${srcPath}" to "${destPath}"`)
+            fs.copySync(srcPath, destPath)
         } catch (error) {
-            debug(`Error copying asset "${localAsset}": ${error.message}`)
+            debug(`Error copying asset "${srcPath}": ${error.message}`)
         }
     }
     const assets = [].concat(config.assets, config.themeOptions.assets)
-    assets.filter(isLocalAsset).forEach(saveLocalAsset)
+    assets.filter(isLocalAsset).forEach(copyLocalAsset)
 }

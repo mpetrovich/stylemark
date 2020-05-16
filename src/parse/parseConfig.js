@@ -28,13 +28,13 @@ const parseConfig = (configPathOrObject) => {
     const inputFiles = getMatchingFiles(userConfig.inputFiles, basePath)
     const outputDir = path.resolve(basePath, userConfig.outputDir)
 
-    const isLocalAsset = (asset) => /^https?:\/\//.test(asset) === false
-    const resolveAssetPath = (asset) => (isLocalAsset(asset) ? path.resolve(basePath, asset) : asset)
-    const assets = (userConfig.assets || []).map(resolveAssetPath)
-
     const themeHandler = userConfig.themeHandler || defaultThemeHandler
     const themeOptions = Object.assign({}, themeHandler.defaultOptions, userConfig.themeOptions)
     const libraryParser = userConfig.libraryParser || defaultLibraryParser
+
+    const isLocalAsset = (asset) => /^https?:\/\//.test(asset) === false
+    const resolveAssetPath = (asset) => (isLocalAsset(asset) ? path.resolve(basePath, asset) : asset)
+    const assets = (userConfig.assets || []).concat(themeHandler.assets || []).map(resolveAssetPath)
 
     const specimenHandlers = _.chain([])
         .concat(userConfig.specimenHandlers, defaultSpecimenHandlers)
