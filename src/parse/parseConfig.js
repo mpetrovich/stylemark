@@ -23,9 +23,9 @@ const parseConfig = (configPathOrObject) => {
 
     debug("Raw loaded config:", serialize(userConfig))
 
-    const basePath = userConfig.basePath || (configPath && path.dirname(configPath))
-    const inputFiles = getMatchingFiles(userConfig.inputFiles, basePath)
-    const outputDir = path.resolve(basePath, userConfig.outputDir)
+    const basePath = userConfig.basePath || (configPath && path.dirname(configPath)) || ""
+    const inputFiles = getMatchingFiles(userConfig.inputFiles || "", basePath)
+    const outputDir = path.resolve(basePath, userConfig.outputDir || "")
 
     const themeHandler = userConfig.themeHandler || defaultThemeHandler
     const themeOptions = Object.assign({}, themeHandler.defaultOptions, userConfig.themeOptions)
