@@ -7,4 +7,10 @@ module.exports = {
         title: "Example Styleguide",
     },
     assets: ["button/button.css", "button/button.js"],
+    specimenHandlers: [
+        htmlSpecimen({
+            collapsedByDefault: ["html"],
+            expandedByDefault: ["css", "js"],
+        }),
+    ],
 }

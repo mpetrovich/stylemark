@@ -5,7 +5,9 @@ const serialize = require("../utils/serialize")
 
 module.exports = (config) => {
     const serializableConfig = _.omitBy(config, _.isFunction)
-    serializableConfig.specimenHandlers = config.specimenHandlers.map((handler) => _.pick(handler, ["name", "initDom"]))
+    serializableConfig.specimenHandlers = config.specimenHandlers.map((handler) =>
+        _.pick(handler, ["name", "options", "initDom"])
+    )
     const configString = serialize(serializableConfig)
 
     const bootstrap = fs.readFileSync(path.resolve(__dirname, "../assets/bootstrap.js"), { encoding: "utf8" })

@@ -1,6 +1,13 @@
-module.exports = (options = {}) => {
+module.exports = (userOptions = {}) => {
+    const defaultOptions = {
+        collapsedByDefault: [],
+        expandedByDefault: ["html", "css", "js"],
+    }
+    const options = Object.assign({}, defaultOptions, userOptions)
+
     return {
         name: "html",
+        options,
 
         test: (specimen, options, config) => specimen.blocks[0].type === "html",
 
@@ -38,6 +45,9 @@ module.exports = (options = {}) => {
                     shadowRoot.appendChild(script)
                 })
             }
+
+            const optionsNode = document.createTextNode(`Options: ${JSON.stringify(options)}`)
+            shadowRoot.appendChild(optionsNode)
         },
     }
 }
