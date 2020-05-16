@@ -2,7 +2,6 @@ const debug = require("debug")("stylemark:parse:config")
 const path = require("path")
 const _ = require("lodash")
 const importFresh = require("import-fresh")
-const uniqueString = require("unique-string")
 const getMatchingFiles = require("../utils/getMatchingFiles")
 const serialize = require("../utils/serialize")
 const Config = require("../models/Config")
@@ -34,7 +33,10 @@ const parseConfig = (configPathOrObject) => {
 
     const isLocalAsset = (asset) => /^https?:\/\//.test(asset) === false
     const resolveAssetPath = (asset) => (isLocalAsset(asset) ? path.resolve(basePath, asset) : asset)
-    const assets = (userConfig.assets || []).concat(themeHandler.assets || []).map(resolveAssetPath)
+    const assets = []
+        .concat(userConfig.assets || [])
+        .concat(themeOptions.assets || [])
+        .map(resolveAssetPath)
 
     const specimenHandlers = _.chain([])
         .concat(userConfig.specimenHandlers, defaultSpecimenHandlers)

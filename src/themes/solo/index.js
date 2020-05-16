@@ -13,11 +13,10 @@ const theme = (library, config) => {
     copyAssets(config)
 }
 
-theme.assets = []
-
 theme.defaultOptions = {
     title: "Stylemark",
     assetDir: "assets",
+    assets: [path.resolve(__dirname, "script.js")],
     headHtml: "",
     bodyHtml: "",
     htmlTag: "<html>",
@@ -32,8 +31,11 @@ const saveHtml = (html, config) => {
 const renderHtml = (library, config) => {
     const isCssAsset = (asset) => /\.css$/.test(asset)
     const isJsAsset = (asset) => /\.js$/.test(asset)
-    const getCssTag = (asset) => `<link rel="stylesheet" href="${asset}">`
-    const getJsTag = (asset) => `<script src="${asset}"></script>`
+    const isLocalAsset = (asset) => /^https:?\/\//.test(asset) === false
+    const getLocalAssetPath = (asset) => [config.themeOptions.assetDir, path.basename(asset)].join("/")
+    const getAssetUri = (asset) => (isLocalAsset(asset) ? getLocalAssetPath(asset) : asset)
+    const getCssTag = (asset) => `<link rel="stylesheet" href="${getAssetUri(asset)}">`
+    const getJsTag = (asset) => `<script src="${getAssetUri(asset)}"></script>`
     const bootstrap = getBootstrap(config)
 
     debug("Using config:", serialize(config))

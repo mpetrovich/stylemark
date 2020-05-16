@@ -6,7 +6,7 @@ module.exports = {
     themeOptions: {
         title: "Example Styleguide",
     },
-    assets: ["button/button.css", "button/button.js"],
+    assets: ["button/button.css"],
     specimenHandlers: [
         htmlSpecimen({
             collapsedByDefault: ["html"],
