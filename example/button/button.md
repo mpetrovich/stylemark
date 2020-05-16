@@ -5,16 +5,12 @@ name: Button
 ## Dynamic button
 
 ```dynamic.html
+<input type="text">
 <button>Button</button>
 ```
 
-```dynamic.html
-<label class="label">Button text:</label>
-<input type="text">
-```
-
 ```dynamic.css
-::slotted(.label) { color: red !important; }
+::slotted(input) { display: block; }
 ```
 
 ```dynamic.js
