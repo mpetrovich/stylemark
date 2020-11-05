@@ -1,5 +1,7 @@
 # Stylemark &nbsp; [![npm version](https://badge.fury.io/js/stylemark.svg)](https://badge.fury.io/js/stylemark) [![Build Status](https://travis-ci.org/nextbigsoundinc/stylemark.svg?branch=master)](https://travis-ci.org/nextbigsoundinc/stylemark)
 
+**NOTICE: This project has been abandoned.** See [this issue](https://github.com/mpetrovich/stylemark/issues/101) for details.
+
 **Generate interactive style guides from Markdown.**
 
 Document your style guide components in code comments or Markdown files, and Stylemark will generate a static HTML site with live, interactive components.
