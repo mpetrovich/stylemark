@@ -170,31 +170,32 @@ class Generator {
 		if (doc.description) {
 			// Replaces <example> tags with <iframe> tags
 			doc.description = doc.description.replace(
-				/<example name="([^"]+)"( height="\d+")?><\/example>/g,
-				`<div class="i-example">
-					<h5 class="i-example__heading">
-						<a
-							href="${doc.slug}-$1.html"
-							target="_blank"
-							class="plain-link"
-							data-toggle="tooltip"
-							data-placement="top"
-							title="Open in a new window"
-						>
-							<i class="fa fa-external-link-square fa-fw"></i>
-							Example
-						</a>
-					</h5>
-					<div class="i-example__body">
-						<div
-							class="i-example__iframe"
-							lazyframe
-							data-src="${doc.slug}-$1.html"
-							data-initinview="true"
-							data-title="Loading..." $2
-						></div>
-					</div>
-				</div>\n`
+        /<example name="([^"]+)"( height="\d+")?><\/example>/g,
+        (_match, name, optionalHeight) =>
+					`<div class="i-example">
+						<h5 class="i-example__heading">
+							<a
+								href="${doc.slug}-${_.kebabCase(name)}.html"
+								target="_blank"
+								class="plain-link"
+								data-toggle="tooltip"
+								data-placement="top"
+								title="Open in a new window"
+							>
+								<i class="fa fa-external-link-square fa-fw"></i>
+								Example
+							</a>
+						</h5>
+						<div class="i-example__body">
+							<div
+								class="i-example__iframe"
+								lazyframe
+								data-src="${doc.slug}-${_.kebabCase(name)}.html"
+								data-initinview="true"
+								data-title="Loading..." ${optionalHeight}
+							></div>
+						</div>
+					</div>\n`
 			);
 
 			// Replaces <info|success|warning|danger> tags with alert divs
