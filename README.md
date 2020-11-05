@@ -2,9 +2,7 @@
 
 **NOTICE: This project has been abandoned.** See [this issue](https://github.com/mpetrovich/stylemark/issues/101) for details.
 
-**Generate interactive style guides from Markdown.**
-
-Document your style guide components in code comments or Markdown files, and Stylemark will generate a static HTML site with live, interactive components.
+Generate interactive style guides from Markdown. Document your style guide components in code comments or Markdown files, and Stylemark will generate a static HTML site with live, interactive components.
 
 ![Bootstrap style guide](https://user-images.githubusercontent.com/1235062/31162551-2d8f6da6-a8ac-11e7-8874-9e8a2c1c6680.png)
 
